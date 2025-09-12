@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akash Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    /* ---------- Particle canvas ---------- */
+#particle-canvas {
+  position: fixed;   /* fixed so it stays while scrolling */
+  top: 0;
+  left: 0;
+  width: 21%;        /* left strip */
+  height: 110vh;     /* full viewport height */
+  z-index: -1;       /* behind content */
+  display: block;
+  pointer-events: none;  /* clicks go through */
+  transition: opacity 0.3s;
+}
+
+    /* ---------- Existing styles (kept) ---------- */
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+    .light { background: #fff; color: #111; }
+    .dark { background: #111; color: #eee; }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      background: inherit;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      z-index: 100;
+    }
+    .navbar nav {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+    .navbar a {
+      text-decoration: none;
+      color: inherit;
+      font-weight: 500;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 2rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 500;
+      line-height: 3;
+      margin: 0;
+    }
+    .hero h1 div { display: block; }
+    .hero h1 span {
+      display: inline-block;
+      opacity: 0;
+      white-space: pre;
+    }
+
+    /* Tagline */
+    .tagline-container { margin-top: 1rem; }
+    .tagline {
+      display: inline-block;
+      font-size: 1.2rem;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    /* CTA Button */
+    .cta {
+      margin-top: 2rem;
+      padding: 1rem 2rem;
+      background: black;
+      color: white;
+      border-radius: 2rem;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: transform 0.2s, background 0.3s;
+    }
+    .cta:hover { transform: scale(1.05); background: #333; }
+
+    /* About */
+    .about {
+      padding: 1rem 1rem;
+      max-width: 900px;
+      margin: auto;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      text-align: justify;
+    }
+    .about h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    /* Experience Gallery (Flip Cards) */
+    .experience-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+      max-width: 1100px;
+      margin: auto;
+      justify-items: center;
+    }
+    .exp-card {
+      width: 100%;
+      max-width: 280px;
+      perspective: 1000px;
+      height: 300px;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+      border-radius: 1rem;
+      cursor: pointer;
+    }
+    .exp-card:hover .card-inner { transform: rotateY(180deg); }
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .card-front {
+      background: rgba(0,0,0,0.05);
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+    .card-back {
+      background: white;
+      color: black;
+      transform: rotateY(180deg);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      text-align: left;
+      align-items: flex-start;
+      padding: 1.2rem;
+      overflow-y: auto;
+    }
+    .card-back h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .card-back .company {
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    .card-back .time {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    /* Logo */
+    .logo img { height: 28px; width: auto; display: inline-block; }
+    .logo {
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      animation: fadeInLogo 1.5s ease-out forwards;
+    }
+    @keyframes fadeInLogo {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .shine {
+      font-size: 1.5rem;
+      margin-left: 6px;
+      display: inline-block;
+      animation: rotateStar 3s linear infinite;
+    }
+    @keyframes rotateStar {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Toggle switch */
+    .toggle-switch {
+      width: 60px;
+      height: 30px;
+      border-radius: 30px;
+      background: #ddd;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .switch-thumb {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: white;
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      transition: all 0.3s ease;
+      background-image: url("./Image/Day logo.png");
+      background-size: 18px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    body.dark .toggle-switch { background: #000; }
+    body.dark .switch-thumb {
+      left: 33px;
+      background-image: url("./Image/Night logo.png");
+    }
+
+    /* Contact Section */
+    .contact-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .contact-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .contact-card:hover {
+      transform: scale(1.1);
+    }
+    .circle {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.6rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    .circle.green { background: #25d366; }   /* Call */
+    .circle.yellow { background: #f4c542; }  /* Location */
+    .circle.red { background: #dd4b39; }     /* Mail */
+    .circle.blue { background: #0077b5; }    /* LinkedIn */
+    .text {
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .experience-gallery { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { font-size: 2.2rem; line-height: 1.6; }
+    }
+    @media (max-width: 560px) {
+      .experience-gallery { grid-template-columns: 1fr; }
+      .navbar { padding: .8rem 1rem; }
+      .hero { padding: 1rem; }
+    }
+
+/* Disable text selection globally */
+body {
+  user-select: none;
+  -webkit-user-select: none; /* For Safari */
+  -moz-user-select: none;    /* For Firefox */
+  -ms-user-select: none;     /* For IE/Edge */
+}
+
+  </style>
+</head>
+<body class="light">
+  <!-- Particle Canvas -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="logo">
+      <img id="logo" src="./Image/Signature logo-black.png" alt="Akash Signature Logo">
+      <span class="shine">✰</span>
+    </div>
+    <nav>
+      <a href="#about">ᴀʙᴏᴜᴛ</a>
+      <a href="#experience">ᴇxᴘᴇʀɪᴇɴᴄᴇ</a>
+      <a href="#projects">ᴘʀᴏᴊᴇᴄᴛꜱ</a>
+      <a href="#contact">ᴄᴏɴᴛᴀᴄᴛ</a>
+      <a href="resume.pdf" target="_blank">ʀᴇꜱᴜᴍᴇ</a>
+      <div class="toggle-switch" id="toggleMode" title="Toggle dark / light">
+        <div class="switch-thumb"></div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1 id="shatterText">
+      <div>ʜᴇʟʟᴏ! 👋 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴀᴋᴀsʜ’s ᴘᴏʀᴛғᴏʟɪᴏ</div>
+    </h1>
+    <div class="tagline-container">
+      <span class="tagline">Data Engineer | AI Enthusiast | Turning Data into Real-World Impact</span>
+    </div>
+    <button class="cta">➤ 𝗖𝗹𝗶𝗰𝗸 𝗵𝗲𝗿𝗲 ➝ 𝘁𝗼 𝗲𝘅𝗽𝗹𝗼𝗿𝗲 𝗺𝗼𝗿𝗲</button>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="about">
+    <h2>About Me</h2>
+    <p>I’m Akash — a data engineer and AI enthusiast with hands-on experience in building scalable data pipelines, technical writing, and software development. My passion lies in transforming complex datasets into actionable insights and leveraging artificial intelligence to solve real-world challenges. With a blend of technical expertise and problem-solving creativity, I aim to bridge the gap between technology and meaningful solutions.</p>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="about">
+    <h2>Experience</h2>
+    <div class="experience-gallery">
+      <div class="exp-card"><div class="card-inner"><div class="card-front"><h3>Data Engineer</h3></div><div class="card-back"><h3>Data Engineer</h3><div class="company">Owlytics (Incubenation)</div><span class="time">Bengaluru | 2025 – Present</span><p>Working on data pipelines and engineering solutions, focusing on data integration and analytics.</p></div></div></div>
+      <div class="exp-card"><div class="card-inner"><div class="card-front"><h3>Admission Counsellor</h3></div><div class="card-back"><h3>Admission Counsellor</h3><div class="company">Aspiraquest</div><span class="time">Bengaluru | 2025</span><p>Guided students through admission processes and provided academic counseling.</p></div></div></div>
+      <div class="exp-card"><div class="card-inner"><div class="card-front"><h3>Assistant Technical Writer</h3></div><div class="card-back"><h3>Assistant Technical Writer</h3><div class="company">Rpinnacle Research Solutions</div><span class="time">Thuckalay | 2024 – 2025</span><p>Created structured documentation, technical reports, and research materials.</p></div></div></div>
+      <div class="exp-card"><div class="card-inner"><div class="card-front"><h3>Internship</h3></div><div class="card-back"><h3>Intern – Programming Fundamentals</h3><div class="company">Srishti Innovations</div><span class="time">Trivandrum | July 2023</span><p>Enhanced programming skills and explored software development methodologies.</p></div></div></div>
+      <div class="exp-card"><div class="card-inner"><div class="card-front"><h3>In-plant Training</h3></div><div class="card-back"><h3>Intern – In-plant Training</h3><div class="company">iTrobes Technologies Pvt. Ltd.</div><span class="time">Marthandam | July 2022</span><p>Gained industry exposure to software development practices and team collaboration.</p></div></div></div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="about">
+    <h2>Projects</h2>
+    <ul>
+      <li><strong>Social Media Website (2023)</strong> — Built a platform encouraging group learning and topic-based discussions.</li>
+      <li><strong>Hospital Management System (2024)</strong> — Developed hospital management with brain tumor detection records and treatment histories.</li>
+    </ul>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="about">
+    <h2>Contact</h2>
+    <div class="contact-container">
+      <!-- Phone -->
+      <a href="tel:+919626863389" class="contact-card" title="Call Akash">
+        <div class="circle green">📞</div>
+      </a>
+
+      <!-- Location -->
+      <div class="contact-card" title="Location">
+        <div class="circle yellow">📍</div>
+      </div>
+
+      <!-- Email -->
+      <a href="mailto:akashrm.mail@gmail.com" class="contact-card" title="Send Email">
+        <div class="circle red">💌</div>
+      </a>
+
+      <!-- LinkedIn -->
+      <a href="https://www.linkedin.com/in/akash-rm" target="_blank" class="contact-card" title="Visit LinkedIn">
+        <div class="circle blue">in</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Particle Script -->
+  <script>
+    // ---------- Particle background script ----------
+    (() => {
+      const canvas = document.getElementById('particle-canvas');
+      const ctx = canvas.getContext('2d', { alpha: true });
+
+      let w = canvas.offsetWidth;
+      let h = canvas.offsetHeight;
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = w * DPR;
+      canvas.height = h * DPR;
+      canvas.style.width = w + "px";
+      canvas.style.height = h + "px";
+      ctx.scale(DPR, DPR);
+      
+let particles = [];
+// Very dense: increases number of particles for heavy effect
+const maxParticles = Math.floor((w * h) / 1500); 
+const mouse = { x: w / 2, y: h / 2, radius: Math.min(w, h) * 0.15, active: false };
+
+      // Create particle class
+// Particle class
+class Particle {
+  constructor(homeX, homeY) {
+    this.homeX = homeX;   // grid position
+    this.homeY = homeY;
+    this.x = homeX;
+    this.y = homeY;
+    this.vx = 0;
+    this.vy = 0;
+    this.size = 1 + Math.random() * 2;
+    this.maxDist = 110 + Math.random() * 80;
+  }
+
+  update() {
+    if (mouse.active) {
+      // let them drift when mouse is inside
+      this.x += this.vx;
+      this.y += this.vy;
+
+      // attract/repel with mouse
+      const dx = mouse.x - this.x;
+      const dy = mouse.y - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < mouse.radius + this.size) {
+        const force = (1 - dist / (mouse.radius + 1)) * 0.6;
+        this.vx += (dx / dist) * force * 0.6;
+        this.vy += (dy / dist) * force * 0.6;
+      }
+
+      // apply friction
+      this.vx *= 0.95;
+      this.vy *= 0.95;
+    } else {
+
+    // smoothly float back to grid (slower)
+this.x += (this.homeX - this.x) * 0.02;  // 3% each frame
+this.y += (this.homeY - this.y) * 0.02;
+
+
+
+      // fully freeze once close enough
+      if (Math.abs(this.x - this.homeX) < 0.05 &&
+          Math.abs(this.y - this.homeY) < 0.05) {
+        this.x = this.homeX;
+        this.y = this.homeY;
+        this.vx = 0;
+        this.vy = 0;
+      }
+    }
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+// init particles in grid
+function initParticles() {
+  particles = [];
+  const cols = 8;   // number of columns
+  const rows = 8;  // number of rows
+  const spacingX = w / (cols + 1);
+  const spacingY = h / (rows + 1);
+
+  for (let i = 1; i <= cols; i++) {
+    for (let j = 1; j <= rows; j++) {
+      const homeX = i * spacingX * 0.8; // keep inside left strip
+      const homeY = j * spacingY;
+      const p = new Particle(homeX, homeY);
+      particles.push(p);
+    }
+  }
+}
+      // drawing loop
+      function animate() {
+        // clear with slight transparency for trailing effect
+        ctx.clearRect(0, 0, w, h);
+
+        // set colors depending on theme
+        const isDark = document.body.classList.contains('dark');
+        ctx.fillStyle = isDark ? 'rgba(230,230,230,0.95)' : 'rgba(30,30,30,0.95)';
+        ctx.strokeStyle = isDark ? 'rgba(230,230,230,0.12)' : 'rgba(30,30,30,0.12)';
+
+        // update & draw particles
+        particles.forEach(p => {
+          p.update();
+          p.draw();
+        });
+
+        // connect particles with lines if close
+        for (let i = 0; i < particles.length; i++) {
+          for (let j = i + 1; j < particles.length; j++) {
+            const a = particles[i];
+            const b = particles[j];
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+            const d2 = dx * dx + dy * dy;
+            const max = (a.maxDist + b.maxDist) * 0.7;
+            if (d2 < max * max) {
+              const alpha = 1 - (Math.sqrt(d2) / max);
+              ctx.globalAlpha = Math.min(0.6 * alpha, 0.6);
+              ctx.beginPath();
+              ctx.moveTo(a.x, a.y);
+              ctx.lineTo(b.x, b.y);
+              ctx.stroke();
+              ctx.globalAlpha = 1;
+            }
+          }
+        }
+
+        requestAnimationFrame(animate);
+      }
+
+      // handle resize
+      function onResize() {
+  w = canvas.offsetWidth;
+  h = canvas.offsetHeight;
+  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  canvas.width = w * DPR;
+  canvas.height = h * DPR;
+  canvas.style.width = w + "px";
+  canvas.style.height = h + "px";
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  mouse.radius = Math.min(w, h) * 0.12;
+  initParticles();
+      }
+      window.addEventListener('resize', onResize, { passive: true });
+
+// mouse events
+window.addEventListener('mousemove', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  mouse.x = e.clientX - rect.left;
+  mouse.y = e.clientY - rect.top;
+
+  // Only activate particles if mouse is inside canvas bounds
+  if (
+    e.clientX >= rect.left &&
+    e.clientX <= rect.right &&
+    e.clientY >= rect.top &&
+    e.clientY <= rect.bottom
+  ) {
+    mouse.active = true;
+  } else {
+    mouse.active = false; // deactivate when leaving canvas area
+  }
+}, { passive: true });
+
+
+      // toggle particle visibility on small devices
+      const shouldHide = /Mobi|Android/i.test(navigator.userAgent) && innerWidth < 520;
+      if (shouldHide) canvas.style.opacity = '0.6';
+
+      // initialize & run
+      initParticles();
+      animate();
+
+      // expose a small function to adjust density dynamically if needed
+      window.__particlesControl = {
+        setDensity: (scale) => {
+          // scale 0.2 - 2 where 1 = default
+          const target = Math.max(10, Math.floor(maxParticles * (scale || 1)));
+          particles.length = 0;
+          for (let i = 0; i < target; i++) particles.push(new Particle());
+        }
+      };
+    })();
+
+    // ---------- Existing site script (dark toggle + GSAP shatter + exp animate) ----------
+    const toggle = document.getElementById("toggleMode");
+    const body = document.body;
+    const logo = document.getElementById("logo");
+    toggle.addEventListener("click", () => {
+      body.classList.toggle("dark");
+      body.classList.toggle("light");
+      logo.src = body.classList.contains("dark")
+        ? "./Image/Signature logo-white.png"
+        : "./Image/Signature logo-black.png";
+    });
+
+    // Shatter animation
+    (function runShatterOnce() {
+      const textEl = document.getElementById("shatterText");
+      const lines = Array.from(textEl.querySelectorAll("div"));
+      lines.forEach((line, i) => {
+        const content = line.textContent || "";
+        const chars = Array.from(content);
+        line.textContent = "";
+        chars.forEach(ch => {
+          const span = document.createElement("span");
+          span.textContent = (ch === " ") ? "\u00A0" : ch;
+          line.appendChild(span);
+        });
+        const spans = line.querySelectorAll("span");
+        gsap.fromTo(spans,
+          { x: () => gsap.utils.random(-500, 500), y: () => gsap.utils.random(-300, 300), rotation: () => gsap.utils.random(-720, 720), scale: 0, opacity: 0 },
+          { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1, stagger: 0.02, ease: "power4.out", duration: 1.2, delay: i * 0.6,
+            onComplete: () => { if (i === lines.length - 1) gsap.to(".tagline", { opacity: 1, y: 0, duration: 0.6 }); }
+          });
+      });
+    })();
+    
+    // Scroll to top on page load
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};
+let lastTap = 0;
+
+logo.addEventListener("dblclick", () => {
+  location.reload();
+});
+
+// For touch devices (double tap)
+logo.addEventListener("touchend", (e) => {
+  const currentTime = new Date().getTime();
+  const tapLength = currentTime - lastTap;
+  if (tapLength < 500 && tapLength > 0) {
+    location.reload();
+  }
+  lastTap = currentTime;
+});
+
+    // Experience animation
+    gsap.utils.toArray(".exp-card").forEach((card, i) => {
+      gsap.to(card, {
+        scrollTrigger: { trigger: card, start: "top 85%" },
+        opacity: 1, y: 0, duration: 0.8, delay: i * 0.1
+      });
+    });
+
+  </script>
+</body>
+</html>
