@@ -2,10 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Akash Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
+
+/* For tablets */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    padding: 10px;
+  }
+  h1 {
+    font-size: 24px;
+    text-align: center;
+  }
+}
+
+/* For mobiles */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  .hero-text {
+    font-size: 18px;
+    text-align: center;
+  }
+  .navbar {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
     /* ---------- Particle canvas ---------- */
 #particle-canvas {
   position: fixed;   /* fixed so it stays while scrolling */
@@ -55,6 +83,13 @@
       padding: 2rem;
       text-align: center;
     }
+
+    img {
+  max-width: 100%;
+  height: auto;
+}
+
+
     .hero h1 {
       font-size: 3.5rem;
       font-weight: 500;
