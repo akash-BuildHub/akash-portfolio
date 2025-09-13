@@ -36,7 +36,7 @@
 
     /* ---------- Particle canvas ---------- */
 #particle-canvas {
-  position: fixed;   /* fixed so it stays while scrolling */
+  position: absolute;   /* fixed so it stays while scrolling */
   top: 0;
   left: 0;
   width: 21%;        /* left strip */
@@ -430,7 +430,7 @@ body {
     (() => {
       const canvas = document.getElementById('particle-canvas');
       const ctx = canvas.getContext('2d', { alpha: true });
-
+      
       let w = canvas.offsetWidth;
       let h = canvas.offsetHeight;
       const DPR = Math.min(window.devicePixelRatio || 1, 2);
@@ -507,14 +507,14 @@ this.y += (this.homeY - this.y) * 0.02;
 // init particles in grid
 function initParticles() {
   particles = [];
-  const cols = 8;   // number of columns
-  const rows = 8;  // number of rows
-  const spacingX = w / (cols + 1);
+  const cols = 8;   // more columns
+  const rows = 12;   // keep rows the same
+  const spacingX = w / (cols + 1) * 0.8;  // adjusted spacing to fit inside left strip
   const spacingY = h / (rows + 1);
 
   for (let i = 1; i <= cols; i++) {
     for (let j = 1; j <= rows; j++) {
-      const homeX = i * spacingX * 0.8; // keep inside left strip
+      const homeX = i * spacingX;
       const homeY = j * spacingY;
       const p = new Particle(homeX, homeY);
       particles.push(p);
@@ -676,6 +676,30 @@ logo.addEventListener("touchend", (e) => {
         opacity: 1, y: 0, duration: 0.8, delay: i * 0.1
       });
     });
+
+// About Me drop-in animation
+gsap.from("#about p", {
+  y: 50,               // start 50px below
+  opacity: 0,           // start invisible
+  duration: 1,          // animation duration
+  ease: "power3.out",   // smooth easing
+  scrollTrigger: {      // trigger on scroll
+    trigger: "#about",
+    start: "top 40%",   // when About section top reaches 80% of viewport
+  }
+});
+
+// Projects drop-in animation
+gsap.from("#projects li", {
+  y: 50,               // start 50px below
+  opacity: 0,           // start invisible
+  duration: 1,          // animation duration
+  ease: "power3.out",   // smooth easing
+  scrollTrigger: {      // trigger on scroll
+    trigger: "#projects",
+    start: "top 40%",   // when Projects section enters viewport
+  }
+});
 
   </script>
 </body>
