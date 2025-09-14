@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <title>Akash Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
@@ -34,7 +34,7 @@
   }
 }
 
-    /* ---------- Particle canvas ---------- */
+/* ---------- Particle canvas ---------- */
 #particle-canvas {
   position: absolute;   /* fixed so it stays while scrolling */
   top: 0;
@@ -47,7 +47,7 @@
   transition: opacity 0.3s;
 }
 
-    /* ---------- Existing styles (kept) ---------- */
+  /* ---------- Existing styles (kept) ---------- */
     body {
       margin: 0;
       font-family: "Inter", sans-serif;
@@ -78,6 +78,24 @@
       font-weight: 500;
     }
 
+/* Wrap navbar links on smaller screens */
+.navbar nav {
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Make experience cards shrink better */
+.exp-card {
+  max-width: 90%;
+}
+
+/* Limit max width of main sections */
+.about, .experience-gallery, #projects {
+  max-width: 1000px;
+  margin: auto;
+  padding: 1rem;
+}
+
     /* Hero */
     .hero {
       padding: 2rem;
@@ -89,11 +107,10 @@
   height: auto;
 }
 
-
     .hero h1 {
-      font-size: 3.5rem;
+      font-size: clamp(1.8rem, 5vw, 3.5rem);
       font-weight: 500;
-      line-height: 3;
+      line-height: 1.4;
       margin: 0;
     }
     .hero h1 div { display: block; }
@@ -102,14 +119,20 @@
       opacity: 0;
       white-space: pre;
     }
+    .hero h1 div {
+      display: block;
+      padding: 0.5rem 1rem;
+      margin-bottom: 4rem;  /* Adds space below the greeting */
+    }
 
-    /* Tagline */
-    .tagline-container { margin-top: 1rem; }
-    .tagline {
-      display: inline-block;
-      font-size: 1.2rem;
+/* Tagline */
+  .tagline {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
       opacity: 0;
       transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      display: block;        /* Ensures margin works properly */
+      margin-bottom: 1.5rem; /* Adds space below tagline */
     }
 
     /* CTA Button */
@@ -125,7 +148,17 @@
       transition: transform 0.2s, background 0.3s;
     }
     .cta:hover { transform: scale(1.05); background: #333; }
+/* Bigger tap areas */
+.cta {
+  min-width: 180px;
+}
 
+/* Increase gap between navbar items on very small screens */
+@media (max-width: 480px) {
+  .navbar nav {
+    gap: 1.2rem;
+  }
+}
     /* About */
     .about {
       padding: 1rem 1rem;
@@ -167,6 +200,9 @@
       transform-style: preserve-3d;
       border-radius: 1rem;
       cursor: pointer;
+      align-items: center;
+      text-align: center;
+
     }
     .exp-card:hover .card-inner { transform: rotateY(180deg); }
     .card-front, .card-back {
@@ -308,40 +344,49 @@
       text-align: center;
     }
 
-    /* Responsive adjustments */
-@media (max-width: 900px) {
-  .experience-gallery { grid-template-columns: repeat(2, 1fr); }
-  .hero h1 { font-size: 2.2rem; line-height: 1.6; }
-}
-@media (max-width: 560px) {
-  .experience-gallery { grid-template-columns: 1fr; }
-  .navbar { padding: .8rem 1rem; }
-  .hero { padding: 1rem; }
-}
-@media (max-width: 768px) {
+  /* Responsive adjustments */
+    @media (max-width: 900px) {
+      .experience-gallery { grid-template-columns: repeat(2, 1fr); }
+      .hero h1 { font-size: 2.2rem; line-height: 1.6; }
+    }
+    @media (max-width: 560px) {
+      .experience-gallery { grid-template-columns: 1fr; }
+      .navbar { padding: .8rem 1rem; }
+      .hero { padding: 1rem; }
+    }
+    @media (max-width: 768px) {
   #particle-canvas {
     display: none; /* hide particles on smaller devices */
+    }
   }
-}
 
 /* Disable text selection globally */
-body {
-  user-select: none;
-  -webkit-user-select: none; /* For Safari */
-  -moz-user-select: none;    /* For Firefox */
-  -ms-user-select: none;     /* For IE/Edge */
+  body {
+    user-select: none;
+    -webkit-user-select: none; /* For Safari */
+    -moz-user-select: none;    /* For Firefox */
+    -ms-user-select: none;     /* For IE/Edge */
+  }
+/* Fix for section titles being hidden behind sticky navbar */
+  section {
+    scroll-margin-top: 100px; /* adjust if navbar is taller/shorter */
+  }
+
+html {
+  scroll-behavior: smooth;
 }
 
-  </style>
+</style>
 </head>
 <body class="light">
+
   <!-- Particle Canvas -->
   <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
   <!-- Navbar -->
   <header class="navbar">
     <div class="logo">
-      <img id="logo" src="./Image/Signature logo-black.png" alt="Akash Signature Logo">
+      <img id="logo" src="./Image/Signature logo-black.png" alt="Akash Signature Logo" loading="lazy">
       <span class="shine">✰</span>
     </div>
     <nav>
@@ -440,15 +485,14 @@ body {
       canvas.style.height = h + "px";
       ctx.scale(DPR, DPR);
       
-let particles = [];
-// Very dense: increases number of particles for heavy effect
-const maxParticles = Math.floor((w * h) / 1500); 
-const mouse = { x: w / 2, y: h / 2, radius: Math.min(w, h) * 0.15, active: false };
+  let particles = [];
+  // Very dense: increases number of particles for heavy effect
+    const maxParticles = Math.floor((w * h) / 1500); 
+    const mouse = { x: w / 2, y: h / 2, radius: Math.min(w, h) * 0.15, active: false };
 
-      // Create particle class
-// Particle class
-class Particle {
-  constructor(homeX, homeY) {
+  // Particle class
+    class Particle {
+    constructor(homeX, homeY) {
     this.homeX = homeX;   // grid position
     this.homeY = homeY;
     this.x = homeX;
@@ -481,10 +525,8 @@ class Particle {
     } else {
 
     // smoothly float back to grid (slower)
-this.x += (this.homeX - this.x) * 0.02;  // 3% each frame
-this.y += (this.homeY - this.y) * 0.02;
-
-
+      this.x += (this.homeX - this.x) * 0.02;  // 3% each frame
+      this.y += (this.homeY - this.y) * 0.02;
 
       // fully freeze once close enough
       if (Math.abs(this.x - this.homeX) < 0.05 &&
@@ -521,23 +563,23 @@ function initParticles() {
     }
   }
 }
-      // drawing loop
-      function animate() {
-        // clear with slight transparency for trailing effect
-        ctx.clearRect(0, 0, w, h);
+  // drawing loop
+    function animate() {
+  // clear with slight transparency for trailing effect
+    ctx.clearRect(0, 0, w, h);
 
-        // set colors depending on theme
-        const isDark = document.body.classList.contains('dark');
-        ctx.fillStyle = isDark ? 'rgba(230,230,230,0.95)' : 'rgba(30,30,30,0.95)';
-        ctx.strokeStyle = isDark ? 'rgba(230,230,230,0.12)' : 'rgba(30,30,30,0.12)';
+  // set colors depending on theme
+    const isDark = document.body.classList.contains('dark');
+    ctx.fillStyle = isDark ? 'rgba(230,230,230,0.95)' : 'rgba(30,30,30,0.95)';
+    ctx.strokeStyle = isDark ? 'rgba(230,230,230,0.12)' : 'rgba(30,30,30,0.12)';
 
-        // update & draw particles
-        particles.forEach(p => {
-          p.update();
-          p.draw();
-        });
+  // update & draw particles
+    particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
 
-        // connect particles with lines if close
+    // connect particles with lines if close
         for (let i = 0; i < particles.length; i++) {
           for (let j = i + 1; j < particles.length; j++) {
             const a = particles[i];
@@ -561,28 +603,37 @@ function initParticles() {
         requestAnimationFrame(animate);
       }
 
-      // handle resize
+    // handle resize
       function onResize() {
-  w = canvas.offsetWidth;
-  h = canvas.offsetHeight;
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = w * DPR;
-  canvas.height = h * DPR;
-  canvas.style.width = w + "px";
-  canvas.style.height = h + "px";
-  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-  mouse.radius = Math.min(w, h) * 0.12;
-  initParticles();
-      }
-      window.addEventListener('resize', onResize, { passive: true });
+      w = canvas.offsetWidth;
+      h = canvas.offsetHeight;
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = w * DPR;
+      canvas.height = h * DPR;
+      canvas.style.width = w + "px";
+      canvas.style.height = h + "px";
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      mouse.radius = Math.min(w, h) * 0.12;
+      initParticles();
+    }
+
+  // Hide particles on small screens after initialization
+    if (window.innerWidth < 768) {
+      particles = [];
+      canvas.style.display = 'none';
+  } else {
+    canvas.style.display = 'block';
+  }
+
+    window.addEventListener('resize', onResize, { passive: true });
 
 // mouse events
-window.addEventListener('mousemove', (e) => {
+  window.addEventListener('mousemove', (e) => {
   const rect = canvas.getBoundingClientRect();
   mouse.x = e.clientX - rect.left;
   mouse.y = e.clientY - rect.top;
 
-  // Only activate particles if mouse is inside canvas bounds
+// Only activate particles if mouse is inside canvas bounds
   if (
     e.clientX >= rect.left &&
     e.clientX <= rect.right &&
@@ -595,24 +646,13 @@ window.addEventListener('mousemove', (e) => {
   }
 }, { passive: true });
 
-
-      // toggle particle visibility on small devices
+// toggle particle visibility on small devices
       const shouldHide = /Mobi|Android/i.test(navigator.userAgent) && innerWidth < 520;
       if (shouldHide) canvas.style.opacity = '0.6';
 
       // initialize & run
       initParticles();
       animate();
-
-      // expose a small function to adjust density dynamically if needed
-      window.__particlesControl = {
-        setDensity: (scale) => {
-          // scale 0.2 - 2 where 1 = default
-          const target = Math.max(10, Math.floor(maxParticles * (scale || 1)));
-          particles.length = 0;
-          for (let i = 0; i < target; i++) particles.push(new Particle());
-        }
-      };
     })();
 
     // ---------- Existing site script (dark toggle + GSAP shatter + exp animate) ----------
@@ -628,43 +668,63 @@ window.addEventListener('mousemove', (e) => {
     });
 
     // Shatter animation
-    (function runShatterOnce() {
-      const textEl = document.getElementById("shatterText");
-      const lines = Array.from(textEl.querySelectorAll("div"));
-      lines.forEach((line, i) => {
-        const content = line.textContent || "";
-        const chars = Array.from(content);
-        line.textContent = "";
-        chars.forEach(ch => {
-          const span = document.createElement("span");
-          span.textContent = (ch === " ") ? "\u00A0" : ch;
-          line.appendChild(span);
-        });
-        const spans = line.querySelectorAll("span");
-        gsap.fromTo(spans,
-          { x: () => gsap.utils.random(-500, 500), y: () => gsap.utils.random(-300, 300), rotation: () => gsap.utils.random(-720, 720), scale: 0, opacity: 0 },
-          { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1, stagger: 0.02, ease: "power4.out", duration: 1.2, delay: i * 0.6,
-            onComplete: () => { if (i === lines.length - 1) gsap.to(".tagline", { opacity: 1, y: 0, duration: 0.6 }); }
-          });
-      });
-    })();
-    
-    // Scroll to top on page load
-window.onbeforeunload = function () {
-  window.scrollTo(0, 0);
-};
-let lastTap = 0;
+(function runShatterOnce() {
+  const textEl = document.getElementById("shatterText");
+  const lines = Array.from(textEl.querySelectorAll("div"));
 
-logo.addEventListener("dblclick", () => {
-  location.reload();
-});
+  lines.forEach((line, i) => {
+    const content = line.textContent || "";
+    const chars = Array.from(content);
+    line.textContent = "";
+    chars.forEach(ch => {
+      const span = document.createElement("span");
+      span.textContent = ch === " " ? "\u00A0" : ch;
+      line.appendChild(span);
+    });
+
+    const spans = line.querySelectorAll("span");
+    gsap.fromTo(
+      spans,
+      {
+        x: () => gsap.utils.random(-500, 500),
+        y: () => gsap.utils.random(-300, 300),
+        rotation: () => gsap.utils.random(-720, 720),
+        scale: 0,
+        opacity: 0
+      },
+      {
+        x: 0,
+        y: 0,
+        rotation: 0,
+        scale: 1,
+        opacity: 1,
+        stagger: 0.02,
+        ease: "power4.out",
+        duration: 1.2,
+        delay: i * 0.6,
+        onComplete: () => {
+          // ✅ Fade in tagline only after last line animation
+          if (i === lines.length - 1) {
+            gsap.to(".tagline", {
+              opacity: 1,
+              y: -20,
+              duration: 0.6,
+              ease: "power2.out"
+            });
+          }
+        }
+      }
+    );
+  });
+})();
 
 // For touch devices (double tap)
-logo.addEventListener("touchend", (e) => {
-  const currentTime = new Date().getTime();
+let lastTap = 0; // ✅ Declare before using
+logo.addEventListener("touchend", () => {
+  const currentTime = Date.now();
   const tapLength = currentTime - lastTap;
-  if (tapLength < 500 && tapLength > 0) {
-    location.reload();
+  if (tapLength < 400 && tapLength > 0) {
+    location.reload(true); // ✅ Refresh on double-tap
   }
   lastTap = currentTime;
 });
@@ -701,6 +761,23 @@ gsap.from("#projects li", {
   }
 });
 
-  </script>
+// ✅ Prevent jumping to top on refresh and restore previous scroll position
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+// ✅ Click (or tap) logo → refresh and start from top
+logo.addEventListener("click", (e) => {
+  e.preventDefault();
+  // Reload page, always starts at top
+  location.reload();
+});
+
+// ✅ Normal refresh (F5, Ctrl+R, browser reload) → always start from top
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
+
+</script>
 </body>
 </html>
