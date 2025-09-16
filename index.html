@@ -823,6 +823,10 @@ window.addEventListener("load", () => {
   }
 });
 
+// Normal refresh (F5, Ctrl+R, browser reload, logo click) → always start from top
+if ("scrollRestoration" in history) {
+  history.scrollRestoration = "manual";
+}
   // Force page to load from top on refresh
   window.history.scrollRestoration = "manual";
   window.onbeforeunload = function () {
