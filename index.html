@@ -815,8 +815,17 @@ if ("scrollRestoration" in history) {
 // Click (or tap) logo → refresh and start from top
 logo.addEventListener("click", (e) => {
   e.preventDefault();
-  // Reload page, always starts at top
+  // Save a flag before reload
+  sessionStorage.setItem("scrollToTop", "true");
   location.reload();
+});
+
+// After reload, check flag
+window.addEventListener("load", () => {
+  if (sessionStorage.getItem("scrollToTop") === "true") {
+    window.scrollTo(0, 0);
+    sessionStorage.removeItem("scrollToTop");
+  }
 });
 
 // Normal refresh (F5, Ctrl+R, browser reload) → always start from top
