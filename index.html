@@ -807,11 +807,6 @@ gsap.from("#projects li", {
   }
 });
 
-// Prevent jumping to top on refresh and restore previous scroll position
-if ("scrollRestoration" in history) {
-  history.scrollRestoration = "manual";
-}
-
 // Click (or tap) logo → refresh and start from top
 logo.addEventListener("click", (e) => {
   e.preventDefault();
@@ -828,15 +823,12 @@ window.addEventListener("load", () => {
   }
 });
 
-// Normal refresh (F5, Ctrl+R, browser reload) → always start from top
-if ("scrollRestoration" in history) {
-  history.scrollRestoration = "manual";
-}
   // Force page to load from top on refresh
   window.history.scrollRestoration = "manual";
   window.onbeforeunload = function () {
     window.scrollTo(0, 0);
   };
+
 </script>
 
 <!-- Footer -->
