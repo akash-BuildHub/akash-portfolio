@@ -4,10 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
   <title>Akash Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
 
-/* For tablets */
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+<style>
+  
+/* ---------- Responsive ---------- */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -17,365 +21,334 @@
     font-size: 24px;
     text-align: center;
   }
-}
-
-/* For mobiles */
-@media (max-width: 480px) {
-  body {
-    font-size: 14px;
-  }
-  .hero-text {
-    font-size: 18px;
-    text-align: center;
-  }
   .navbar {
     flex-direction: column;
     gap: 8px;
   }
+  .contact-wrapper {
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+  }
+  .contact-info {
+    text-align: center;
+  }
+  .social-icons {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  body { font-size: 14px; }
+  .hero-text { font-size: 18px; text-align: center; }
+  .navbar nav { gap: 1.2rem; }
+}
+
+@media (max-width: 900px) {
+  .experience-gallery { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 2.2rem; line-height: 1.6; }
+}
+
+@media (max-width: 560px) {
+  .experience-gallery { grid-template-columns: 1fr; }
+  .navbar { padding: .8rem 1rem; }
+  .hero { padding: 1rem; }
+}
+
+@media (max-width: 768px) {
+  #particle-canvas { display: none; }
 }
 
 /* ---------- Particle canvas ---------- */
 #particle-canvas {
-  position: absolute;   /* fixed so it stays while scrolling */
-  top: 0;
-  left: 0;
-  width: 21%;        /* left strip */
-  height: 110vh;     /* full viewport height */
-  z-index: -1;       /* behind content */
+  position: absolute;
+  top: 0; left: 0;
+  width: 21%; height: 110vh;
+  z-index: -1;
   display: block;
-  pointer-events: none;  /* clicks go through */
+  pointer-events: none;
   transition: opacity 0.3s;
 }
 
-  /* ---------- Existing styles (kept) ---------- */
-    body {
-      margin: 0;
-      font-family: "Inter", sans-serif;
-      transition: background 0.3s, color 0.3s;
-    }
-    .light { background: #fff; color: #111; }
-    .dark { background: #111; color: #eee; }
+/* ---------- Base styles ---------- */
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  transition: background 0.3s, color 0.3s;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+.light { background: #fff; color: #111; }
+.dark { background: #111; color: #eee; }
 
-    /* Navbar */
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      background: inherit;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-      z-index: 100;
-    }
-    .navbar nav {
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-    }
-    .navbar a {
-      text-decoration: none;
-      color: inherit;
-      font-weight: 500;
-    }
+html { scroll-behavior: smooth; }
 
-/* Wrap navbar links on smaller screens */
+/* ---------- Navbar ---------- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  position: sticky;
+  top: 0;
+  background: inherit;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  z-index: 100;
+}
 .navbar nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
   flex-wrap: wrap;
   justify-content: center;
 }
-
-/* Make experience cards shrink better */
-.exp-card {
-  max-width: 90%;
+.navbar a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
 }
 
-/* Limit max width of main sections */
-.about, .experience-gallery, #projects {
-  max-width: 1000px;
+/* ---------- Hero ---------- */
+.hero {
+  padding: 2rem;
+  text-align: center;
+}
+.hero h1 {
+  font-size: clamp(1.8rem, 5vw, 3.5rem);
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0;
+}
+.hero h1 div { display: block; padding: 0.5rem 1rem; margin-bottom: 4rem; }
+.hero h1 span { display: inline-block; opacity: 0; white-space: pre; }
+
+.tagline {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  margin-bottom: 1.5rem;
+}
+
+.cta {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  background: black;
+  color: white;
+  border-radius: 2rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  min-width: 180px;
+  transition: transform 0.2s, background 0.3s;
+}
+.cta:hover { transform: scale(1.05); background: #333; }
+
+img { max-width: 100%; height: auto; }
+
+/* ---------- About ---------- */
+.about {
+  padding: 1rem;
+  max-width: 900px;
   margin: auto;
+  line-height: 1.8;
+  font-size: 1.05rem;
+  text-align: justify;
+}
+.about h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* ---------- Experience Cards ---------- */
+.experience-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  max-width: 1100px;
+  margin: auto;
+  justify-items: center;
+}
+.exp-card {
+  width: 100%;
+  max-width: 280px;
+  height: 300px;
+  perspective: 1000px;
+  opacity: 0;
+  transform: translateY(40px);
+}
+.card-inner {
+  position: relative;
+  width: 100%; height: 100%;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+  border-radius: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+.exp-card:hover .card-inner { transform: rotateY(180deg); }
+.card-front, .card-back {
+  position: absolute;
+  width: 100%; height: 100%;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 1rem;
 }
+.card-front {
+  background: rgba(0,0,0,0.05);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.card-back {
+  background: white;
+  color: black;
+  transform: rotateY(180deg);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-align: justify;
+  align-items: flex-start;
+  padding: 1.2rem;
+  overflow-y: auto;
+}
+.card-back h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+.card-back .company { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.3rem; }
+.card-back .time { font-size: 0.85rem; color: #666; margin-bottom: 0.8rem; display: block; }
 
-    /* Hero */
-    .hero {
-      padding: 2rem;
-      text-align: center;
-    }
+/* ---------- Logo ---------- */
+.logo img { height: 28px; width: auto; display: inline-block; }
+.logo { display: flex; align-items: center; opacity: 0; animation: fadeInLogo 1.5s ease-out forwards; }
+@keyframes fadeInLogo { from { opacity: 0; } to { opacity: 1; } }
+.shine { font-size: 1.5rem; margin-left: 6px; display: inline-block; animation: rotateStar 3s linear infinite; }
+@keyframes rotateStar { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-    img {
-  max-width: 100%;
-  height: auto;
+/* ---------- Toggle Switch ---------- */
+.toggle-switch {
+  width: 60px; height: 30px;
+  border-radius: 30px;
+  background: #ddd;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.switch-thumb {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: 3px; left: 3px;
+  transition: all 0.3s ease;
+  background-image: url("./Image/Day logo.png");
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+body.dark .toggle-switch { background: #000; }
+body.dark .switch-thumb {
+  left: 33px;
+  background-image: url("./Image/Night logo.png");
 }
 
-    .hero h1 {
-      font-size: clamp(1.8rem, 5vw, 3.5rem);
-      font-weight: 500;
-      line-height: 1.4;
-      margin: 0;
-    }
-    .hero h1 div { display: block; }
-    .hero h1 span {
-      display: inline-block;
-      opacity: 0;
-      white-space: pre;
-    }
-    .hero h1 div {
-      display: block;
-      padding: 0.5rem 1rem;
-      margin-bottom: 4rem;  /* Adds space below the greeting */
-    }
-
-/* Tagline */
-  .tagline {
-      font-size: clamp(1rem, 2.5vw, 1.2rem);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      display: block;        /* Ensures margin works properly */
-      margin-bottom: 1.5rem; /* Adds space below tagline */
-    }
-
-    /* CTA Button */
-    .cta {
-      margin-top: 2rem;
-      padding: 1rem 2rem;
-      background: black;
-      color: white;
-      border-radius: 2rem;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: transform 0.2s, background 0.3s;
-    }
-    .cta:hover { transform: scale(1.05); background: #333; }
-/* Bigger tap areas */
-.cta {
-  min-width: 180px;
+/* ---------- Timeline ---------- */
+.timeline {
+  position: relative;
+  padding: 1rem 0;
+  margin-left: 20px;
+  border-left: 3px solid #555;
+}
+.timeline-item { margin-bottom: 1.5rem; position: relative; }
+.timeline-date { font-weight: 700; margin-bottom: 0.2rem; color: #0077b5; }
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -10px; top: 5px;
+  width: 12px; height: 12px;
+  background: #0077b5;
+  border-radius: 50%;
 }
 
-/* Increase gap between navbar items on very small screens */
+/* ---------- Contact Section ---------- */
+.contact-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.contact-info {
+  text-align: right;
+  flex: 1;
+  max-width: 300px;
+}
+.contact-info p {
+  margin: 0.4rem 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+.contact-info a { color: inherit; text-decoration: none; }
+.contact-info a:hover { text-decoration: underline; }
+
+.contact-message {
+  max-width: 280px;
+  font-family: Arial, sans-serif;
+  color: #333;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+.contact-message strong {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+/* Social Icons */
+.social-icons {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+.circle {
+  width: 45px; height: 45px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+.circle.blue { background-color: #0077b5; }  /* LinkedIn */
+.circle.green { background-color: #25d366; }/* WhatsApp */
+.circle.red { background-color: #dd4b39; }  /* Mail */
+.circle.dark { background-color: #333; }    /* GitHub */
+.circle:hover { transform: scale(1.1); opacity: 0.85; }
+
+/* ---------- Footer ---------- */
+.site-footer {
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background: inherit;
+  color: inherit;
+  margin-top: 2rem;
+}
 @media (max-width: 480px) {
-  .navbar nav {
-    gap: 1.2rem;
-  }
-}
-    /* About */
-    .about {
-      padding: 1rem 1rem;
-      max-width: 900px;
-      margin: auto;
-      line-height: 1.8;
-      font-size: 1.05rem;
-      text-align: justify;
-    }
-    .about h2 {
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-
-    /* Experience Gallery (Flip Cards) */
-    .experience-gallery {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2.5rem;
-      max-width: 1100px;
-      margin: auto;
-      justify-items: center;
-    }
-    .exp-card {
-      width: 100%;
-      max-width: 280px;
-      perspective: 1000px;
-      height: 300px;
-      opacity: 0;
-      transform: translateY(40px);
-    }
-    .card-inner {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.8s;
-      transform-style: preserve-3d;
-      border-radius: 1rem;
-      cursor: pointer;
-      align-items: center;
-      text-align: center;
-
-    }
-    .exp-card:hover .card-inner { transform: rotateY(180deg); }
-    .card-front, .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 1rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
-    }
-    .card-front {
-      background: rgba(0,0,0,0.05);
-      font-size: 1.1rem;
-      font-weight: 700;
-    }
-    .card-back {
-      background: white;
-      color: black;
-      transform: rotateY(180deg);
-      font-size: 0.95rem;
-      line-height: 1.6;
-      text-align: justify;
-      align-items: flex-start;
-      padding: 1.2rem;
-      overflow-y: auto;
-    }
-    .card-back h3 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 0.3rem;
-    }
-    .card-back .company {
-      font-size: 0.95rem;
-      font-weight: 500;
-      margin-bottom: 0.3rem;
-    }
-    .card-back .time {
-      font-size: 0.85rem;
-      color: #666;
-      margin-bottom: 0.8rem;
-      display: block;
-    }
-
-    /* Logo */
-    .logo img { height: 28px; width: auto; display: inline-block; }
-    .logo {
-      display: flex;
-      align-items: center;
-      opacity: 0;
-      animation: fadeInLogo 1.5s ease-out forwards;
-    }
-    @keyframes fadeInLogo {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    .shine {
-      font-size: 1.5rem;
-      margin-left: 6px;
-      display: inline-block;
-      animation: rotateStar 3s linear infinite;
-    }
-    @keyframes rotateStar {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-
-    /* Toggle switch */
-    .toggle-switch {
-      width: 60px;
-      height: 30px;
-      border-radius: 30px;
-      background: #ddd;
-      position: relative;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .switch-thumb {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      background: white;
-      position: absolute;
-      top: 3px;
-      left: 3px;
-      transition: all 0.3s ease;
-      background-image: url("./Image/Day logo.png");
-      background-size: 18px;
-      background-repeat: no-repeat;
-      background-position: center;
-    }
-    body.dark .toggle-switch { background: #000; }
-    body.dark .switch-thumb {
-      left: 33px;
-      background-image: url("./Image/Night logo.png");
-    }
-
-    /* Contact Section */
-    .contact-container {
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-      margin-top: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .contact-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-      color: inherit;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-    .contact-card:hover {
-      transform: scale(1.1);
-    }
-    .circle {
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.6rem;
-      color: white;
-      margin-bottom: 0.5rem;
-    }
-    .circle.green { background: #25d366; }   /* Call */
-    .circle.yellow { background: #f4c542; }  /* Location */
-    .circle.red { background: #dd4b39; }     /* Mail */
-    .circle.blue { background: #0077b5; }    /* LinkedIn */
-    .text {
-      font-size: 0.9rem;
-      font-weight: 500;
-      text-align: center;
-    }
-
-  /* Responsive adjustments */
-    @media (max-width: 900px) {
-      .experience-gallery { grid-template-columns: repeat(2, 1fr); }
-      .hero h1 { font-size: 2.2rem; line-height: 1.6; }
-    }
-    @media (max-width: 560px) {
-      .experience-gallery { grid-template-columns: 1fr; }
-      .navbar { padding: .8rem 1rem; }
-      .hero { padding: 1rem; }
-    }
-    @media (max-width: 768px) {
-  #particle-canvas {
-    display: none; /* hide particles on smaller devices */
-    }
-  }
-
-/* Disable text selection globally */
-  body {
-    user-select: none;
-    -webkit-user-select: none; /* For Safari */
-    -moz-user-select: none;    /* For Firefox */
-    -ms-user-select: none;     /* For IE/Edge */
-  }
-/* Fix for section titles being hidden behind sticky navbar */
-  section {
-    scroll-margin-top: 100px; /* adjust if navbar is taller/shorter */
-  }
-
-html {
-  scroll-behavior: smooth;
+  .site-footer { font-size: 0.85rem; padding: 0.8rem; }
 }
 
+/* ---------- Utility ---------- */
+section { scroll-margin-top: 100px; }
 </style>
 </head>
 <body class="light">
@@ -439,31 +412,65 @@ html {
     </ul>
   </section>
 
-  <!-- Contact Section -->
-  <section id="contact" class="about">
-    <h2>Contact</h2>
-    <div class="contact-container">
-      <!-- Phone -->
-      <a href="tel:+919626863389" class="contact-card" title="Call Akash">
-        <div class="circle green">📞</div>
-      </a>
-
-      <!-- Location -->
-      <div class="contact-card" title="Location">
-        <div class="circle yellow">📍</div>
-      </div>
-
-      <!-- Email -->
-      <a href="mailto:akashrm.mail@gmail.com" class="contact-card" title="Send Email">
-        <div class="circle red">💌</div>
-      </a>
-
-      <!-- LinkedIn -->
-      <a href="https://www.linkedin.com/in/akash-rm" target="_blank" class="contact-card" title="Visit LinkedIn">
-        <div class="circle blue">in</div>
-      </a>
+  <!-- Timeline Section (Initially Hidden) -->
+<section id="timeline-section" class="about" style="display: none; opacity:0; transform: translateY(40px);">
+  <h2>My Journey</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">2022</div>
+      <div class="timeline-content">Completed in-plant training at iTrobes Technologies.</div>
     </div>
-  </section>
+    <div class="timeline-item">
+      <div class="timeline-date">2023</div>
+      <div class="timeline-content">Interned at Srishti Innovations (Python).</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2024</div>
+      <div class="timeline-content">Worked as Assistant Technical Writer at Rpinnacle Research Solutions.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2025</div>
+      <div class="timeline-content">Data Engineer at Owlytics and Admission Counsellor at SIB.</div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="about">
+  <h2>Contact</h2>
+  <div class="contact-wrapper">
+    <!-- Left Corner Message -->
+    <div class="contact-message">
+      <strong>Akash's Portfolio</strong><br>
+      Thanks for exploring my little corner of the web.<br>
+      This portfolio is just the trailer — the real story begins when we connect.
+    </div>
+
+    <!-- Contact Details (Aligned to Right End) -->
+<div class="contact-details">
+  <p>📞 +91 96298 63389</p>
+  <p>💌 akashrm.mail@gmail.com</p>
+  <p>📍 Tamil Nadu, India</p>
+</div>
+
+<div class="social-icons">
+  <a href="https://wa.me/919629863389" target="_blank" class="circle green" title="WhatsApp" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <a href="mailto:akashrm.mail@gmail.com" target="_blank" class="circle red" title="Email" aria-label="Email">
+    <i class="fas fa-envelope"></i>
+  </a>
+  
+  <a href="https://www.linkedin.com/in/akash-rm" target="_blank" class="circle blue" title="LinkedIn" aria-label="LinkedIn">
+    <i class="fab fa-linkedin-in"></i>
+  </a>
+  
+  <a href="https://github.com/akash-BuildHub" target="_blank" class="circle dark" title="GitHub" aria-label="GitHub">
+    <i class="fab fa-github"></i>
+  </a>
+</div>
+</section>
 
   <!-- GSAP -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
@@ -716,6 +723,47 @@ function initParticles() {
   });
 })();
 
+// Toggle timeline visibility on CTA click
+const ctaButton = document.querySelector(".cta");
+const timelineSection = document.getElementById("timeline-section");
+
+ctaButton.addEventListener("click", () => {
+  if (timelineSection.style.display === "none") {
+    timelineSection.style.display = "block";
+    // Smooth scroll into view
+    timelineSection.scrollIntoView({ behavior: "smooth" });
+
+    // Animate fade-in and slide-up using GSAP
+    gsap.to(timelineSection, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power3.out"
+    });
+
+    // Animate each timeline item
+    gsap.from(".timeline-item", {
+      y: 30,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 0.8,
+      ease: "power3.out",
+      delay: 0.3
+    });
+  } else {
+    // Collapse the section
+    gsap.to(timelineSection, {
+      opacity: 0,
+      y: 40,
+      duration: 0.8,
+      ease: "power3.in",
+      onComplete: () => {
+        timelineSection.style.display = "none";
+      }
+    });
+  }
+});
+
 // For touch devices (double tap)
 let lastTap = 0; // ✅ Declare before using
 logo.addEventListener("touchend", () => {
@@ -727,7 +775,7 @@ logo.addEventListener("touchend", () => {
   lastTap = currentTime;
 });
 
-    // Experience animation
+// Experience animation
     gsap.utils.toArray(".exp-card").forEach((card, i) => {
       gsap.to(card, {
         scrollTrigger: { trigger: card, start: "top 85%" },
@@ -754,28 +802,38 @@ gsap.from("#projects li", {
   duration: 1,          // animation duration
   ease: "power3.out",   // smooth easing
   scrollTrigger: {      // trigger on scroll
-    trigger: "#projects",
-    start: "top 40%",   // when Projects section enters viewport
+  trigger: "#projects",
+  start: "top 40%",   // when Projects section enters viewport
   }
 });
 
-// ✅ Prevent jumping to top on refresh and restore previous scroll position
+// Prevent jumping to top on refresh and restore previous scroll position
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
 }
 
-// ✅ Click (or tap) logo → refresh and start from top
+// Click (or tap) logo → refresh and start from top
 logo.addEventListener("click", (e) => {
   e.preventDefault();
   // Reload page, always starts at top
   location.reload();
 });
 
-// ✅ Normal refresh (F5, Ctrl+R, browser reload) → always start from top
+// Normal refresh (F5, Ctrl+R, browser reload) → always start from top
 if ("scrollRestoration" in history) {
   history.scrollRestoration = "manual";
 }
-
+  // Force page to load from top on refresh
+  window.history.scrollRestoration = "manual";
+  window.onbeforeunload = function () {
+    window.scrollTo(0, 0);
+  };
 </script>
+
+<!-- Footer -->
+<footer class="site-footer">
+  Designed and developed by Akash
+</footer>
+
 </body>
 </html>
