@@ -58,16 +58,17 @@
   .site-footer { font-size: 0.85rem; padding: 0.8rem; }
 }
 
-/* Mobile fix: neatly stack into 2 lines */
-@media (max-width: 768px) {
-  #shatterText {
-    white-space: normal; /* allow wrapping */
-    line-height: 1.4;
-  }
+/* Default: inline for desktop */
+.mobile-break {
+  display: inline;
+}
 
-  #shatterText div {
-    display: block;      /* force each part onto its own line */
-    text-align: center;  /* keep centered */
+/* On mobile: force break before ♥ */
+@media (max-width: 768px) {
+  .mobile-break {
+    display: block;    /* new line */
+    text-align: center;
+    margin-top: 0.3em; /* small gap */
   }
 }
 
@@ -259,8 +260,6 @@ body.dark .circle.dark { background: #eee; color: #111; }
   font-size: 0.95rem; font-weight: 500;
   border-top: 1px solid rgba(0, 0, 0, 0.1); margin-top: 2rem;
 }
-
-
 
 /* ---------- Dark Mode ---------- */
 body.dark {
