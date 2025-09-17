@@ -37,6 +37,27 @@
 <style>
   
 /* ---------- Responsive ---------- */
+
+/* Tablets and below */
+@media (max-width: 900px) {
+  .experience-gallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+    line-height: 1.6;
+  }
+  .contact-wrapper {
+    flex-direction: column;
+    text-align: center;
+    gap: 25px;
+  }
+  .social-icons {
+    justify-content: center;
+  }
+}
+
+/* Small tablets and large phones */
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -50,10 +71,14 @@
     flex-direction: column;
     gap: 8px;
   }
+  .hero {
+    padding: 1.5rem;
+  }
+  .experience-gallery {
+    grid-template-columns: 1fr;
+  }
   .contact-wrapper {
     justify-content: center;
-    text-align: center;
-    flex-direction: column;
     align-items: center;
   }
   .contact-info {
@@ -64,36 +89,32 @@
   }
 }
 
-@media (max-width: 480px) {
-  body { font-size: 14px; }
-  .hero-text { font-size: 18px; text-align: center; }
-  .navbar nav { gap: 1.2rem; }
-}
-
-@media (max-width: 900px) {
-  .experience-gallery { grid-template-columns: repeat(2, 1fr); }
-  .hero h1 { font-size: 2.2rem; line-height: 1.6; }
-}
-
+/* Mobile phones */
 @media (max-width: 560px) {
-  .experience-gallery { grid-template-columns: 1fr; }
-  .navbar { padding: .8rem 1rem; }
-  .hero { padding: 1rem; }
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+  .hero {
+    padding: 1rem;
+  }
 }
 
-@media (max-width: 768px) {
-  #particle-canvas { display: none; }
-}
-
-/* ---------- Particle canvas ---------- */
-#particle-canvas {
-  position: absolute;
-  top: 0; left: 0;
-  width: 21%; height: 110vh;
-  z-index: -1;
-  display: block;
-  pointer-events: none;
-  transition: opacity 0.3s;
+/* Extra small phones */
+@media (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  .hero-text {
+    font-size: 18px;
+    text-align: center;
+  }
+  .navbar nav {
+    gap: 1.2rem;
+  }
+  .site-footer {
+    font-size: 0.85rem;
+    padding: 0.8rem;
+  }
 }
 
 /* ---------- Base styles ---------- */
@@ -299,23 +320,21 @@ body.dark .switch-thumb {
   border-radius: 50%;
 }
 
-/* Contact Section */
+/* ---------- Contact Section ---------- */
 #contact {
   padding: 60px 20px;
   background: #f5f5f5;
   color: #333;
   transition: background 0.3s, color 0.3s;
 }
-
 body.dark #contact {
   background: #111;
   color: #eee;
 }
-
 .contact-wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: center; /* Align all three in the middle baseline */
+  align-items: center;
   max-width: 1100px;
   margin: 0 auto;
   gap: 40px;
@@ -327,9 +346,7 @@ body.dark #contact {
   font-size: 0.95rem;
   line-height: 1.6;
 }
-.contact-message h3 {
-  margin-bottom: 10px;
-}
+.contact-message h3 { margin-bottom: 10px; }
 
 /* Center */
 .contact-info {
@@ -340,8 +357,12 @@ body.dark #contact {
   font-size: 1.8rem;
   margin-bottom: 15px;
 }
-.contact-info p {
-  margin: 8px 0;
+.contact-info p { margin: 8px 0; }
+
+.sub-heading {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
 }
 
 /* Right */
@@ -362,8 +383,17 @@ body.dark #contact {
   color: #fff;
   transition: transform 0.3s;
 }
-.social-icons a:hover {
-  transform: scale(1.1);
+.social-icons a:hover { transform: scale(1.1); }
+
+#contact {
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.contact-heading {
+  font-size: 1.5rem;   /* Same as Akash's Portfolio */
+  font-weight: 700;    /* Bold */
+  margin-bottom: 0.5rem;
 }
 
 /* Colors */
@@ -372,18 +402,6 @@ body.dark #contact {
 .circle.blue { background: #0077b5; }
 .circle.dark { background: #333; }
 body.dark .circle.dark { background: #eee; color: #111; }
-
-/* Responsive */
-@media (max-width: 900px) {
-  .contact-wrapper {
-    flex-direction: column;
-    text-align: center;
-    gap: 25px;
-  }
-  .social-icons {
-    justify-content: center;
-  }
-}
 
 /* ---------- Footer ---------- */
 .site-footer {
@@ -396,18 +414,12 @@ body.dark .circle.dark { background: #eee; color: #111; }
   color: inherit;
   margin-top: 2rem;
 }
-@media (max-width: 480px) {
-  .site-footer { font-size: 0.85rem; padding: 0.8rem; }
-}
 
 /* ---------- Utility ---------- */
 section { scroll-margin-top: 100px; }
 </style>
 </head>
 <body class="light">
-
-  <!-- Particle Canvas -->
-  <canvas id="particle-canvas" aria-hidden="true"></canvas>
 
   <!-- Navbar -->
   <header class="navbar">
@@ -489,7 +501,8 @@ section { scroll-margin-top: 100px; }
 </section>
 
 <!-- Contact Section -->
-<section id="contact">
+<section id="contact" class="about">
+  <h2>Contact</h2> <!-- ✅ Main section heading like Projects/Experience -->
   <div class="contact-wrapper">
     
     <!-- Left -->
@@ -501,13 +514,14 @@ section { scroll-margin-top: 100px; }
       </p>
     </div>
 
-    <!-- Center -->
-    <div class="contact-info">
-      <h2>Contact</h2>
-      <p>📞 +91 96298 63389</p>
-      <p>💌 akashrm.mail@gmail.com</p>
-      <p>📍 Tamil Nadu, India</p>
-    </div>
+<!-- Center -->
+<div class="contact-info">
+  <h3 class="contact-heading">Reach Out</h3> <!-- Same style as Akash's Portfolio -->
+  <p>📞 +91 96298 63389</p>
+  <p>💌 akashrm.mail@gmail.com</p>
+  <p>📍 Tamil Nadu, India</p>
+</div>
+
 
     <!-- Right -->
     <div class="social-icons">
@@ -520,367 +534,203 @@ section { scroll-margin-top: 100px; }
   </div>
 </section>
 
-  <!-- GSAP -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <!-- Particle Script -->
-  <script>
-    // ---------- Particle background script ----------
-    (() => {
-      const canvas = document.getElementById('particle-canvas');
-      const ctx = canvas.getContext('2d', { alpha: true });
-      
-      let w = canvas.offsetWidth;
-      let h = canvas.offsetHeight;
-      const DPR = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = w * DPR;
-      canvas.height = h * DPR;
-      canvas.style.width = w + "px";
-      canvas.style.height = h + "px";
-      ctx.scale(DPR, DPR);
-      
-  let particles = [];
-  // Very dense: increases number of particles for heavy effect
-    const maxParticles = Math.floor((w * h) / 1500); 
-    const mouse = { x: w / 2, y: h / 2, radius: Math.min(w, h) * 0.15, active: false };
+<script>
+  // ---------- Dark/Light toggle ----------
+  const toggle = document.getElementById("toggleMode");
+  const body = document.body;
+  const logo = document.getElementById("logo");
 
-  // Particle class
-    class Particle {
-    constructor(homeX, homeY) {
-    this.homeX = homeX;   // grid position
-    this.homeY = homeY;
-    this.x = homeX;
-    this.y = homeY;
-    this.vx = 0;
-    this.vy = 0;
-    this.size = 1 + Math.random() * 2;
-    this.maxDist = 110 + Math.random() * 80;
-  }
-
-  update() {
-    if (mouse.active) {
-      // let them drift when mouse is inside
-      this.x += this.vx;
-      this.y += this.vy;
-
-      // attract/repel with mouse
-      const dx = mouse.x - this.x;
-      const dy = mouse.y - this.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < mouse.radius + this.size) {
-        const force = (1 - dist / (mouse.radius + 1)) * 0.6;
-        this.vx += (dx / dist) * force * 0.6;
-        this.vy += (dy / dist) * force * 0.6;
-      }
-
-      // apply friction
-      this.vx *= 0.95;
-      this.vy *= 0.95;
-    } else {
-
-    // smoothly float back to grid (slower)
-      this.x += (this.homeX - this.x) * 0.02;  // 3% each frame
-      this.y += (this.homeY - this.y) * 0.02;
-
-      // fully freeze once close enough
-      if (Math.abs(this.x - this.homeX) < 0.05 &&
-          Math.abs(this.y - this.homeY) < 0.05) {
-        this.x = this.homeX;
-        this.y = this.homeY;
-        this.vx = 0;
-        this.vy = 0;
-      }
-    }
-  }
-
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-// init particles in grid
-function initParticles() {
-  particles = [];
-  const cols = 8;   // more columns
-  const rows = 12;   // keep rows the same
-  const spacingX = w / (cols + 1) * 0.8;  // adjusted spacing to fit inside left strip
-  const spacingY = h / (rows + 1);
-
-  for (let i = 1; i <= cols; i++) {
-    for (let j = 1; j <= rows; j++) {
-      const homeX = i * spacingX;
-      const homeY = j * spacingY;
-      const p = new Particle(homeX, homeY);
-      particles.push(p);
-    }
-  }
-}
-  // drawing loop
-    function animate() {
-  // clear with slight transparency for trailing effect
-    ctx.clearRect(0, 0, w, h);
-
-  // set colors depending on theme
-    const isDark = document.body.classList.contains('dark');
-    ctx.fillStyle = isDark ? 'rgba(230,230,230,0.95)' : 'rgba(30,30,30,0.95)';
-    ctx.strokeStyle = isDark ? 'rgba(230,230,230,0.12)' : 'rgba(30,30,30,0.12)';
-
-  // update & draw particles
-    particles.forEach(p => {
-    p.update();
-    p.draw();
+  toggle.addEventListener("click", () => {
+    body.classList.toggle("dark");
+    body.classList.toggle("light");
+    logo.src = body.classList.contains("dark")
+      ? "./Image/Signature logo-white.png"
+      : "./Image/Signature logo-black.png";
   });
 
-    // connect particles with lines if close
-        for (let i = 0; i < particles.length; i++) {
-          for (let j = i + 1; j < particles.length; j++) {
-            const a = particles[i];
-            const b = particles[j];
-            const dx = a.x - b.x;
-            const dy = a.y - b.y;
-            const d2 = dx * dx + dy * dy;
-            const max = (a.maxDist + b.maxDist) * 0.7;
-            if (d2 < max * max) {
-              const alpha = 1 - (Math.sqrt(d2) / max);
-              ctx.globalAlpha = Math.min(0.6 * alpha, 0.6);
-              ctx.beginPath();
-              ctx.moveTo(a.x, a.y);
-              ctx.lineTo(b.x, b.y);
-              ctx.stroke();
-              ctx.globalAlpha = 1;
+  // ---------- Shatter animation ----------
+  (function runShatterOnce() {
+    const textEl = document.getElementById("shatterText");
+    const lines = Array.from(textEl.querySelectorAll("div"));
+
+    lines.forEach((line, i) => {
+      const content = line.textContent || "";
+      const chars = Array.from(content);
+      line.textContent = "";
+      chars.forEach(ch => {
+        const span = document.createElement("span");
+        span.textContent = ch === " " ? "\u00A0" : ch;
+        line.appendChild(span);
+      });
+
+      const spans = line.querySelectorAll("span");
+      gsap.fromTo(
+        spans,
+        {
+          x: () => gsap.utils.random(-500, 500),
+          y: () => gsap.utils.random(-300, 300),
+          rotation: () => gsap.utils.random(-720, 720),
+          scale: 0,
+          opacity: 0
+        },
+        {
+          x: 0,
+          y: 0,
+          rotation: 0,
+          scale: 1,
+          opacity: 1,
+          stagger: 0.02,
+          ease: "power4.out",
+          duration: 1.2,
+          delay: i * 0.6,
+          onComplete: () => {
+            if (i === lines.length - 1) {
+              gsap.to(".tagline", {
+                opacity: 1,
+                y: -20,
+                duration: 0.6,
+                ease: "power2.out"
+              });
             }
           }
         }
-
-        requestAnimationFrame(animate);
-      }
-
-    // handle resize
-      function onResize() {
-      w = canvas.offsetWidth;
-      h = canvas.offsetHeight;
-      const DPR = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = w * DPR;
-      canvas.height = h * DPR;
-      canvas.style.width = w + "px";
-      canvas.style.height = h + "px";
-      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      mouse.radius = Math.min(w, h) * 0.12;
-      initParticles();
-    }
-
-  // Hide particles on small screens after initialization
-    if (window.innerWidth < 768) {
-      particles = [];
-      canvas.style.display = 'none';
-  } else {
-    canvas.style.display = 'block';
-  }
-
-// mouse events
-  window.addEventListener('mousemove', (e) => {
-  const rect = canvas.getBoundingClientRect();
-  mouse.x = e.clientX - rect.left;
-  mouse.y = e.clientY - rect.top;
-
-// Only activate particles if mouse is inside canvas bounds
-  if (
-    e.clientX >= rect.left &&
-    e.clientX <= rect.right &&
-    e.clientY >= rect.top &&
-    e.clientY <= rect.bottom
-  ) {
-    mouse.active = true;
-  } else {
-    mouse.active = false; // deactivate when leaving canvas area
-  }
-}, { passive: true });
-
-// toggle particle visibility on small devices
-      const shouldHide = /Mobi|Android/i.test(navigator.userAgent) && innerWidth < 520;
-      if (shouldHide) canvas.style.opacity = '0.6';
-
-      // initialize & run
-      initParticles();
-      animate();
-    })();
-
-    // ---------- Existing site script (dark toggle + GSAP shatter + exp animate) ----------
-    const toggle = document.getElementById("toggleMode");
-    const body = document.body;
-    const logo = document.getElementById("logo");
-    toggle.addEventListener("click", () => {
-      body.classList.toggle("dark");
-      body.classList.toggle("light");
-      logo.src = body.classList.contains("dark")
-        ? "./Image/Signature logo-white.png"
-        : "./Image/Signature logo-black.png";
+      );
     });
+  })();
 
-    // Shatter animation
-(function runShatterOnce() {
-  const textEl = document.getElementById("shatterText");
-  const lines = Array.from(textEl.querySelectorAll("div"));
+  // ---------- CTA Timeline ----------
+  const ctaButton = document.querySelector(".cta");
+  const timelineSection = document.getElementById("timeline-section");
 
-  lines.forEach((line, i) => {
-    const content = line.textContent || "";
-    const chars = Array.from(content);
-    line.textContent = "";
-    chars.forEach(ch => {
-      const span = document.createElement("span");
-      span.textContent = ch === " " ? "\u00A0" : ch;
-      line.appendChild(span);
-    });
+  ctaButton.addEventListener("click", () => {
+    if (timelineSection.style.display === "none") {
+      timelineSection.style.display = "block";
+      timelineSection.scrollIntoView({ behavior: "smooth" });
 
-    const spans = line.querySelectorAll("span");
-    gsap.fromTo(
-      spans,
-      {
-        x: () => gsap.utils.random(-500, 500),
-        y: () => gsap.utils.random(-300, 300),
-        rotation: () => gsap.utils.random(-720, 720),
-        scale: 0,
-        opacity: 0
-      },
-      {
-        x: 0,
-        y: 0,
-        rotation: 0,
-        scale: 1,
+      gsap.to(timelineSection, {
         opacity: 1,
-        stagger: 0.02,
-        ease: "power4.out",
-        duration: 1.2,
-        delay: i * 0.6,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+      });
+
+      gsap.from(".timeline-item", {
+        y: 30,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 0.8,
+        ease: "power3.out",
+        delay: 0.3
+      });
+    } else {
+      gsap.to(timelineSection, {
+        opacity: 0,
+        y: 40,
+        duration: 0.8,
+        ease: "power3.in",
         onComplete: () => {
-          // ✅ Fade in tagline only after last line animation
-          if (i === lines.length - 1) {
-            gsap.to(".tagline", {
-              opacity: 1,
-              y: -20,
-              duration: 0.6,
-              ease: "power2.out"
-            });
-          }
+          timelineSection.style.display = "none";
         }
-      }
-    );
+      });
+    }
   });
-})();
 
-// Toggle timeline visibility on CTA click
-const ctaButton = document.querySelector(".cta");
-const timelineSection = document.getElementById("timeline-section");
-
-ctaButton.addEventListener("click", () => {
-  if (timelineSection.style.display === "none") {
-    timelineSection.style.display = "block";
-    // Smooth scroll into view
-    timelineSection.scrollIntoView({ behavior: "smooth" });
-
-    // Animate fade-in and slide-up using GSAP
-    gsap.to(timelineSection, {
+  // ---------- Experience animation ----------
+  gsap.utils.toArray(".exp-card").forEach((card, i) => {
+    gsap.to(card, {
+      scrollTrigger: { trigger: card, start: "top 85%" },
       opacity: 1,
       y: 0,
-      duration: 1,
-      ease: "power3.out"
-    });
-
-    // Animate each timeline item
-    gsap.from(".timeline-item", {
-      y: 30,
-      opacity: 0,
-      stagger: 0.2,
       duration: 0.8,
-      ease: "power3.out",
-      delay: 0.3
+      delay: i * 0.1
     });
-  } else {
-    // Hide again if clicked twice
-    gsap.to(timelineSection, {
-      opacity: 0,
-      y: 40,
-      duration: 0.8,
-      ease: "power3.in",
-      onComplete: () => {
-        timelineSection.style.display = "none";
-      }
-    });
+  });
+
+  // ---------- About Me animation ----------
+  gsap.from("#about p", {
+    y: 50,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: "#about",
+      start: "top 40%"
+    }
+  });
+
+  // ---------- Projects animation ----------
+  gsap.from("#projects li", {
+    y: 50,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: "#projects",
+      start: "top 40%"
+    }
+  });
+
+  // ---------- Contact section animation ----------
+  gsap.from("#contact h2", {
+    y: 40,
+    opacity: 0,
+    duration: 1,
+    ease: "power3.out",
+    scrollTrigger: {
+      trigger: "#contact",
+      start: "top 60%"
+    }
+  });
+
+  gsap.from("#contact p", {
+    y: 20,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.1,
+    ease: "power2.out",
+    delay: 0.3,
+    scrollTrigger: {
+      trigger: "#contact",
+      start: "top 70%"
+    }
+  });
+
+  // ---------- Force scroll top on refresh ----------
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual"; // disable browser restore
   }
-});
 
-// For touch devices (double tap)
-let lastTap = 0; // ✅ Declare before using
-logo.addEventListener("touchend", () => {
-  const currentTime = Date.now();
-  const tapLength = currentTime - lastTap;
-  if (tapLength < 400 && tapLength > 0) {
-    location.reload(true); // ✅ Refresh on double-tap
-  }
-  lastTap = currentTime;
-});
-
-// Experience animation
-    gsap.utils.toArray(".exp-card").forEach((card, i) => {
-      gsap.to(card, {
-        scrollTrigger: { trigger: card, start: "top 85%" },
-        opacity: 1, y: 0, duration: 0.8, delay: i * 0.1
-      });
-    });
-
-// About Me drop-in animation
-gsap.from("#about p", {
-  y: 50,               // start 50px below
-  opacity: 0,           // start invisible
-  duration: 1,          // animation duration
-  ease: "power3.out",   // smooth easing
-  scrollTrigger: {      // trigger on scroll
-    trigger: "#about",
-    start: "top 40%",   // when About section top reaches 80% of viewport
-  }
-});
-
-// Projects drop-in animation
-gsap.from("#projects li", {
-  y: 50,               // start 50px below
-  opacity: 0,           // start invisible
-  duration: 1,          // animation duration
-  ease: "power3.out",   // smooth easing
-  scrollTrigger: {      // trigger on scroll
-  trigger: "#projects",
-  start: "top 40%",   // when Projects section enters viewport
-  }
-});
-
-// Click (or tap) logo → refresh and start from top
-logo.addEventListener("click", (e) => {
-  e.preventDefault();
-  // Save a flag before reload
-  sessionStorage.setItem("scrollToTop", "true");
-  location.reload();
-});
-
-// After reload, check flag
-window.addEventListener("load", () => {
-  if (sessionStorage.getItem("scrollToTop") === "true") {
-    window.scrollTo(0, 0);
-    sessionStorage.removeItem("scrollToTop");
-  }
-});
-
-// Normal refresh (F5, Ctrl+R, browser reload, logo click) → always start from top
-if ("scrollRestoration" in history) {
-  history.scrollRestoration = "manual";
-}
-  // Force page to load from top on refresh
-  window.history.scrollRestoration = "manual";
+  // Always scroll top when leaving
   window.onbeforeunload = function () {
     window.scrollTo(0, 0);
   };
 
+  // Always scroll top when loading
+  window.onload = function () {
+    setTimeout(() => window.scrollTo(0, 0), 0);
+  };
+
+  // ---------- Logo reload ----------
+  logo.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.scrollTo(0, 0);
+    setTimeout(() => location.reload(true), 100);
+  });
+
+  // Touch double-tap reload
+  let lastTap = 0;
+  logo.addEventListener("touchend", () => {
+    const now = Date.now();
+    if (now - lastTap < 400) {
+      window.scrollTo(0, 0);
+      setTimeout(() => location.reload(true), 100);
+    }
+    lastTap = now;
+  });
 </script>
 
 <!-- Footer -->
