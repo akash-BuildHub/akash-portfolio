@@ -58,6 +58,19 @@
   .site-footer { font-size: 0.85rem; padding: 0.8rem; }
 }
 
+/* Mobile fix: neatly stack into 2 lines */
+@media (max-width: 768px) {
+  #shatterText {
+    white-space: normal; /* allow wrapping */
+    line-height: 1.4;
+  }
+
+  #shatterText div {
+    display: block;      /* force each part onto its own line */
+    text-align: center;  /* keep centered */
+  }
+}
+
 /* ---------- Base styles ---------- */
 body {
   margin: 0;
@@ -246,6 +259,8 @@ body.dark .circle.dark { background: #eee; color: #111; }
   font-size: 0.95rem; font-weight: 500;
   border-top: 1px solid rgba(0, 0, 0, 0.1); margin-top: 2rem;
 }
+
+
 
 /* ---------- Dark Mode ---------- */
 body.dark {
