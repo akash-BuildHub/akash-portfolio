@@ -10,7 +10,7 @@
   <meta name="keywords" content="Akash, Portfolio, Data Engineer, AI Enthusiast, Projects, Experience, Python, Machine Learning, Software Developer" />
   <meta name="author" content="Akash RM" />
 
-  <!-- Open Graph / Social Preview -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Akash Portfolio | Data Engineer & AI Enthusiast" />
   <meta property="og:description" content="Explore Akash’s portfolio — Data Engineering, AI, Projects, and Career Journey." />
   <meta property="og:image" content="./Image/Signature-logo-preview.png" />
@@ -27,94 +27,35 @@
   <link rel="icon" href="./Image/favicon.png" type="image/png" />
 
   <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
   <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="all" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
 <style>
-  
 /* ---------- Responsive ---------- */
-
-/* Tablets and below */
 @media (max-width: 900px) {
-  .experience-gallery {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .hero h1 {
-    font-size: 2.2rem;
-    line-height: 1.6;
-  }
-  .contact-wrapper {
-    flex-direction: column;
-    text-align: center;
-    gap: 25px;
-  }
-  .social-icons {
-    justify-content: center;
-  }
+  .experience-gallery { grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { font-size: 2.2rem; line-height: 1.6; }
+  .contact-wrapper { flex-direction: column; text-align: center; gap: 25px; }
 }
-
-/* Small tablets and large phones */
 @media (max-width: 768px) {
-  .container {
-    flex-direction: column;
-    padding: 10px;
-  }
-  h1 {
-    font-size: 24px;
-    text-align: center;
-  }
-  .navbar {
-    flex-direction: column;
-    gap: 8px;
-  }
-  .hero {
-    padding: 1.5rem;
-  }
-  .experience-gallery {
-    grid-template-columns: 1fr;
-  }
-  .contact-wrapper {
-    justify-content: center;
-    align-items: center;
-  }
-  .contact-info {
-    text-align: center;
-  }
-  .social-icons {
-    justify-content: center;
-  }
+  .container { flex-direction: column; padding: 10px; }
+  h1 { font-size: 24px; text-align: center; }
+  .navbar { flex-direction: column; gap: 8px; }
+  .hero { padding: 1.5rem; }
+  .experience-gallery { grid-template-columns: 1fr; }
+  .contact-info { text-align: center; }
 }
-
-/* Mobile phones */
 @media (max-width: 560px) {
-  .navbar {
-    padding: 0.8rem 1rem;
-  }
-  .hero {
-    padding: 1rem;
-  }
+  .navbar { padding: 0.8rem 1rem; }
+  .hero { padding: 1rem; }
 }
-
-/* Extra small phones */
 @media (max-width: 480px) {
-  body {
-    font-size: 14px;
-  }
-  .hero-text {
-    font-size: 18px;
-    text-align: center;
-  }
-  .navbar nav {
-    gap: 1.2rem;
-  }
-  .site-footer {
-    font-size: 0.85rem;
-    padding: 0.8rem;
-  }
+  body { font-size: 14px; }
+  .hero-text { font-size: 18px; text-align: center; }
+  .navbar nav { gap: 1.2rem; }
+  .site-footer { font-size: 0.85rem; padding: 0.8rem; }
 }
 
 /* ---------- Base styles ---------- */
@@ -123,146 +64,79 @@ body {
   font-family: "Inter", sans-serif;
   transition: background 0.3s, color 0.3s;
   user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }
 .light { background: #fff; color: #111; }
 .dark { background: #111; color: #eee; }
-
 html { scroll-behavior: smooth; }
 
 /* ---------- Navbar ---------- */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 1rem 2rem;
-  position: sticky;
-  top: 0;
-  background: inherit;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
+  display: flex; justify-content: space-between;
+  padding: 1rem 2rem; position: sticky; top: 0;
+  background: inherit; border-bottom: 1px solid rgba(0,0,0,0.05);
   z-index: 100;
 }
 .navbar nav {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: center;
 }
-.navbar a {
-  text-decoration: none;
-  color: inherit;
-  font-weight: 500;
-}
+.navbar a { text-decoration: none; color: inherit; font-weight: 500; }
 
 /* ---------- Hero ---------- */
-.hero {
-  padding: 2rem;
-  text-align: center;
-}
+.hero { padding: 2rem; text-align: center; }
 .hero h1 {
-  font-size: clamp(1.8rem, 5vw, 3.5rem);
-  font-weight: 500;
-  line-height: 1.4;
-  margin: 0;
+  font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 500; line-height: 1.4; margin: 0;
 }
 .hero h1 div { display: block; padding: 0.5rem 1rem; margin-bottom: 4rem; }
 .hero h1 span { display: inline-block; opacity: 0; white-space: pre; }
-
 .tagline {
   font-size: clamp(1rem, 2.5vw, 1.2rem);
-  opacity: 0;
-  transform: translateY(20px);
+  opacity: 0; transform: translateY(20px);
   transition: opacity 0.6s ease, transform 0.6s ease;
   margin-bottom: 1.5rem;
 }
-
 .cta {
-  margin-top: 2rem;
-  padding: 1rem 2rem;
-  background: black;
-  color: white;
-  border-radius: 2rem;
-  border: none;
-  cursor: pointer;
-  font-size: 1rem;
-  min-width: 180px;
+  margin-top: 2rem; padding: 1rem 2rem;
+  background: black; color: white; border-radius: 2rem; border: none;
+  cursor: pointer; font-size: 1rem; min-width: 180px;
   transition: transform 0.2s, background 0.3s;
 }
 .cta:hover { transform: scale(1.05); background: #333; }
-
 img { max-width: 100%; height: auto; }
 
 /* ---------- About ---------- */
 .about {
-  padding: 1rem;
-  max-width: 900px;
-  margin: auto;
-  line-height: 1.8;
-  font-size: 1.05rem;
-  text-align: justify;
+  padding: 1rem; max-width: 900px; margin: auto;
+  line-height: 1.8; font-size: 1.05rem; text-align: justify;
 }
 .about h2 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  text-align: center;
+  font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;
 }
 
 /* ---------- Experience Cards ---------- */
 .experience-gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-  max-width: 1100px;
-  margin: auto;
-  justify-items: center;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem; max-width: 1100px; margin: auto; justify-items: center;
 }
 .exp-card {
-  width: 100%;
-  max-width: 280px;
-  height: 300px;
-  perspective: 1000px;
-  opacity: 0;
-  transform: translateY(40px);
+  width: 100%; max-width: 280px; height: 300px;
+  perspective: 1000px; opacity: 0; transform: translateY(40px);
 }
 .card-inner {
-  position: relative;
-  width: 100%; height: 100%;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-  border-radius: 1rem;
-  cursor: pointer;
-  text-align: center;
+  position: relative; width: 100%; height: 100%;
+  transition: transform 0.8s; transform-style: preserve-3d;
+  border-radius: 1rem; cursor: pointer; text-align: center;
 }
 .exp-card:hover .card-inner { transform: rotateY(180deg); }
 .card-front, .card-back {
-  position: absolute;
-  width: 100%; height: 100%;
-  backface-visibility: hidden;
-  border-radius: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
+  border-radius: 1rem; display: flex; flex-direction: column; justify-content: center; align-items: center;
   padding: 1rem;
 }
-.card-front {
-  background: rgba(0,0,0,0.05);
-  font-size: 1.1rem;
-  font-weight: 700;
-}
+.card-front { background: rgba(0,0,0,0.05); font-size: 1.1rem; font-weight: 700; }
 .card-back {
-  background: white;
-  color: black;
-  transform: rotateY(180deg);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  text-align: justify;
-  align-items: flex-start;
-  padding: 1.2rem;
-  overflow-y: auto;
+  background: white; color: black; transform: rotateY(180deg);
+  font-size: 0.95rem; line-height: 1.6; text-align: justify;
+  align-items: flex-start; padding: 1.2rem; overflow-y: auto;
 }
 .card-back h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
 .card-back .company { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.3rem; }
@@ -277,101 +151,76 @@ img { max-width: 100%; height: auto; }
 
 /* ---------- Toggle Switch ---------- */
 .toggle-switch {
-  width: 60px; height: 30px;
-  border-radius: 30px;
-  background: #ddd;
-  position: relative;
-  cursor: pointer;
-  transition: background 0.3s;
+  width: 60px; height: 30px; border-radius: 30px; background: #ddd;
+  position: relative; cursor: pointer; transition: background 0.3s;
 }
 .switch-thumb {
-  width: 24px; height: 24px;
-  border-radius: 50%;
-  background: white;
-  position: absolute;
-  top: 3px; left: 3px;
-  transition: all 0.3s ease;
-  background-image: url("./Image/Day logo.png");
-  background-size: 18px;
-  background-repeat: no-repeat;
-  background-position: center;
+  width: 24px; height: 24px; border-radius: 50%; background: white;
+  position: absolute; top: 3px; left: 3px; transition: all 0.3s ease;
+  background-image: url("./Image/Day logo.png"); background-size: 18px; background-repeat: no-repeat; background-position: center;
 }
 body.dark .toggle-switch { background: #000; }
-body.dark .switch-thumb {
-  left: 33px;
-  background-image: url("./Image/Night logo.png");
-}
+body.dark .switch-thumb { left: 33px; background-image: url("./Image/Night logo.png"); }
 
 /* ---------- Timeline ---------- */
 .timeline {
-  position: relative;
-  padding: 1rem 0;
-  margin-left: 20px;
-  border-left: 3px solid #555;
+  position: relative; padding: 1rem 0; margin-left: 20px; border-left: 3px solid #555;
 }
 .timeline-item { margin-bottom: 1.5rem; position: relative; }
 .timeline-date { font-weight: 700; margin-bottom: 0.2rem; color: #0077b5; }
 .timeline-item::before {
-  content: "";
-  position: absolute;
-  left: -10px; top: 5px;
-  width: 12px; height: 12px;
-  background: #0077b5;
-  border-radius: 50%;
+  content: ""; position: absolute; left: -10px; top: 5px;
+  width: 12px; height: 12px; background: #0077b5; border-radius: 50%;
 }
 
 /* ---------- Contact Section ---------- */
 #contact {
   padding: 60px 20px;
-  background: #f5f5f5;
-  color: #333;
-  transition: background 0.3s, color 0.3s;
+  background: none;   /* keep page background */
+  color: inherit;
 }
-body.dark #contact {
-  background: #111;
-  color: #eee;
-}
+
 .contact-wrapper {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;   
   max-width: 1100px;
   margin: 0 auto;
   gap: 40px;
 }
 
-/* Left */
-.contact-message {
-  flex: 1;
+.contact-message,
+.contact-info,
+.social-icons {
+  flex: 1;                
   font-size: 0.95rem;
   line-height: 1.6;
 }
-.contact-message h3 { margin-bottom: 10px; }
 
-/* Center */
-.contact-info {
-  flex: 1;
-  text-align: center;
-}
-.contact-info h2 {
-  font-size: 1.8rem;
-  margin-bottom: 15px;
-}
-.contact-info p { margin: 8px 0; }
+.contact-message { text-align: left; }
+.contact-info   { text-align: center; }
+.social-icons   { text-align: right; }
 
-.sub-heading {
-  font-size: 1.3rem;
-  font-weight: 600;
+.contact-message h3,
+.contact-info h3,
+.social-icons h3 {
+  font-size: 1rem;         
+  font-weight: 700;
   margin-bottom: 0.8rem;
 }
 
-/* Right */
-.social-icons {
-  flex: 1;
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
+.contact-message p,
+.contact-info p {
+  margin: 0 0 0.4rem;
 }
+
+/* Social icons row */
+.social-icons .icons-row {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;  /* icons align right */
+}
+
 .social-icons a {
   display: flex;
   justify-content: center;
@@ -383,42 +232,38 @@ body.dark #contact {
   color: #fff;
   transition: transform 0.3s;
 }
-.social-icons a:hover { transform: scale(1.1); }
 
-#contact {
-  background: none !important;
-  box-shadow: none !important;
-}
-
-.contact-heading {
-  font-size: 1.5rem;   /* Same as Akash's Portfolio */
-  font-weight: 700;    /* Bold */
-  margin-bottom: 0.5rem;
-}
-
-/* Colors */
 .circle.green { background: #25d366; }
-.circle.red { background: #d93025; }
-.circle.blue { background: #0077b5; }
-.circle.dark { background: #333; }
+.circle.red   { background: #d93025; }
+.circle.blue  { background: #0077b5; }
+.circle.dark  { background: #333; }
 body.dark .circle.dark { background: #eee; color: #111; }
+
 
 /* ---------- Footer ---------- */
 .site-footer {
-  text-align: center;
-  padding: 1rem;
-  font-size: 0.95rem;
-  font-weight: 500;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  background: inherit;
-  color: inherit;
-  margin-top: 2rem;
+  text-align: center; padding: 1rem;
+  font-size: 0.95rem; font-weight: 500;
+  border-top: 1px solid rgba(0, 0, 0, 0.1); margin-top: 2rem;
+}
+
+/* ---------- Dark Mode ---------- */
+body.dark {
+  background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #2c003e 100%);
+  color: #eee; position: relative; overflow-x: hidden;
+}
+body.dark::before {
+  content: ""; position: fixed; top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url("https://www.transparenttextures.com/patterns/stardust.png");
+  opacity: 0.2; z-index: -1; pointer-events: none;
 }
 
 /* ---------- Utility ---------- */
 section { scroll-margin-top: 100px; }
 </style>
 </head>
+
 <body class="light">
 
   <!-- Navbar -->
@@ -502,9 +347,9 @@ section { scroll-margin-top: 100px; }
 
 <!-- Contact Section -->
 <section id="contact" class="about">
-  <h2>Contact</h2> <!-- ✅ Main section heading like Projects/Experience -->
+  <h2>Contact</h2> <!-- Main section heading -->
   <div class="contact-wrapper">
-    
+
     <!-- Left -->
     <div class="contact-message">
       <h3>Akash's Portfolio</h3>
@@ -514,25 +359,28 @@ section { scroll-margin-top: 100px; }
       </p>
     </div>
 
-<!-- Center -->
-<div class="contact-info">
-  <h3 class="contact-heading">Reach Out</h3> <!-- Same style as Akash's Portfolio -->
-  <p>📞 +91 96298 63389</p>
-  <p>💌 akashrm.mail@gmail.com</p>
-  <p>📍 Tamil Nadu, India</p>
-</div>
-
+    <!-- Center -->
+    <div class="contact-info">
+      <h3>Reach Out</h3>
+      <p>📞 +91 96298 63389</p>
+      <p>💌 akashrm.mail@gmail.com</p>
+      <p>📍 Tamil Nadu, India</p>
+    </div>
 
     <!-- Right -->
     <div class="social-icons">
-      <a href="https://wa.me/919629863389" target="_blank" class="circle green"><i class="fab fa-whatsapp"></i></a>
-      <a href="mailto:akashrm.mail@gmail.com" target="_blank" class="circle red"><i class="fas fa-envelope"></i></a>
-      <a href="https://www.linkedin.com/in/akash-rm" target="_blank" class="circle blue"><i class="fab fa-linkedin-in"></i></a>
-      <a href="https://github.com/akash-BuildHub" target="_blank" class="circle dark"><i class="fab fa-github"></i></a>
+      <h3>Catch Me Online</h3>
+      <div class="icons-row">
+        <a href="https://wa.me/919629863389" target="_blank" class="circle green"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:akashrm.mail@gmail.com" target="_blank" class="circle red"><i class="fas fa-envelope"></i></a>
+        <a href="https://www.linkedin.com/in/akash-rm" target="_blank" class="circle blue"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://github.com/akash-BuildHub" target="_blank" class="circle dark"><i class="fab fa-github"></i></a>
+      </div>
     </div>
 
   </div>
 </section>
+
 
 <!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
