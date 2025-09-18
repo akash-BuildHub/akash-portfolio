@@ -7,7 +7,7 @@
 
   <!-- SEO Meta -->
   <meta name="description" content="Akash’s portfolio — Data Engineer & AI Enthusiast. Explore my projects, experience, and journey in data engineering, AI, and software development." />
-  <meta name="keywords" content="Akash, Portfolio, Data Engineer, AI Enthusiast, Projects, Experience, Python, Machine Learning, Software Developer" />
+  <meta name="keywords" content="Akash RM portfolio, data engineer in Bengaluru, AI projects, Python developer, machine learning portfolio, scalable data pipelines, software development projects" />
   <meta name="author" content="Akash RM" />
 
   <!-- Open Graph -->
@@ -42,7 +42,8 @@
 @media (max-width: 768px) {
   .container { flex-direction: column; padding: 10px; }
   h1 { font-size: 24px; text-align: center; }
-  .navbar { flex-direction: column; gap: 8px; }
+  .navbar { flex-direction: column; gap: 12px; align-items: center; }
+  .navbar nav { justify-content: center; }
   .hero { padding: 1.5rem; }
   .experience-gallery { grid-template-columns: 1fr; }
   .contact-info { text-align: center; }
@@ -59,75 +60,50 @@
 }
 
 /* Default: inline for desktop */
-.mobile-break {
-  display: inline;
-}
+.mobile-break { display: inline; }
 
 /* On mobile: force break before ♥ */
 @media (max-width: 768px) {
   .mobile-break {
-    display: block;    /* new line */
+    display: block; 
     text-align: center;
-    margin-top: 0.3em; /* small gap */
+    margin-top: 0.3em;
   }
 }
 
 /* ---------- Base styles ---------- */
 
-/* Fix the navbar so the logo stays visible while scrolling */
+/* Navbar */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: white;       /* ensures text stays readable */
+  background: white;
   backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(0,0,0,0.1);
   padding: 1rem;
-}
-
-.navbar {
   display: flex;
-  justify-content: space-between; /* logo left, menu right */
+  justify-content: space-between;
   align-items: center;
 }
-
 .navbar nav {
   display: flex;
   gap: 2rem;
-  justify-content: flex-end; /* push nav items to the right */
+  justify-content: flex-end;
 }
-
-.navbar a { 
-  text-decoration: none; 
-  color: inherit; 
-  font-weight: 500; }
+.navbar a { text-decoration: none; color: inherit; font-weight: 500; }
 
 /* ---------- Hero ---------- */
-.hero { 
-  padding: 2rem; 
-  text-align: center; }
+.hero { padding: 2rem; text-align: center; }
 .hero h1 {
   font-size: clamp(1.8rem, 5vw, 3.5rem); 
   font-weight: 500; 
   line-height: 1.4; 
   margin: 0;
 }
-.hero h1 div { 
-  display: block; 
-  padding: 0.5rem 1rem; 
-  margin-bottom: 4rem; }
-
-.hero h1 span { 
-  display: inline-block; 
-  opacity: 0; 
-  white-space: normal;   /* allow wrapping inside long text */
-}
-
-.hero h1 {
-  word-break: keep-all;
-  overflow-wrap: break-word;
-}
-
+.hero h1 div { display: block; padding: 0.5rem 1rem; margin-bottom: 4rem; }
+.hero h1 span { display: inline-block; opacity: 0; white-space: normal; }
+.hero h1 { word-break: keep-all; overflow-wrap: break-word; }
 .tagline {
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   opacity: 0; 
@@ -136,133 +112,65 @@
   margin-bottom: 1.5rem;
 }
 .cta {
-  margin-top: 2rem; 
-  padding: 1rem 2rem;
-  background: black; 
-  color: white; 
-  border-radius: 2rem; 
-  border: none;
-  cursor: pointer; 
-  font-size: 1rem; 
-  min-width: 180px;
+  margin-top: 2rem; padding: 1rem 2rem;
+  background: black; color: white; border-radius: 2rem; border: none;
+  cursor: pointer; font-size: 1rem; min-width: 180px;
   transition: transform 0.2s, background 0.3s;
 }
-.cta:hover { 
-  transform: scale(1.05); 
-  background: #333; }
-img { 
-  max-width: 100%; 
-  height: auto; }
+.cta:hover { transform: scale(1.05); background: #333; }
+img { max-width: 100%; height: auto; }
 
 /* ---------- About ---------- */
 .about {
-  padding: 1rem; 
-  max-width: 900px; 
-  margin: auto;
-  line-height: 1.8; 
-  font-size: 1.05rem; 
-  text-align: justify;
+  padding: 1rem; max-width: 900px; margin: auto;
+  line-height: 1.8; font-size: 1.05rem; text-align: justify;
 }
 .about h2 {
-  font-size: 2rem; 
-  font-weight: 700; 
-  margin-bottom: 1.5rem; 
-  text-align: center;
+  font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;
 }
 
 /* ---------- Experience Cards ---------- */
 .experience-gallery {
-  display: grid; 
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem; 
-  max-width: 1100px; 
-  margin: auto; 
-  justify-items: center;
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem; max-width: 1100px; margin: auto; justify-items: center;
 }
 .exp-card {
-  width: 100%; 
-  max-width: 280px; 
-  height: 300px;
-  perspective: 1000px; 
-  opacity: 0; 
-  transform: translateY(40px);
+  width: 100%; max-width: 280px; min-height: 280px;
+  perspective: 1000px; opacity: 0; transform: translateY(40px);
+  height: auto;
 }
 .card-inner {
-  position: relative; 
-  width: 100%; 
-  height: 100%;
-  transition: transform 0.8s; 
-  transform-style: preserve-3d;
-  border-radius: 1rem; 
-  cursor: pointer; 
-  text-align: center;
+  position: relative; width: 100%; height: 100%;
+  transition: transform 0.8s; transform-style: preserve-3d;
+  border-radius: 1rem; cursor: pointer; text-align: center;
 }
-.exp-card:hover .card-inner { 
-  transform: rotateY(180deg); }
+.exp-card:hover .card-inner { transform: rotateY(180deg); }
 .card-front, .card-back {
-  position: absolute; 
-  width: 100%;
-  height: 100%; 
-  backface-visibility: hidden;
-  border-radius: 1rem; 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center;
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden; border-radius: 1rem;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
   padding: 1rem;
 }
-.card-front { 
-  background: rgba(0,0,0,0.05); 
-  font-size: 1.1rem; 
-  font-weight: 700; }
+.card-front { background: rgba(0,0,0,0.05); font-size: 1.1rem; font-weight: 700; }
 .card-back {
-  background: white; 
-  color: black; 
-  transform: rotateY(180deg);
-  font-size: 0.95rem; 
-  line-height: 1.6; 
-  text-align: justify;
-  align-items: flex-start; 
-  padding: 1.2rem; 
-  overflow-y: auto;
+  background: white; color: black; transform: rotateY(180deg);
+  font-size: 0.95rem; line-height: 1.6; text-align: justify;
+  align-items: flex-start; padding: 1.2rem; overflow-y: auto; max-height: 100%;
 }
-.card-back h3 { 
-  font-size: 1.05rem; 
-  font-weight: 700; 
-  margin-bottom: 0.3rem; }
-.card-back .company { 
-  font-size: 0.95rem; 
-  font-weight: 500; 
-  margin-bottom: 0.3rem; }
-.card-back .time { 
-  font-size: 0.85rem; 
-  color: #666; 
-  margin-bottom: 0.8rem; 
-  display: block; }
+.card-back h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+.card-back .company { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.3rem; }
+.card-back .time { font-size: 0.85rem; color: #666; margin-bottom: 0.8rem; display: block; }
 
 /* ---------- Logo ---------- */
-.logo img { 
-  height: 28px; 
-  width: auto; 
-  display: inline-block; }
-.logo { 
-  display: flex; 
-  align-items: center; 
-  opacity: 0; 
-  animation: fadeInLogo 1.5s ease-out forwards; }
+.logo img { height: 28px; width: auto; display: inline-block; }
+.logo { display: flex; align-items: center; opacity: 0; animation: fadeInLogo 1.5s ease-out forwards; }
 @keyframes fadeInLogo { from { opacity: 0; } to { opacity: 1; } }
-.shine { 
-  font-size: 1.5rem; 
-  margin-left: 6px; 
-  display: inline-block; 
-  animation: rotateStar 3s linear infinite; }
+.shine { font-size: 1.5rem; margin-left: 6px; display: inline-block; animation: rotateStar 3s linear infinite; }
 @keyframes rotateStar { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
 /* ---------- Timeline ---------- */
 .timeline {
-  position: relative; 
-  padding: 1rem 0; 
-  margin-left: 20px; border-left: 3px solid #555;
+  position: relative; padding: 1rem 0; margin-left: 20px; border-left: 3px solid #555;
 }
 .timeline-item { margin-bottom: 1.5rem; position: relative; }
 .timeline-date { font-weight: 700; margin-bottom: 0.2rem; color: #0077b5; }
@@ -272,90 +180,46 @@ img {
 }
 
 /* ---------- Contact Section ---------- */
-#contact {
-  padding: 60px 20px;
-  background: none;   /* keep page background */
-  color: inherit;
+#contact { padding: 60px 20px; background: none; color: inherit; }
+body.dark #contact {
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  padding: 50px 20px;
 }
-
 .contact-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;   
-  max-width: 1100px;
-  margin: 0 auto;
-  gap: 40px;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  max-width: 1100px; margin: 0 auto; gap: 40px;
 }
-
-.contact-message,
-.contact-info,
-.social-icons {
-  flex: 1;                
-  font-size: 0.95rem;
-  line-height: 1.6;
+.contact-message, .contact-info, .social-icons {
+  flex: 1; font-size: 0.95rem; line-height: 1.6;
 }
-
 .contact-message { text-align: left; }
-.contact-info   { text-align: center; }
-.social-icons   { text-align: right; }
-
-.contact-message h3,
-.contact-info h3,
-.social-icons h3 {
-  font-size: 1rem;         
-  font-weight: 700;
-  margin-bottom: 0.8rem;
+.contact-info { text-align: center; }
+.social-icons { text-align: right; }
+.contact-message h3, .contact-info h3, .social-icons h3 {
+  font-size: 1rem; font-weight: 700; margin-bottom: 0.8rem;
 }
-
-.contact-message p,
-.contact-info p {
-  margin: 0 0 0.4rem;
-}
-
+.contact-message p, .contact-info p { margin: 0 0 0.4rem; }
 /* Social icons row */
 .social-icons .icons-row {
-  display: flex;
-  gap: 12px;
-  justify-content: flex-end;  /* icons align right */
+  display: flex; gap: 12px; justify-content: flex-end;
 }
-
 .social-icons a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  color: #fff;
-  transition: transform 0.3s;
+  display: flex; justify-content: center; align-items: center;
+  width: 42px; height: 42px; border-radius: 50%;
+  font-size: 1.2rem; color: #fff; transition: transform 0.3s;
 }
-
 .circle.green { background: #25d366; }
-.circle.red   { background: #d93025; }
-.circle.blue  { background: #0077b5; }
-.circle.dark  { background: #333; }
+.circle.red { background: #d93025; }
+.circle.blue { background: #0077b5; }
+.circle.dark { background: #333; }
 body.dark .circle.dark { background: #eee; color: #111; }
-
 
 /* ---------- Footer ---------- */
 .site-footer {
   text-align: center; padding: 1rem;
   font-size: 0.95rem; font-weight: 500;
   border-top: 1px solid rgba(0, 0, 0, 0.1); margin-top: 2rem;
-}
-
-
-/* ---------- Dark Mode ---------- */
-body.dark {
-  background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #2c003e 100%);
-  color: #eee; position: relative; overflow-x: hidden;
-}
-body.dark::before {
-  content: ""; position: fixed; top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: url("https://www.transparenttextures.com/patterns/stardust.png");
-  opacity: 0.2; z-index: -1; pointer-events: none;
 }
 
 /* ---------- Utility ---------- */
@@ -473,202 +337,196 @@ section { scroll-margin-top: 100px; }
         <a href="https://github.com/akash-BuildHub" target="_blank" class="circle dark"><i class="fab fa-github"></i></a>
       </div>
     </div>
-
   </div>
 </section>
+  <!-- Footer -->
+  <footer class="site-footer">
+    © 2025 Akash RM <span class="mobile-break"></span> ♥ Made with passion
+  </footer>
 
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-<!-- GSAP -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    // ---------- Shatter animation ----------
+    (function runShatterOnce() {
+      const textEl = document.getElementById("shatterText");
+      const lines = Array.from(textEl.querySelectorAll("div"));
 
-<script>
+      lines.forEach((line, i) => {
+        const content = line.textContent || "";
+        const chars = Array.from(content);
+        line.textContent = "";
+        chars.forEach(ch => {
+          const span = document.createElement("span");
+          span.textContent = ch === " " ? "\u00A0" : ch;
+          line.appendChild(span);
+        });
 
-  // ---------- Shatter animation ----------
-  (function runShatterOnce() {
-    const textEl = document.getElementById("shatterText");
-    const lines = Array.from(textEl.querySelectorAll("div"));
-
-    lines.forEach((line, i) => {
-      const content = line.textContent || "";
-      const chars = Array.from(content);
-      line.textContent = "";
-      chars.forEach(ch => {
-        const span = document.createElement("span");
-        span.textContent = ch === " " ? "\u00A0" : ch;
-        line.appendChild(span);
-      });
-
-      const spans = line.querySelectorAll("span");
-      gsap.fromTo(
-        spans,
-        {
-          x: () => gsap.utils.random(-500, 500),
-          y: () => gsap.utils.random(-300, 300),
-          rotation: () => gsap.utils.random(-720, 720),
-          scale: 0,
-          opacity: 0
-        },
-        {
-          x: 0,
-          y: 0,
-          rotation: 0,
-          scale: 1,
-          opacity: 1,
-          stagger: 0.02,
-          ease: "power4.out",
-          duration: 1.2,
-          delay: i * 0.6,
-          onComplete: () => {
-            if (i === lines.length - 1) {
-              gsap.to(".tagline", {
-                opacity: 1,
-                y: -20,
-                duration: 0.6,
-                ease: "power2.out"
-              });
+        const spans = line.querySelectorAll("span");
+        gsap.fromTo(
+          spans,
+          {
+            x: () => gsap.utils.random(-500, 500),
+            y: () => gsap.utils.random(-300, 300),
+            rotation: () => gsap.utils.random(-720, 720),
+            scale: 0,
+            opacity: 0
+          },
+          {
+            x: 0,
+            y: 0,
+            rotation: 0,
+            scale: 1,
+            opacity: 1,
+            stagger: 0.02,
+            ease: "power4.out",
+            duration: 1.2,
+            delay: i * 0.6,
+            onComplete: () => {
+              if (i === lines.length - 1) {
+                gsap.to(".tagline", {
+                  opacity: 1,
+                  y: -20,
+                  duration: 0.6,
+                  ease: "power2.out"
+                });
+              }
             }
           }
-        }
-      );
+        );
+      });
+    })();
+
+    // ---------- CTA Timeline ----------
+    const ctaButton = document.querySelector(".cta");
+    const timelineSection = document.getElementById("timeline-section");
+
+    ctaButton.addEventListener("click", () => {
+      if (timelineSection.style.display === "none") {
+        timelineSection.style.display = "block";
+        timelineSection.scrollIntoView({ behavior: "smooth" });
+
+        gsap.to(timelineSection, {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out"
+        });
+
+        gsap.from(".timeline-item", {
+          y: 30,
+          opacity: 0,
+          stagger: 0.2,
+          duration: 0.8,
+          ease: "power3.out",
+          delay: 0.3
+        });
+      } else {
+        gsap.to(timelineSection, {
+          opacity: 0,
+          y: 40,
+          duration: 0.8,
+          ease: "power3.in",
+          onComplete: () => {
+            timelineSection.style.display = "none";
+          }
+        });
+      }
     });
-  })();
 
-  // ---------- CTA Timeline ----------
-  const ctaButton = document.querySelector(".cta");
-  const timelineSection = document.getElementById("timeline-section");
-
-  ctaButton.addEventListener("click", () => {
-    if (timelineSection.style.display === "none") {
-      timelineSection.style.display = "block";
-      timelineSection.scrollIntoView({ behavior: "smooth" });
-
-      gsap.to(timelineSection, {
+    // ---------- Experience animation ----------
+    gsap.utils.toArray(".exp-card").forEach((card, i) => {
+      gsap.to(card, {
+        scrollTrigger: { trigger: card, start: "top 85%" },
         opacity: 1,
         y: 0,
-        duration: 1,
-        ease: "power3.out"
-      });
-
-      gsap.from(".timeline-item", {
-        y: 30,
-        opacity: 0,
-        stagger: 0.2,
         duration: 0.8,
-        ease: "power3.out",
-        delay: 0.3
+        delay: i * 0.1
       });
-    } else {
-      gsap.to(timelineSection, {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        ease: "power3.in",
-        onComplete: () => {
-          timelineSection.style.display = "none";
-        }
-      });
-    }
-  });
-
-  // ---------- Experience animation ----------
-  gsap.utils.toArray(".exp-card").forEach((card, i) => {
-    gsap.to(card, {
-      scrollTrigger: { trigger: card, start: "top 85%" },
-      opacity: 1,
-      y: 0,
-      duration: 0.8,
-      delay: i * 0.1
     });
-  });
 
-  // ---------- About Me animation ----------
-  gsap.from("#about p", {
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: "#about",
-      start: "top 40%"
+    // ---------- About Me animation ----------
+    gsap.from("#about p", {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: "#about",
+        start: "top 40%"
+      }
+    });
+
+    // ---------- Projects animation ----------
+    gsap.from("#projects li", {
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: "#projects",
+        start: "top 40%"
+      }
+    });
+
+    // ---------- Contact section animation ----------
+    gsap.from("#contact h2", {
+      y: 40,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: "#contact",
+        start: "top 60%"
+      }
+    });
+
+    gsap.from("#contact p", {
+      y: 20,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.1,
+      ease: "power2.out",
+      delay: 0.3,
+      scrollTrigger: {
+        trigger: "#contact",
+        start: "top 70%"
+      }
+    });
+
+    // ---------- Force scroll top on refresh ----------
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
     }
-  });
+    window.onbeforeunload = () => window.scrollTo(0, 0);
+    window.onload = () => setTimeout(() => window.scrollTo(0, 0), 0);
 
-  // ---------- Projects animation ----------
-  gsap.from("#projects li", {
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: "#projects",
-      start: "top 40%"
-    }
-  });
+    // ---------- Logo reload ----------
+    const logo = document.getElementById("logo");
+    let lastTap = 0;
 
-  // ---------- Contact section animation ----------
-  gsap.from("#contact h2", {
-    y: 40,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: "#contact",
-      start: "top 60%"
-    }
-  });
+    logo.addEventListener("click", (e) => {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
 
-  gsap.from("#contact p", {
-    y: 20,
-    opacity: 0,
-    duration: 0.8,
-    stagger: 0.1,
-    ease: "power2.out",
-    delay: 0.3,
-    scrollTrigger: {
-      trigger: "#contact",
-      start: "top 70%"
-    }
-  });
+      // Reload only if already at top
+      if (window.scrollY === 0) {
+        setTimeout(() => location.reload(), 300);
+      }
+    });
 
-  // ---------- Force scroll top on refresh ----------
-  if ("scrollRestoration" in history) {
-    history.scrollRestoration = "manual"; // disable browser restore
-  }
-
-  // Always scroll top when leaving
-  window.onbeforeunload = function () {
-    window.scrollTo(0, 0);
-  };
-
-  // Always scroll top when loading
-  window.onload = function () {
-    setTimeout(() => window.scrollTo(0, 0), 0);
-  };
-
-  // ---------- Logo reload ----------
-  logo.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.scrollTo(0, 0);
-    setTimeout(() => location.reload(true), 100);
-  });
-
-  // Touch double-tap reload
-  let lastTap = 0;
-  logo.addEventListener("touchend", () => {
-    const now = Date.now();
-    if (now - lastTap < 400) {
-      window.scrollTo(0, 0);
-      setTimeout(() => location.reload(true), 100);
-    }
-    lastTap = now;
-  });
-</script>
-
-<!-- Footer -->
-<footer class="site-footer">
-  Designed and developed by Akash
-</footer>
+    // Touch double-tap reload
+    logo.addEventListener("touchend", () => {
+      const now = Date.now();
+      if (now - lastTap < 400) {
+        window.scrollTo(0, 0);
+        setTimeout(() => location.reload(), 100);
+      }
+      lastTap = now;
+    });
+  </script>
 
 </body>
 </html>
