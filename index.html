@@ -73,112 +73,188 @@
 }
 
 /* ---------- Base styles ---------- */
-body {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  transition: background 0.3s, color 0.3s;
-  user-select: none;
-}
-.light { background: #fff; color: #111; }
-.dark { background: #111; color: #eee; }
-html { scroll-behavior: smooth; }
 
-/* ---------- Navbar ---------- */
+/* Fix the navbar so the logo stays visible while scrolling */
 .navbar {
-  display: flex; justify-content: space-between;
-  padding: 1rem 2rem; position: sticky; top: 0;
-  background: inherit; border-bottom: 1px solid rgba(0,0,0,0.05);
-  z-index: 100;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: white;       /* ensures text stays readable */
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  padding: 1rem;
 }
+
+.navbar {
+  display: flex;
+  justify-content: space-between; /* logo left, menu right */
+  align-items: center;
+}
+
 .navbar nav {
-  display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; justify-content: center;
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-end; /* push nav items to the right */
 }
-.navbar a { text-decoration: none; color: inherit; font-weight: 500; }
+
+.navbar a { 
+  text-decoration: none; 
+  color: inherit; 
+  font-weight: 500; }
 
 /* ---------- Hero ---------- */
-.hero { padding: 2rem; text-align: center; }
+.hero { 
+  padding: 2rem; 
+  text-align: center; }
 .hero h1 {
-  font-size: clamp(1.8rem, 5vw, 3.5rem); font-weight: 500; line-height: 1.4; margin: 0;
+  font-size: clamp(1.8rem, 5vw, 3.5rem); 
+  font-weight: 500; 
+  line-height: 1.4; 
+  margin: 0;
 }
-.hero h1 div { display: block; padding: 0.5rem 1rem; margin-bottom: 4rem; }
-.hero h1 span { display: inline-block; opacity: 0; white-space: pre; }
+.hero h1 div { 
+  display: block; 
+  padding: 0.5rem 1rem; 
+  margin-bottom: 4rem; }
+.hero h1 span { 
+  display: inline-block; 
+  opacity: 0; 
+  white-space: pre; }
 .tagline {
   font-size: clamp(1rem, 2.5vw, 1.2rem);
-  opacity: 0; transform: translateY(20px);
+  opacity: 0; 
+  transform: translateY(20px);
   transition: opacity 0.6s ease, transform 0.6s ease;
   margin-bottom: 1.5rem;
 }
 .cta {
-  margin-top: 2rem; padding: 1rem 2rem;
-  background: black; color: white; border-radius: 2rem; border: none;
-  cursor: pointer; font-size: 1rem; min-width: 180px;
+  margin-top: 2rem; 
+  padding: 1rem 2rem;
+  background: black; 
+  color: white; 
+  border-radius: 2rem; 
+  border: none;
+  cursor: pointer; 
+  font-size: 1rem; 
+  min-width: 180px;
   transition: transform 0.2s, background 0.3s;
 }
-.cta:hover { transform: scale(1.05); background: #333; }
-img { max-width: 100%; height: auto; }
+.cta:hover { 
+  transform: scale(1.05); 
+  background: #333; }
+img { 
+  max-width: 100%; 
+  height: auto; }
 
 /* ---------- About ---------- */
 .about {
-  padding: 1rem; max-width: 900px; margin: auto;
-  line-height: 1.8; font-size: 1.05rem; text-align: justify;
+  padding: 1rem; 
+  max-width: 900px; 
+  margin: auto;
+  line-height: 1.8; 
+  font-size: 1.05rem; 
+  text-align: justify;
 }
 .about h2 {
-  font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; text-align: center;
+  font-size: 2rem; 
+  font-weight: 700; 
+  margin-bottom: 1.5rem; 
+  text-align: center;
 }
 
 /* ---------- Experience Cards ---------- */
 .experience-gallery {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem; max-width: 1100px; margin: auto; justify-items: center;
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem; 
+  max-width: 1100px; 
+  margin: auto; 
+  justify-items: center;
 }
 .exp-card {
-  width: 100%; max-width: 280px; height: 300px;
-  perspective: 1000px; opacity: 0; transform: translateY(40px);
+  width: 100%; 
+  max-width: 280px; 
+  height: 300px;
+  perspective: 1000px; 
+  opacity: 0; 
+  transform: translateY(40px);
 }
 .card-inner {
-  position: relative; width: 100%; height: 100%;
-  transition: transform 0.8s; transform-style: preserve-3d;
-  border-radius: 1rem; cursor: pointer; text-align: center;
+  position: relative; 
+  width: 100%; 
+  height: 100%;
+  transition: transform 0.8s; 
+  transform-style: preserve-3d;
+  border-radius: 1rem; 
+  cursor: pointer; 
+  text-align: center;
 }
-.exp-card:hover .card-inner { transform: rotateY(180deg); }
+.exp-card:hover .card-inner { 
+  transform: rotateY(180deg); }
 .card-front, .card-back {
-  position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-  border-radius: 1rem; display: flex; flex-direction: column; justify-content: center; align-items: center;
+  position: absolute; 
+  width: 100%;
+  height: 100%; 
+  backface-visibility: hidden;
+  border-radius: 1rem; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center;
   padding: 1rem;
 }
-.card-front { background: rgba(0,0,0,0.05); font-size: 1.1rem; font-weight: 700; }
+.card-front { 
+  background: rgba(0,0,0,0.05); 
+  font-size: 1.1rem; 
+  font-weight: 700; }
 .card-back {
-  background: white; color: black; transform: rotateY(180deg);
-  font-size: 0.95rem; line-height: 1.6; text-align: justify;
-  align-items: flex-start; padding: 1.2rem; overflow-y: auto;
+  background: white; 
+  color: black; 
+  transform: rotateY(180deg);
+  font-size: 0.95rem; 
+  line-height: 1.6; 
+  text-align: justify;
+  align-items: flex-start; 
+  padding: 1.2rem; 
+  overflow-y: auto;
 }
-.card-back h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
-.card-back .company { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.3rem; }
-.card-back .time { font-size: 0.85rem; color: #666; margin-bottom: 0.8rem; display: block; }
+.card-back h3 { 
+  font-size: 1.05rem; 
+  font-weight: 700; 
+  margin-bottom: 0.3rem; }
+.card-back .company { 
+  font-size: 0.95rem; 
+  font-weight: 500; 
+  margin-bottom: 0.3rem; }
+.card-back .time { 
+  font-size: 0.85rem; 
+  color: #666; 
+  margin-bottom: 0.8rem; 
+  display: block; }
 
 /* ---------- Logo ---------- */
-.logo img { height: 28px; width: auto; display: inline-block; }
-.logo { display: flex; align-items: center; opacity: 0; animation: fadeInLogo 1.5s ease-out forwards; }
+.logo img { 
+  height: 28px; 
+  width: auto; 
+  display: inline-block; }
+.logo { 
+  display: flex; 
+  align-items: center; 
+  opacity: 0; 
+  animation: fadeInLogo 1.5s ease-out forwards; }
 @keyframes fadeInLogo { from { opacity: 0; } to { opacity: 1; } }
-.shine { font-size: 1.5rem; margin-left: 6px; display: inline-block; animation: rotateStar 3s linear infinite; }
+.shine { 
+  font-size: 1.5rem; 
+  margin-left: 6px; 
+  display: inline-block; 
+  animation: rotateStar 3s linear infinite; }
 @keyframes rotateStar { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-/* ---------- Toggle Switch ---------- */
-.toggle-switch {
-  width: 60px; height: 30px; border-radius: 30px; background: #ddd;
-  position: relative; cursor: pointer; transition: background 0.3s;
-}
-.switch-thumb {
-  width: 24px; height: 24px; border-radius: 50%; background: white;
-  position: absolute; top: 3px; left: 3px; transition: all 0.3s ease;
-  background-image: url("./Image/Day logo.png"); background-size: 18px; background-repeat: no-repeat; background-position: center;
-}
-body.dark .toggle-switch { background: #000; }
-body.dark .switch-thumb { left: 33px; background-image: url("./Image/Night logo.png"); }
 
 /* ---------- Timeline ---------- */
 .timeline {
-  position: relative; padding: 1rem 0; margin-left: 20px; border-left: 3px solid #555;
+  position: relative; 
+  padding: 1rem 0; 
+  margin-left: 20px; border-left: 3px solid #555;
 }
 .timeline-item { margin-bottom: 1.5rem; position: relative; }
 .timeline-date { font-weight: 700; margin-bottom: 0.2rem; color: #0077b5; }
@@ -261,6 +337,7 @@ body.dark .circle.dark { background: #eee; color: #111; }
   border-top: 1px solid rgba(0, 0, 0, 0.1); margin-top: 2rem;
 }
 
+
 /* ---------- Dark Mode ---------- */
 body.dark {
   background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #2c003e 100%);
@@ -292,9 +369,6 @@ section { scroll-margin-top: 100px; }
       <a href="#projects">ᴘʀᴏᴊᴇᴄᴛꜱ</a>
       <a href="#contact">ᴄᴏɴᴛᴀᴄᴛ</a>
       <a href="resume.pdf" target="_blank">ʀᴇꜱᴜᴍᴇ</a>
-      <div class="toggle-switch" id="toggleMode" title="Toggle dark / light">
-        <div class="switch-thumb"></div>
-      </div>
     </nav>
   </header>
 
@@ -401,18 +475,6 @@ section { scroll-margin-top: 100px; }
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 <script>
-  // ---------- Dark/Light toggle ----------
-  const toggle = document.getElementById("toggleMode");
-  const body = document.body;
-  const logo = document.getElementById("logo");
-
-  toggle.addEventListener("click", () => {
-    body.classList.toggle("dark");
-    body.classList.toggle("light");
-    logo.src = body.classList.contains("dark")
-      ? "./Image/Signature logo-white.png"
-      : "./Image/Signature logo-black.png";
-  });
 
   // ---------- Shatter animation ----------
   (function runShatterOnce() {
