@@ -35,9 +35,14 @@
 <style>
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
-  .experience-gallery { grid-template-columns: repeat(2, 1fr); }
-  .hero h1 { font-size: 2.2rem; line-height: 1.6; }
-  .contact-wrapper { flex-direction: column; text-align: center; gap: 25px; }
+  .experience-gallery { 
+    grid-template-columns: repeat(2, 1fr); }
+  .hero h1 { 
+    font-size: 2.2rem; 
+    line-height: 1.6; }
+  .contact-wrapper { 
+    flex-direction: column; 
+    text-align: center; gap: 25px; }
 }
 @media (max-width: 768px) {
   .container { flex-direction: column; padding: 10px; }
@@ -131,35 +136,75 @@ img { max-width: 100%; height: auto; }
 
 /* ---------- Experience Cards ---------- */
 .experience-gallery {
-  display: grid; grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem; max-width: 1100px; margin: auto; justify-items: center;
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem; 
+  max-width: 1100px; 
+  margin: auto; 
+  justify-items: center;
 }
 .exp-card {
-  width: 100%; max-width: 280px; min-height: 280px;
-  perspective: 1000px; opacity: 0; transform: translateY(40px);
+  width: 100%; 
+  max-width: 280px; 
+  min-height: 280px;
+  perspective: 1000px; 
+  opacity: 0; 
+  transform: translateY(40px);
   height: auto;
 }
 .card-inner {
-  position: relative; width: 100%; height: 100%;
-  transition: transform 0.8s; transform-style: preserve-3d;
-  border-radius: 1rem; cursor: pointer; text-align: center;
+  position: relative; 
+  width: 100%; 
+  height: 100%;
+  transition: transform 0.8s; 
+  transform-style: preserve-3d;
+  border-radius: 1rem; 
+  cursor: pointer; 
+  text-align: center;
 }
-.exp-card:hover .card-inner { transform: rotateY(180deg); }
+.exp-card:hover .card-inner { 
+  transform: rotateY(180deg); }
 .card-front, .card-back {
-  position: absolute; width: 100%; height: 100%;
-  backface-visibility: hidden; border-radius: 1rem;
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  position: absolute; 
+  width: 100%; 
+  height: 100%;
+  backface-visibility: hidden; 
+  border-radius: 1rem;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center;
   padding: 1rem;
 }
-.card-front { background: rgba(0,0,0,0.05); font-size: 1.1rem; font-weight: 700; }
+.card-front { 
+  background: rgba(0,0,0,0.05); 
+  font-size: 1.1rem; 
+  font-weight: 700; }
 .card-back {
-  background: white; color: black; transform: rotateY(180deg);
-  font-size: 0.95rem; line-height: 1.6; text-align: justify;
-  align-items: flex-start; padding: 1.2rem; overflow-y: auto; max-height: 100%;
+  background: white; 
+  color: black; 
+  transform: rotateY(180deg);
+  font-size: 0.95rem; 
+  line-height: 1.6; 
+  text-align: justify;
+  align-items: flex-start; 
+  padding: 1.2rem;
+  overflow-y: auto; 
+  max-height: 100%;
 }
-.card-back h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
-.card-back .company { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.3rem; }
-.card-back .time { font-size: 0.85rem; color: #666; margin-bottom: 0.8rem; display: block; }
+.card-back h3 { 
+  font-size: 1.05rem; 
+  font-weight: 700; 
+  margin-bottom: 0.3rem; }
+.card-back .company { 
+  font-size: 0.95rem; 
+  font-weight: 500; 
+  margin-bottom: 0.3rem; }
+.card-back .time { 
+  font-size: 0.85rem; 
+  color: #666; 
+  margin-bottom: 0.8rem; 
+  display: block; }
 
 /* ---------- Logo ---------- */
 .logo img { height: 28px; width: auto; display: inline-block; }
@@ -222,6 +267,74 @@ body.dark .circle.dark { background: #eee; color: #111; }
   border-top: 1px solid rgba(0, 0, 0, 0.1); margin-top: 2rem;
 }
 
+/* Disable text selection everywhere */
+body {
+  user-select: none;
+}
+
+/* Allow selection ONLY for phone, email, and location */
+.contact-info p {
+  user-select: text;
+}
+
+.timeline-vertical {
+  position: relative;
+  margin: 2rem 0;
+  padding-left: 30px;
+  border-left: 3px solid #000000;
+}
+
+.timeline-box {
+  position: relative;
+  background: #fff;
+  border: 2px solid #020202;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  transition: transform 0.3s;
+}
+
+.timeline-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.timeline-icon {
+  position: absolute;
+  left: -35px;
+  top: 20px;
+  background: #060606;
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+.timeline-box h3 {
+  margin-top: 0;
+  color: #050505;
+}
+
+.timeline-box ul {
+  padding-left: 1.2rem;
+  margin: 0;
+  list-style-type: disc;
+}
+
+.timeline-box ul li {
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+#timeline {
+  display: none;   /* Hidden until button click */
+  opacity: 0;      /* For smooth GSAP reveal */
+  transform: translateY(40px);
+}
+
 /* ---------- Utility ---------- */
 section { scroll-margin-top: 100px; }
 </style>
@@ -267,7 +380,7 @@ section { scroll-margin-top: 100px; }
     <div class="experience-gallery">
       <div class="exp-card"><div class="card-inner"><div class="card-front"><h3>Data Engineer</h3></div><div class="card-back"><h3>Owlytics</h3><div class="company">(Incubenation)</div><span class="time">Bengaluru | 2025 – Present</span><p>Working on data pipelines and engineering solutions, focusing on data integration and analytics.</p></div></div></div>
       <div class="exp-card"><div class="card-inner"><div class="card-front"><h3>Admission Counsellor</h3></div><div class="card-back"><h3>Study in Bengaluru (SIB)</h3><div class="company">(Aspiraquest)</div><span class="time">Bengaluru | 2025</span><p>Guided students through academic programs and admissions, assisting with applications, documentation, and study pathways.</p></div></div></div>
-      <div class="exp-card"><div class="card-inner"><div class="card-front"><h3>Assistant Technical Writer</h3></div><div class="card-back"><h3>Rpinnacle Research Solutions</h3><div class="company">(Resbee)</div><span class="time">Thuckalay | 2024 – 2025</span><p>Created structured documentation, technical reports, and research materials for deep learning projects, improving clarity, knowledge sharing, and supporting ongoing development and research efforts.</p></div></div></div>
+      <div class="exp-card"><div class="card-inner"><div class="card-front"><h3>Assistant Technical Writer</h3></div><div class="card-back"><h3>Rpinnacle Research Solutions</h3><div class="company">(Resbee)</div><span class="time">Thuckalay | 2024 – 2025</span><p>Created documentation, technical reports, and research materials for deep learning projects, improving clarity, knowledge sharing, and supporting ongoing development and research efforts.</p></div></div></div>
       <div class="exp-card"><div class="card-inner"><div class="card-front"><h3>Python- Intern</h3></div><div class="card-back"><h3>Srishti Innovations</h3>Techno park<div class="company"></div><span class="time">Trivandrum | July 2023</span><p>Enhanced Python programming skills and explored software development methodologies through hands-on projects and practical applications.</p></div></div></div>
       <div class="exp-card"><div class="card-inner"><div class="card-front"><h3>In-plant Training</h3></div><div class="card-back"><h3>iTrobes Technologies Pvt. Ltd.</h3><div class="company">Industry exposure</div><span class="time">Marthandam | July 2022</span><p>Gained industry exposure to software development practices and team collaboration, strengthening practical understanding of real-world workflows.</p></div></div></div>
     </div>
@@ -283,25 +396,55 @@ section { scroll-margin-top: 100px; }
   </section>
 
   <!-- Timeline Section (Initially Hidden) -->
-<section id="timeline-section" class="about" style="display: none; opacity:0; transform: translateY(40px);">
+<section id="timeline" class="about">
   <h2>My Journey</h2>
-  <div class="timeline">
-    <div class="timeline-item">
-      <div class="timeline-date">2022</div>
-      <div class="timeline-content">Completed in-plant training at iTrobes Technologies.</div>
+  <div class="timeline-vertical">
+    
+    <!-- Education -->
+    <div class="timeline-box">
+      <div class="timeline-icon">🎓</div>
+      <h3>Education (2020 - 2024)</h3>
+      <ul>
+        <li>HSE – Child Jesus Matriculation Higher Secondary School, Unnamalaikadai [2018 – 2020]</li>
+        <li>BE (CSE) – Bethlahem Institute of Engineering, Karungal [2020 – 2024]</li>
+      </ul>
     </div>
-    <div class="timeline-item">
-      <div class="timeline-date">2023</div>
-      <div class="timeline-content">Interned at Srishti Innovations (Python).</div>
+
+    <!-- Career -->
+    <div class="timeline-box">
+      <div class="timeline-icon">💼</div>
+      <h3>Career (2023 - 2025)</h3>
+      <ul>
+        <li>2023 – Academic Research Project using Deep Learning</li>
+        <li>2024 – Joined a research company as a Research Analyst</li>
+        <li>2025 – Developed Personal Portfolio Website (React, HTML, CSS, JavaScript)</li>
+      </ul>
     </div>
-    <div class="timeline-item">
-      <div class="timeline-date">2024</div>
-      <div class="timeline-content">Worked as Assistant Technical Writer at Rpinnacle Research Solutions.</div>
+
+    <!-- Personal Journey -->
+    <div class="timeline-box">
+      <div class="timeline-icon">📈</div>
+      <h3>Personal Journey (2020 - 2025)</h3>
+      <ul>
+        <li>2020 – Transitioned from school to engineering</li>
+        <li>2023 – Research milestone</li>
+        <li>2024 – Career search</li>
+        <li>2025 – Exploring Web Development & AI career opportunities</li>
+      </ul>
     </div>
-    <div class="timeline-item">
-      <div class="timeline-date">2025</div>
-      <div class="timeline-content">Data Engineer at Owlytics and Admission Counsellor at SIB.</div>
+
+    <!-- Skills -->
+    <div class="timeline-box">
+      <div class="timeline-icon">🛠️</div>
+      <h3>Skills</h3>
+      <ul>
+        <li>Programming – Python, JavaScript (Node.js, React), HTML, CSS</li>
+        <li>Backend & Databases – Node.js, UPI Payment Integration, API Handling</li>
+        <li>Design – UI/UX (Figma, portfolio design), Graphic/Interior design interest</li>
+        <li>AI/Research – Deep learning, reinforcement learning, image processing, network optimization</li>
+      </ul>
     </div>
+
   </div>
 </section>
 
@@ -399,42 +542,42 @@ section { scroll-margin-top: 100px; }
       });
     })();
 
-    // ---------- CTA Timeline ----------
-    const ctaButton = document.querySelector(".cta");
-    const timelineSection = document.getElementById("timeline-section");
+// ---------- CTA Timeline ----------
+const ctaButton = document.querySelector(".cta");
+const timelineSection = document.getElementById("timeline"); // fixed id
 
-    ctaButton.addEventListener("click", () => {
-      if (timelineSection.style.display === "none") {
-        timelineSection.style.display = "block";
-        timelineSection.scrollIntoView({ behavior: "smooth" });
+ctaButton.addEventListener("click", () => {
+  if (timelineSection.style.display === "none" || timelineSection.style.display === "") {
+    timelineSection.style.display = "block";
+    timelineSection.scrollIntoView({ behavior: "smooth" });
 
-        gsap.to(timelineSection, {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out"
-        });
+    gsap.to(timelineSection, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power3.out"
+    });
 
-        gsap.from(".timeline-item", {
-          y: 30,
-          opacity: 0,
-          stagger: 0.2,
-          duration: 0.8,
-          ease: "power3.out",
-          delay: 0.3
-        });
-      } else {
-        gsap.to(timelineSection, {
-          opacity: 0,
-          y: 40,
-          duration: 0.8,
-          ease: "power3.in",
-          onComplete: () => {
-            timelineSection.style.display = "none";
-          }
-        });
+    gsap.from(".timeline-box", {
+      y: 30,
+      opacity: 0,
+      stagger: 0.2,
+      duration: 0.8,
+      ease: "power3.out",
+      delay: 0.3
+    });
+  } else {
+    gsap.to(timelineSection, {
+      opacity: 0,
+      y: 40,
+      duration: 0.8,
+      ease: "power3.in",
+      onComplete: () => {
+        timelineSection.style.display = "none";
       }
     });
+  }
+});
 
     // ---------- Experience animation ----------
     gsap.utils.toArray(".exp-card").forEach((card, i) => {
