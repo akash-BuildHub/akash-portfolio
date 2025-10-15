@@ -379,7 +379,6 @@ body.dark #contact {
   width: 42px; height: 42px; border-radius: 50%;
   font-size: 1.2rem; color: #fff; transition: transform 0.3s;
 }
-
 .circle.green { background: #25d366; }
 .circle.red { background: #d93025; }
 .circle.blue { background: #0077b5; }
@@ -459,6 +458,32 @@ body {
   display: none;   /* Hidden until button click */
   opacity: 0;      /* For smooth GSAP reveal */
   transform: translateY(40px);
+}
+/* ===== Custom Scrollbar Matching Theme ===== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0a; /* same as your main background */
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00eaff, #007bff); /* neon-cyan to blue */
+  border-radius: 10px;
+  box-shadow: 0 0 8px #00eaff; /* soft glow */
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00ffff, #00aaff);
+  box-shadow: 0 0 12px #00ffff;
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #00eaff #0a0a0a;
 }
 
 /* ---------- Utility ---------- */
