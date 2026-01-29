@@ -66,7 +66,7 @@ const Navbar = () => {
             className="border-primary/50 hover:border-primary hover:bg-primary/10 glow-hover transition-all duration-300"
             onClick={() => {
               // Resume download - placeholder until user provides PDF
-              window.open('/resume.pdf', '_blank');
+              window.open('/ak-resume.pdf', '_blank');
             }}
           >
             <Download className="w-4 h-4 mr-2" />
