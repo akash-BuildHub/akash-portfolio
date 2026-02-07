@@ -93,14 +93,14 @@ const ExperienceCard = ({ experience, index }: { experience: ExperienceItem; ind
     >
       <div className="flip-card-inner">
         {/* Front Side - Job Title Only */}
-        <div className="flip-card-front bg-gradient-to-br from-card/80 to-card/40 border border-border/50 rounded-xl flex items-center justify-center p-6 hover:border-primary/30 transition-colors">
+        <div className="flip-card-front bg-[#0a0a12]/80 to-card/40 border border-border/50 rounded-xl flex items-center justify-center p-6 hover:border-primary/30 transition-colors">
           <h3 className="text-2xl font-bold text-foreground text-center gradient-text">
             {experience.title}
           </h3>
         </div>
         
         {/* Back Side - Full Details */}
-        <div className="flip-card-back bg-gradient-to-br from-primary/20 to-accent/10 border border-primary/30 rounded-xl p-6 flex flex-col justify-center">
+        <div className="flip-card-back bg-[#0a0a12]/20 to-accent/10 border border-primary/30 rounded-xl p-6 flex flex-col justify-center">
           <h3 className="text-xl font-bold text-foreground mb-1">{experience.company}</h3>
           {experience.parentCompany && (
             <p className="text-primary text-sm mb-2">({experience.parentCompany})</p>

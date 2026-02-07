@@ -37,7 +37,6 @@
     --radius: 0.75rem;
 
     /* Custom colors for portfolio */
-    --glow: 270 80% 65%;
     --glass: 260 30% 15%;
     --glass-border: 260 40% 30%;
     --gradient-start: 280 100% 70%;
@@ -125,8 +124,6 @@
   /* Glassmorphism card */
   .glass {
     background: hsl(var(--glass) / 0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border: 1px solid hsl(var(--glass-border) / 0.3);
   }
 
