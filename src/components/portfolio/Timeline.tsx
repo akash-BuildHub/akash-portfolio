@@ -24,31 +24,33 @@ const timelineData: TimelineItem[] = [
       'BE (CSE) – Bethlahem Institute of Engineering, Karungal [2020 – 2024]',
     ],
   },
-  {
+      {
     icon: Briefcase,
     title: 'Career',
     content: [
-      '2023 – Academic Research Project using Deep Learning',
-      '2024 – Joined a research company as a Research Analyst',
-      '2025 – Developed computer vision projects and a personal portfolio website',
+      '2023 – Academic Project using Deep Learning',
+      '2024 – Research Analyst',
+      '2025 – Python Developer',
+      '2025 – AI Developer',
     ],
   },
   {
     icon: TrendingUp,
     title: 'Personal Journey',
     content: [
-      '2020 – Transitioned from School to Engineering',
-      '2023 – Research milestone',
-      '2024 – Career search',
-      '2025 – Exploring Web Development & AI career opportunities',
+      '2020 – Transitioned from school to engineering, building core technical foundations',
+      '2023 – Achieved significant research milestones and actively explored career opportunities',
+      '2024 – Placed in a Research Analyst role, working on data-driven research tasks',
+      '2025 – Exploring opportunities in Web Development and AI technologies',
+      '2026 – Focused on building AI-powered computer vision and real-time analytics projects',
     ],
   },
   {
     icon: Wrench,
     title: 'Skills',
     content: [
-      'Programming – HTML, CSS, JavaScript, React',
-      'Backend & Databases – Python, Cloud, Firebase, API Integration',
+      'Programming – HTML, CSS, JavaScript, React, Node.js',
+      'Backend & Databases – Python, Cloud, API Integration, PostgreSQL',
       'Design – UI/UX (Figma), Graphic/Interior design',
       'AI/Research – Computer vision, Network optimization, Deep Learning, Machine Learning, AI - Recognition | Detection | Classification',
     ],
