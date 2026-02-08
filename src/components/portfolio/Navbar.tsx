@@ -77,11 +77,8 @@ const Navbar = () => {
           ))}
           <Button
             variant="outline"
-            className="border-primary/50 hover:border-primary hover:bg-primary/10 glow-hover transition-all duration-300"
-            onClick={() => {
-              // Resume download - placeholder until user provides PDF
-              window.open('/ak-resume.pdf', '_blank');
-            }}
+            className="border-primary/50 hover:border-primary w-full mt-2"
+            onClick={() => window.open('/ak-resume.pdf', '_blank')}
           >
             <Download className="w-4 h-4 mr-2" />
             Resume
