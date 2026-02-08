@@ -52,7 +52,7 @@ const timelineData: TimelineItem[] = [
       'Programming – HTML, CSS, JavaScript, React, Node.js',
       'Backend & Databases – Python, Cloud, API Integration, PostgreSQL',
       'Design – UI/UX (Figma), Graphic/Interior design',
-      'AI/Research – Computer vision, Network optimization, Deep Learning, Machine Learning, AI - Recognition | Detection | Classification',
+      'AI & Research – Computer vision, Network optimization, Deep Learning, Machine Learning, AI - Recognition | Detection | Classification',
     ],
   },
 ];
