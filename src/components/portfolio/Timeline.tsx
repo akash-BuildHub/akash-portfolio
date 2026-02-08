@@ -152,12 +152,6 @@ const Timeline = ({ show }: TimelineProps) => {
       ref={sectionRef}
       className="py-24 md:py-32 relative"
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 left-1/4 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl" />
-      </div>
-
       <div className="container mx-auto px-6 relative z-10">
         <h2 className="section-title">My Journey</h2>
 

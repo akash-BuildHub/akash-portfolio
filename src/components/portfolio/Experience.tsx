@@ -122,12 +122,6 @@ const Experience = () => {
 
   return (
     <section id="experience" ref={sectionRef} className="py-24 md:py-32 relative">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-accent/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl" />
-      </div>
-
       <div className="container mx-auto px-6 relative z-10">
         <h2 className="section-title">Experience</h2>
 

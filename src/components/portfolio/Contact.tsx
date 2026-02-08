@@ -77,11 +77,6 @@ const Contact = () => {
 
   return (
     <section id="contact" ref={sectionRef} className="py-24 md:py-32 relative">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full blur-3xl" />
-      </div>
-
       <div className="container mx-auto px-6 relative z-10">
         <h2 className="section-title">Contact</h2>
 
@@ -90,7 +85,7 @@ const Contact = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto"
         >
           {/* Personal Message */}
-          <div className="glass-card p-8 glow-hover transition-all duration-500">
+          <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-4">Akash's Portfolio</h3>
             <p className="text-foreground/80 leading-relaxed">
               Thanks for exploring my little corner of the web.<br></br>
@@ -99,7 +94,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="glass-card p-8 glow-hover transition-all duration-500">
+          <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-6">Reach Out</h3>
             <div className="space-y-4 selectable">
               <div className="flex items-center gap-4 text-foreground/80 hover:text-foreground transition-colors">
@@ -118,7 +113,7 @@ const Contact = () => {
           </div>
 
           {/* Social Links - Colored circular icons */}
-          <div className="glass-card p-8 glow-hover transition-all duration-500">
+          <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-6">Catch Me Online</h3>
             <div className="flex justify-center gap-4">
               {socialLinks.map((social, index) => (

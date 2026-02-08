@@ -150,11 +150,6 @@ const Projects = () => {
 
   return (
     <section id="projects" ref={sectionRef} className="py-24 md:py-32 relative">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl -translate-y-1/2" />
-      </div>
-
       <div className="container mx-auto px-6 relative z-10">
         <h2 className="section-title">Projects</h2>
 
