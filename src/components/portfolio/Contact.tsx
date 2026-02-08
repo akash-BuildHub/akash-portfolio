@@ -11,18 +11,18 @@ const Contact = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
+        gsap.fromTo(
         contentRef.current?.children || [],
-        { opacity: 0, y: 50 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: 'power3.out',
+          duration: 0.35,
+          stagger: 0.08,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 80%',
+            start: 'top 95%',
             toggleActions: 'play none none reverse',
           },
         }

@@ -64,17 +64,17 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
+        gsap.fromTo(
         cardRef.current,
-        { opacity: 0, x: index % 2 === 0 ? -50 : 50 },
+        { opacity: 0, y: 20 },
         {
           opacity: 1,
-          x: 0,
-          duration: 0.8,
-          ease: 'power3.out',
+          y: 0,
+          duration: 0.35,
+          ease: 'power2.out',
           scrollTrigger: {
             trigger: cardRef.current,
-            start: 'top 85%',
+            start: 'top 95%',
             toggleActions: 'play none none reverse',
           },
         }
