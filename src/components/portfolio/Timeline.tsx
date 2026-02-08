@@ -91,7 +91,7 @@ const TimelineItemComponent = ({ item, index }: { item: TimelineItem; index: num
     >
       {/* Content */}
       <div className={`flex-1 ${isLeft ? 'md:text-right' : 'md:text-left'}`}>
-        <div className={`glass-card p-6 glow-hover transition-all duration-500 inline-block ${isLeft ? 'md:ml-auto' : 'md:mr-auto'}`}>
+        <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-6 transition-all duration-500 inline-block">
           <h3 className="text-xl font-bold gradient-text mb-4">{item.title}</h3>
           <ul className="space-y-2">
             {item.content.map((text, i) => (
@@ -105,7 +105,7 @@ const TimelineItemComponent = ({ item, index }: { item: TimelineItem; index: num
 
       {/* Icon */}
       <div className="relative flex-shrink-0 z-10">
-        <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center glow animate-glow-pulse">
+        <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center">
           <item.icon className="w-7 h-7 text-primary-foreground" />
         </div>
       </div>
