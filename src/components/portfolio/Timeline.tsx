@@ -31,7 +31,7 @@ const timelineData: TimelineItem[] = [
       '2023 – Academic Project using Deep Learning',
       '2024 – Research Analyst',
       '2025 – Python Developer',
-      '2025 – AI Developer',
+      '2026 – AI Developer',
     ],
   },
   {
