@@ -87,7 +87,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   return (
     <div
       ref={cardRef}
-      className="glass-card p-8 glow-hover transition-all duration-500 hover:scale-[1.02] group"
+      className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-500 hover:scale-[1.02] group"
     >
       <div className="flex items-start gap-6">
         {/* Icon */}
