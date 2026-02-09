@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Menu, X, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { RESUME_PATH } from '@/lib/utils';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -78,7 +79,7 @@ const Navbar = () => {
           <Button
             variant="outline"
             className="border-primary/50 hover:border-primary w-full mt-2"
-            onClick={() => window.open('/ak-resume.pdf', '_blank')}
+            onClick={() => window.open(RESUME_PATH, '_blank')}
           >
             <Download className="w-4 h-4 mr-2" />
             Resume
@@ -110,7 +111,7 @@ const Navbar = () => {
             <Button
               variant="outline"
               className="border-primary/50 hover:border-primary w-full mt-2"
-              onClick={() => window.open('/resume.pdf', '_blank')}
+              onClick={() => window.open(RESUME_PATH, '_blank')}
             >
               <Download className="w-4 h-4 mr-2" />
               Resume
