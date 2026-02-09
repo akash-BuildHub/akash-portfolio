@@ -108,14 +108,14 @@ const Navbar = () => {
                 {item.label}
               </button>
             ))}
-            <Button
-              variant="outline"
-              className="border-primary/50 hover:border-primary w-full mt-2"
-              onClick={() => window.open(RESUME_PATH, '_blank')}
+            <a
+              href={RESUME_PATH}
+              download
+              className="inline-flex items-center justify-center gap-2 w-full px-4 py-2 rounded-md border border-primary/50 hover:border-primary text-foreground hover:bg-primary/10 transition-colors mt-2"
             >
-              <Download className="w-4 h-4 mr-2" />
+              <Download className="w-4 h-4" />
               Resume
-            </Button>
+            </a>
           </div>
         </div>
       )}
