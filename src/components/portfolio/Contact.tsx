@@ -1,13 +1,140 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Phone, Mail, MapPin } from 'lucide-react';
+import { Phone, Mail, MapPin, X, Loader } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Contact = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [showChatForm, setShowChatForm] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState<{type: 'success' | 'error'; text: string} | null>(null);
+  const [formData, setFormData] = useState({
+    name: '',
+    companyName: '',
+    mobileNumber: '',
+    email: '',
+    purpose: '',
+    message: '',
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Google Apps Script Web App URL (user will need to update this)
+  const GOOGLE_APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+
+  // Validation functions
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validateMobileNumber = (mobile: string): boolean => {
+    const mobileRegex = /^[0-9]{10}$/;
+    const cleanMobile = mobile.replace(/\D/g, '');
+    return cleanMobile.length === 10;
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+
+    if (!formData.mobileNumber.trim()) {
+      newErrors.mobileNumber = 'Mobile number is required';
+    } else if (!validateMobileNumber(formData.mobileNumber)) {
+      newErrors.mobileNumber = 'Please enter a valid 10-digit mobile number';
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!validateEmail(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+    // Clear error for this field when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: '',
+      }));
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitMessage(null);
+
+    try {
+      const dataToSubmit = {
+        ...formData,
+        timestamp: new Date().toISOString(),
+      };
+
+      const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(dataToSubmit),
+      });
+
+      // no-cors mode doesn't allow us to check response, so we assume success
+      setSubmitMessage({
+        type: 'success',
+        text: 'Thanks! Your message has been sent. I\'ll get back to you soon!',
+      });
+
+      // Reset form
+      setFormData({
+        name: '',
+        companyName: '',
+        mobileNumber: '',
+        email: '',
+        purpose: '',
+        message: '',
+      });
+
+      // Close form after 3 seconds
+      setTimeout(() => {
+        setShowChatForm(false);
+        setSubmitMessage(null);
+      }, 3000);
+    } catch (error) {
+      setSubmitMessage({
+        type: 'error',
+        text: 'Failed to send message. Please try again or contact me directly.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const closeChatForm = () => {
+    setShowChatForm(false);
+    setSubmitMessage(null);
+    setErrors({});
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -115,7 +242,7 @@ const Contact = () => {
           {/* Social Links - Colored circular icons */}
           <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-6">Catch Me Online</h3>
-            <div className="flex justify-center gap-4">
+            <div className="flex justify-center gap-4 mb-8">
               {socialLinks.map((social, index) => (
                 <a
                   key={index}
@@ -129,9 +256,185 @@ const Contact = () => {
                 </a>
               ))}
             </div>
+            
+            {/* Let's Talk Button */}
+            <button
+              onClick={() => setShowChatForm(!showChatForm)}
+              className="w-full px-6 py-2 bg-gradient-to-r from-primary to-blue-600 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-300 hover:scale-105"
+            >
+              {showChatForm ? 'Close' : "Let's Talk"}
+            </button>
           </div>
         </div>
-      </div>
+
+        {/* Chat Form Section - Styled as Card Like About Section */}
+        <div
+          className={`overflow-hidden transition-all duration-500 ease-out mt-12 ${
+            showChatForm ? 'max-h-[950px] opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 md:p-12 transition-all duration-500">
+              {/* Header */}
+              <div className="flex justify-between items-center mb-8">
+                <h3 className="text-2xl md:text-3xl font-bold text-foreground">Drop a Message</h3>
+                <button
+                  onClick={closeChatForm}
+                  className="text-foreground/60 hover:text-foreground transition-colors p-1"
+                  aria-label="Close form"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <form onSubmit={handleSubmit}>
+                {/* Two Column Layout */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                {/* Left Column */}
+                    <div className="space-y-5">
+                      {/* Name */}
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                          Name <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                          placeholder="Your name"
+                          className={`w-full px-4 py-3 bg-background/50 border rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all ${
+                            errors.name ? 'border-red-500 focus:border-red-500' : 'border-border/50'
+                          }`}
+                        />
+                        {errors.name && <p className="text-red-400 text-xs mt-1.5">{errors.name}</p>}
+                      </div>
+
+                      {/* Email */}
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                          Email <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="email"
+                          name="email"
+                          value={formData.email}
+                          onChange={handleInputChange}
+                          placeholder="your@email.com"
+                          className={`w-full px-4 py-3 bg-background/50 border rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all ${
+                            errors.email ? 'border-red-500 focus:border-red-500' : 'border-border/50'
+                          }`}
+                        />
+                        {errors.email && <p className="text-red-400 text-xs mt-1.5">{errors.email}</p>}
+                      </div>
+
+                      {/* Mobile Number */}
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                          Mobile Number <span className="text-red-500">*</span>
+                        </label>
+                        <input
+                          type="tel"
+                          name="mobileNumber"
+                          value={formData.mobileNumber}
+                          onChange={handleInputChange}
+                          placeholder="10-digit number"
+                          className={`w-full px-4 py-3 bg-background/50 border rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all ${
+                            errors.mobileNumber ? 'border-red-500 focus:border-red-500' : 'border-border/50'
+                          }`}
+                        />
+                        {errors.mobileNumber && <p className="text-red-400 text-xs mt-1.5">{errors.mobileNumber}</p>}
+                      </div>
+
+                      {/* Company Name */}
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                          Company Name
+                        </label>
+                        <input
+                          type="text"
+                          name="companyName"
+                          value={formData.companyName}
+                          onChange={handleInputChange}
+                          placeholder="Your company (optional)"
+                          className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Right Column */}
+                    <div className="space-y-5">
+                      {/* Purpose */}
+                      <div>
+                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                          Purpose
+                        </label>
+                        <select
+                          name="purpose"
+                          value={formData.purpose}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none cursor-pointer"
+                        >
+                          <option value="" className="bg-[#0a0a12] text-foreground">Select a purpose…</option>
+                          <option value="Project Inquiry" className="bg-[#0a0a12] text-foreground">Project Inquiry</option>
+                          <option value="Job Opportunity" className="bg-[#0a0a12] text-foreground">Job Opportunity</option>
+                          <option value="Collaboration" className="bg-[#0a0a12] text-foreground">Collaboration</option>
+                          <option value="General Inquiry" className="bg-[#0a0a12] text-foreground">General Inquiry</option>
+                        </select>
+                      </div>
+
+                      {/* Message */}
+                      <div className="md:row-span-3">
+                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                          Message
+                        </label>
+                        <textarea
+                          name="message"
+                          value={formData.message}
+                          onChange={handleInputChange}
+                          placeholder="Tell me what's on your mind…"
+                          rows={8}
+                          className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Submit Message */}
+                  {submitMessage && (
+                    <div
+                      className={`mb-6 p-4 rounded-lg text-sm font-medium border transition-all ${
+                        submitMessage.type === 'success'
+                          ? 'bg-green-500/20 text-green-300 border-green-500/40'
+                          : 'bg-red-500/20 text-red-300 border-red-500/40'
+                      }`}
+                    >
+                      {submitMessage.text}
+                    </div>
+                  )}
+
+                  {/* Submit Button */}
+                  <div className="flex justify-end">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg hover:shadow-xl"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader className="w-4 h-4 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        'Send Message'
+                      )}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
     </section>
   );
 };
