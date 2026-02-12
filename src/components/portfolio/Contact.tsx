@@ -24,7 +24,7 @@ const Contact = () => {
 
   // Google Apps Script Web App URL (user will need to update this)
   const GOOGLE_APPS_SCRIPT_URL =
-    import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL ?? 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+    import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL ?? 'https://script.google.com/macros/s/AKfycbyt82VFGoEw0gwSCGzl8dWLAwVA6jaFLZgARxk77zZFk6x7gnsNE_UyKUgrgeEZrDp5Tw/exec';
 
   // Validation functions
   const validateEmail = (email: string): boolean => {
