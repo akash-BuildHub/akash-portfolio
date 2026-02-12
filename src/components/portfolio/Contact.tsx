@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const Contact = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const chatFormRef = useRef<HTMLDivElement>(null);
   const [showChatForm, setShowChatForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<{type: 'success' | 'error'; text: string} | null>(null);
@@ -22,7 +23,8 @@ const Contact = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Google Apps Script Web App URL (user will need to update this)
-  const GOOGLE_APPS_SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
+  const GOOGLE_APPS_SCRIPT_URL =
+    import.meta.env.VITE_GOOGLE_APPS_SCRIPT_URL ?? 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE';
 
   // Validation functions
   const validateEmail = (email: string): boolean => {
@@ -31,7 +33,6 @@ const Contact = () => {
   };
 
   const validateMobileNumber = (mobile: string): boolean => {
-    const mobileRegex = /^[0-9]{10}$/;
     const cleanMobile = mobile.replace(/\D/g, '');
     return cleanMobile.length === 10;
   };
@@ -90,7 +91,7 @@ const Contact = () => {
         timestamp: new Date().toISOString(),
       };
 
-      const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+      await fetch(GOOGLE_APPS_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: {
@@ -99,7 +100,6 @@ const Contact = () => {
         body: JSON.stringify(dataToSubmit),
       });
 
-      // no-cors mode doesn't allow us to check response, so we assume success
       setSubmitMessage({
         type: 'success',
         text: 'Thanks! Your message has been sent. I\'ll get back to you soon!',
@@ -120,7 +120,7 @@ const Contact = () => {
         setShowChatForm(false);
         setSubmitMessage(null);
       }, 3000);
-    } catch (error) {
+    } catch {
       setSubmitMessage({
         type: 'error',
         text: 'Failed to send message. Please try again or contact me directly.',
@@ -158,6 +158,25 @@ const Contact = () => {
 
     return () => ctx.revert();
   }, []);
+
+  useEffect(() => {
+    if (!showChatForm) return;
+
+    const timeoutId = window.setTimeout(() => {
+      if (!chatFormRef.current) return;
+
+      const navbarOffset = 96;
+      const top =
+        chatFormRef.current.getBoundingClientRect().top + window.scrollY - navbarOffset;
+
+      window.scrollTo({
+        top: Math.max(top, 0),
+        behavior: 'smooth',
+      });
+    }, 120);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [showChatForm]);
 
   const socialLinks = [
     {
@@ -215,7 +234,7 @@ const Contact = () => {
           <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-4">Akash's Portfolio</h3>
             <p className="text-foreground/80 leading-relaxed">
-              Thanks for exploring my little corner of the web.<br></br>
+              Thanks for exploring my little corner of the web.<br />
               This portfolio is just the trailer, the real story begins when we connect.
             </p>
           </div>
@@ -243,9 +262,9 @@ const Contact = () => {
           <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-6">Catch Me Online</h3>
             <div className="flex justify-center gap-4 mb-8">
-              {socialLinks.map((social, index) => (
+              {socialLinks.map((social) => (
                 <a
-                  key={index}
+                  key={social.label}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -269,15 +288,16 @@ const Contact = () => {
 
         {/* Chat Form Section - Styled as Card Like About Section */}
         <div
+          ref={chatFormRef}
           className={`overflow-hidden transition-all duration-500 ease-out mt-12 ${
-            showChatForm ? 'max-h-[950px] opacity-100' : 'max-h-0 opacity-0'
+            showChatForm ? 'max-h-[850px] opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 md:p-12 transition-all duration-500">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-6 md:p-8 transition-all duration-500">
               {/* Header */}
-              <div className="flex justify-between items-center mb-8">
-                <h3 className="text-2xl md:text-3xl font-bold text-foreground">Drop a Message</h3>
+              <div className="flex justify-between items-center mb-6">
+                <h3 className="text-xl md:text-2xl font-bold text-foreground">Drop a Message</h3>
                 <button
                   onClick={closeChatForm}
                   className="text-foreground/60 hover:text-foreground transition-colors p-1"
@@ -289,9 +309,9 @@ const Contact = () => {
 
               <form onSubmit={handleSubmit}>
                 {/* Two Column Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 {/* Left Column */}
-                    <div className="space-y-5">
+                    <div className="space-y-4">
                       {/* Name */}
                       <div>
                         <label className="block text-sm font-semibold text-foreground/80 mb-2">
@@ -363,7 +383,7 @@ const Contact = () => {
                     </div>
 
                     {/* Right Column */}
-                    <div className="space-y-5">
+                    <div className="space-y-4">
                       {/* Purpose */}
                       <div>
                         <label className="block text-sm font-semibold text-foreground/80 mb-2">
@@ -375,7 +395,7 @@ const Contact = () => {
                           onChange={handleInputChange}
                           className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none cursor-pointer"
                         >
-                          <option value="" className="bg-[#0a0a12] text-foreground">Select a purpose…</option>
+                          <option value="" className="bg-[#0a0a12] text-foreground">Select a purpose...</option>
                           <option value="Project Inquiry" className="bg-[#0a0a12] text-foreground">Project Inquiry</option>
                           <option value="Job Opportunity" className="bg-[#0a0a12] text-foreground">Job Opportunity</option>
                           <option value="Collaboration" className="bg-[#0a0a12] text-foreground">Collaboration</option>
@@ -392,7 +412,7 @@ const Contact = () => {
                           name="message"
                           value={formData.message}
                           onChange={handleInputChange}
-                          placeholder="Tell me what's on your mind…"
+                          placeholder="Tell me what's on your mind..."
                           rows={8}
                           className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
                         />

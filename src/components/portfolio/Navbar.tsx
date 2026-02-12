@@ -6,9 +6,14 @@ import { RESUME_PATH } from '@/lib/utils';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const clickTimeout = useRef<NodeJS.Timeout | null>(null);
+  const clickTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    if (sessionStorage.getItem('scrollToTopAfterReload') === '1') {
+      sessionStorage.removeItem('scrollToTopAfterReload');
+      window.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
@@ -52,6 +57,7 @@ const Navbar = () => {
               clearTimeout(clickTimeout.current);
               clickTimeout.current = null;
             }
+            sessionStorage.setItem('scrollToTopAfterReload', '1');
             window.location.reload();
           }}
           className="hover:opacity-80 hover:scale-105 transition-all duration-300 cursor-pointer flex items-center gap-2"
@@ -61,7 +67,7 @@ const Navbar = () => {
             alt="Logo" 
             className="h-10 w-auto"
           />
-          <span className="shine text-primary text-2xl md:text-3xl animate-pulse">✰</span>
+          <span className="shine text-primary text-2xl md:text-3xl animate-pulse">*</span>
         </button>
 
         {/* Desktop Menu */}
