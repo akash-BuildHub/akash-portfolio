@@ -3,26 +3,85 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0a0a12" />
+    <link rel="icon" type="image/png" href="/title-logo.png" />
+    <link rel="apple-touch-icon" href="/title-logo.jpg" />
 
-    <title>Akash Portfolio</title>
+    <title>Akash | Portfolio ✯</title>
 
-    <meta name="description" content="Personal portfolio website" />
+    <meta
+      name="description"
+      content="Akash portfolio showcasing AI development, Python projects, web solutions, and real-world engineering work."
+    />
     <meta name="author" content="Akash" />
+    <meta
+      name="keywords"
+      content="Akash, AI Developer, Python Developer, Portfolio, React, Machine Learning"
+    />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="/" />
 
-    <!-- Open Graph / Social Preview -->
-    <meta property="og:title" content="Akash Portfolio" />
-    <meta property="og:description" content="Personal portfolio website" />
+    <meta property="og:title" content="Akash | Portfolio" />
+    <meta
+      property="og:description"
+      content="Akash portfolio showcasing AI development, Python projects, web solutions, and real-world engineering work."
+    />
     <meta property="og:type" content="website" />
-    <!-- Optional: replace with your own image or remove entirely -->
-    <!-- <meta property="og:image" content="/og-image.png" /> -->
+    <meta property="og:image" content="/ak-profile.png" />
 
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <!-- Optional -->
-    <!-- <meta name="twitter:image" content="/og-image.png" /> -->
+    <meta name="twitter:title" content="Akash | Portfolio" />
+    <meta
+      name="twitter:description"
+      content="Akash portfolio showcasing AI development, Python projects, web solutions, and real-world engineering work."
+    />
+    <meta name="twitter:image" content="/ak-profile.png" />
+    <style>
+      html, body, #root {
+        margin: 0;
+        min-height: 100%;
+        background: #000;
+      }
+
+      #initial-loader {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        background: #000;
+        z-index: 9999;
+        transition: opacity 240ms ease;
+      }
+
+      #initial-loader.is-hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .initial-loader-ring {
+        width: 110px;
+        height: 110px;
+        border-radius: 9999px;
+        border: 3px solid rgba(255, 255, 255, 0.14);
+        border-top-color: rgba(255, 255, 255, 0.95);
+        border-left-color: rgba(255, 255, 255, 0.9);
+        border-bottom-color: rgba(255, 255, 255, 0.78);
+        box-shadow: 0 0 14px rgba(255, 255, 255, 0.18);
+        animation: initial-spin 1s linear infinite;
+      }
+
+      @keyframes initial-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
   </head>
 
   <body>
+    <div id="initial-loader" aria-hidden="true">
+      <div class="initial-loader-ring"></div>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

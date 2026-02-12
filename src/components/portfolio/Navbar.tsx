@@ -67,7 +67,7 @@ const Navbar = () => {
             alt="Logo" 
             className="h-10 w-auto"
           />
-          <span className="shine text-primary text-2xl md:text-3xl animate-pulse">*</span>
+          <span className="shine text-primary text-2xl md:text-3xl animate-pulse">✯°</span>
         </button>
 
         {/* Desktop Menu */}

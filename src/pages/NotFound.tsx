@@ -1,11 +1,25 @@
 import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
+import { setCanonical, setMetaName, setMetaProperty, setRobots } from "@/lib/seo";
 
 const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
+
+    const title = "404 | Page Not Found";
+    const description = "The page you are looking for does not exist.";
+    const url = `${window.location.origin}${location.pathname}`;
+
+    document.title = title;
+    setMetaName("description", description);
+    setMetaName("twitter:title", title);
+    setMetaName("twitter:description", description);
+    setMetaProperty("og:title", title);
+    setMetaProperty("og:description", description);
+    setCanonical(url);
+    setRobots("noindex, nofollow");
   }, [location.pathname]);
 
   return (
