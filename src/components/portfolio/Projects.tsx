@@ -56,11 +56,11 @@ const projects: Project[] = [
     icon: Hospital,
   },
     {
-    title: 'AI Bating Classification',
+    title: 'AI Batting Classification',
     year: '2026',
     description:
-      'An advanced AI-powered system for real-time recognition and detection using IP cameras and deep learning techniques, enabling accurate identification, classification, tracking, and intelligent video analysis.',
-    features: ['Deep Learning','Detection','Recognition'],
+      'AI Batting Classification – An intelligent computer vision system that processes uploaded cricket videos to identify and classify batting shots, analyze performance metrics, and predict outcomes for advanced sports analytics.',
+    features: ['Deep Learning','Prediction','clasification'],
     icon: Hospital,
   },
 ];
