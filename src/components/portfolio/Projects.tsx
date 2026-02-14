@@ -16,10 +16,10 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: 'Social Media Website',
+    title: 'Tech Media Community',
     year: '2023',
     description:
-      'Designed and developed a social media platform that encourages group learning and topic-based conversations. The platform enables members to exchange ideas, discuss emerging technologies, and collaborate on upcoming developments, creating a community-driven learning experience.',
+      'Designed and developed a tech media platform that encourages group learning and topic-based conversations. The platform enables members to exchange ideas, discuss emerging technologies, and collaborate on upcoming developments, creating a community-driven learning experience.',
     features: ['Group Learning', 'Topic-Based Discussions', 'Community Collaboration'],
     icon: Users,
   },
@@ -38,7 +38,6 @@ const projects: Project[] = [
       'Vision Snap is a web based tool for creating image datasets for computer vision. It captures images from live webcams and extracts frames from uploaded videos. Users can organize samples into custom classes and export them as machine learning ready datasets.',
     features: ['Webcam Capture', 'Video Frame Extraction', 'Dataset Creation'],
     icon: Calendar,
-    link: 'https://vision-snap-two.vercel.app',
   },
   {
     title: 'ALL IN ONE',
@@ -47,10 +46,17 @@ const projects: Project[] = [
       'ALL IN ONE is a web-based OCR tool that extracts content from images, PDFs, and web uploads. It converts scanned documents into readable and searchable text and extracts embedded images along with textual data. Supports structured output from multi-page PDF documents for fast and accurate digitization.',
     features: ['OCR', 'Document AI', 'Text & Image Extraction'],
     icon: Users,
-    link: 'https://all-in-one-2xce.onrender.com',
   },
   {
     title: 'AI Recognition & Detection',
+    year: '2026',
+    description:
+      'An advanced AI-powered system for real-time recognition and detection using IP cameras and deep learning techniques, enabling accurate identification, classification, tracking, and intelligent video analysis.',
+    features: ['Deep Learning','Detection','Recognition'],
+    icon: Hospital,
+  },
+    {
+    title: 'AI Bating Classification',
     year: '2026',
     description:
       'An advanced AI-powered system for real-time recognition and detection using IP cameras and deep learning techniques, enabling accurate identification, classification, tracking, and intelligent video analysis.',
@@ -87,7 +93,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   return (
     <div
       ref={cardRef}
-      className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-500 hover:scale-[1.02] group"
+      className="h-full bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-500 hover:scale-[1.02] group"
     >
       <div className="flex items-start gap-6">
         {/* Icon */}
@@ -109,7 +115,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             )}
           </div>
 
-          <p className="text-muted-foreground mb-4 leading-relaxed">
+          <p className="text-muted-foreground mb-4 leading-relaxed text-justify">
             {project.description}
           </p>
 
@@ -153,7 +159,7 @@ const Projects = () => {
       <div className="container mx-auto px-6 relative z-10">
         <h2 className="section-title">Projects</h2>
 
-        <div className="flex flex-col gap-6 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {projects.map((project, index) => (
             <ProjectCard key={index} project={project} index={index} />
           ))}
