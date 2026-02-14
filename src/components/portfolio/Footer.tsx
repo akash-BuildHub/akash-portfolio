@@ -2,7 +2,7 @@ import { Heart } from 'lucide-react';
 
 const Footer = () => {
   return (
-    <footer className="py-8 border-t border-border/50 relative">
+    <footer className="py-8 border-t border-border/90 relative">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row items-center justify-center gap-2 text-center">
           <p className="text-muted-foreground">
@@ -20,3 +20,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

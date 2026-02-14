@@ -84,7 +84,7 @@ const Navbar = () => {
           ))}
           <Button
             variant="outline"
-            className="border-primary/50 hover:border-primary w-full mt-2"
+            className="border-primary/60 hover:border-primary w-full mt-2"
             onClick={() => window.open(RESUME_PATH, '_blank')}
           >
             <Download className="w-4 h-4 mr-2" />
@@ -117,7 +117,7 @@ const Navbar = () => {
             <a
               href={RESUME_PATH}
               download
-              className="inline-flex items-center justify-center gap-2 w-full px-4 py-2 rounded-md border border-primary/50 hover:border-primary text-foreground hover:bg-primary/10 transition-colors mt-2"
+              className="inline-flex items-center justify-center gap-2 w-full px-4 py-2 rounded-md border border-primary/60 hover:border-primary text-foreground hover:bg-primary/10 transition-colors mt-2"
             >
               <Download className="w-4 h-4" />
               Resume
@@ -130,3 +130,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

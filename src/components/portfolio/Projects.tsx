@@ -93,7 +93,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
   return (
     <div
       ref={cardRef}
-      className="h-full bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-500 hover:scale-[1.02] group"
+      className="h-full bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 transition-all duration-500 hover:scale-[1.02] group"
     >
       <div className="flex items-start gap-6">
         {/* Icon */}
@@ -124,7 +124,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
             {project.features.map((feature, i) => (
               <span
                 key={i}
-                className="px-3 py-1 rounded-full bg-secondary/80 text-foreground/80 text-sm border border-primary/10 hover:border-primary/30 transition-colors"
+                className="px-3 py-1 rounded-full bg-secondary/80 text-foreground/80 text-sm border border-primary/40 hover:border-primary/60 transition-colors"
               >
                 {feature}
               </span>
@@ -170,3 +170,5 @@ const Projects = () => {
 };
 
 export default Projects;
+
+

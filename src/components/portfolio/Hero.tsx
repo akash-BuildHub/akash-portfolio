@@ -43,9 +43,9 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
   return (
     <section
       ref={heroRef}
-      className="min-h-screen flex items-center justify-center bg-[#0a0a12]"
+      className="min-h-screen flex items-center justify-center bg-[#0a0a12] pt-16 md:pt-20"
     >
-      <div className="relative w-full max-w-6xl mx-auto rounded-3xl border border-purple-500/15 bg-gradient-to-br from-[#0e0e18] via-[#0b0b14] to-black shadow-[0_0_80px_-20_rgba(168,85,247,0.35)] overflow-hidden">
+      <div className="relative w-full max-w-6xl mx-auto rounded-3xl border border-purple-500/40 bg-gradient-to-br from-[#0e0e18] via-[#0b0b14] to-black shadow-[0_0_80px_-20_rgba(168,85,247,0.35)] overflow-hidden">
         <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] items-center gap-14 px-14 py-20">
           <div ref={textRef}>
             <h1 className="text-5xl font-bold text-white">Welcome to</h1>
@@ -83,3 +83,5 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
 };
 
 export default Hero;
+
+

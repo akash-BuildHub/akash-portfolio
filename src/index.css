@@ -30,8 +30,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 260 30% 20%;
-    --input: 260 30% 20%;
+    --border: 260 32% 34%;
+    --input: 260 32% 34%;
     --ring: 270 80% 65%;
 
     --radius: 0.75rem;
@@ -68,8 +68,8 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 260 30% 20%;
-    --input: 260 30% 20%;
+    --border: 260 32% 34%;
+    --input: 260 32% 34%;
     --ring: 270 80% 65%;
   }
 }

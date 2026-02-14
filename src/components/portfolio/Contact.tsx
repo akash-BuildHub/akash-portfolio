@@ -231,7 +231,7 @@ const Contact = () => {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto"
         >
           {/* Personal Message */}
-          <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-300">
+          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-4">Akash's Portfolio</h3>
             <p className="text-foreground/80 leading-relaxed">
               Thanks for exploring my little corner of the web.<br />
@@ -240,7 +240,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-300">
+          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-6">Reach Out</h3>
             <div className="space-y-4 selectable">
               <div className="flex items-center gap-4 text-foreground/80 hover:text-foreground transition-colors">
@@ -259,7 +259,7 @@ const Contact = () => {
           </div>
 
           {/* Social Links - Colored circular icons */}
-          <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 transition-all duration-300">
+          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-6">Catch Me Online</h3>
             <div className="flex justify-center gap-4 mb-8">
               {socialLinks.map((social) => (
@@ -294,7 +294,7 @@ const Contact = () => {
           }`}
         >
           <div className="max-w-4xl mx-auto">
-            <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-6 md:p-8 transition-all duration-500">
+            <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-6 md:p-8 transition-all duration-500">
               {/* Header */}
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl md:text-2xl font-bold text-foreground">Drop a Message</h3>
@@ -324,7 +324,7 @@ const Contact = () => {
                           onChange={handleInputChange}
                           placeholder="Your name"
                           className={`w-full px-4 py-3 bg-background/50 border rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all ${
-                            errors.name ? 'border-red-500 focus:border-red-500' : 'border-border/50'
+                            errors.name ? 'border-red-500 focus:border-red-500' : 'border-border/90'
                           }`}
                         />
                         {errors.name && <p className="text-red-400 text-xs mt-1.5">{errors.name}</p>}
@@ -342,7 +342,7 @@ const Contact = () => {
                           onChange={handleInputChange}
                           placeholder="your@email.com"
                           className={`w-full px-4 py-3 bg-background/50 border rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all ${
-                            errors.email ? 'border-red-500 focus:border-red-500' : 'border-border/50'
+                            errors.email ? 'border-red-500 focus:border-red-500' : 'border-border/90'
                           }`}
                         />
                         {errors.email && <p className="text-red-400 text-xs mt-1.5">{errors.email}</p>}
@@ -360,7 +360,7 @@ const Contact = () => {
                           onChange={handleInputChange}
                           placeholder="10-digit number"
                           className={`w-full px-4 py-3 bg-background/50 border rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all ${
-                            errors.mobileNumber ? 'border-red-500 focus:border-red-500' : 'border-border/50'
+                            errors.mobileNumber ? 'border-red-500 focus:border-red-500' : 'border-border/90'
                           }`}
                         />
                         {errors.mobileNumber && <p className="text-red-400 text-xs mt-1.5">{errors.mobileNumber}</p>}
@@ -377,7 +377,7 @@ const Contact = () => {
                           value={formData.companyName}
                           onChange={handleInputChange}
                           placeholder="Your company (optional)"
-                          className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
+                          className="w-full px-4 py-3 bg-background/50 border border-border/90 rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                         />
                       </div>
                     </div>
@@ -393,7 +393,7 @@ const Contact = () => {
                           name="purpose"
                           value={formData.purpose}
                           onChange={handleInputChange}
-                          className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none cursor-pointer"
+                          className="w-full px-4 py-3 bg-background/50 border border-border/90 rounded-lg text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all appearance-none cursor-pointer"
                         >
                           <option value="" className="bg-[#0a0a12] text-foreground">Select a purpose...</option>
                           <option value="Project Inquiry" className="bg-[#0a0a12] text-foreground">Project Inquiry</option>
@@ -414,7 +414,7 @@ const Contact = () => {
                           onChange={handleInputChange}
                           placeholder="Tell me what's on your mind..."
                           rows={8}
-                          className="w-full px-4 py-3 bg-background/50 border border-border/50 rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
+                          className="w-full px-4 py-3 bg-background/50 border border-border/90 rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
                         />
                       </div>
                     </div>
@@ -460,3 +460,5 @@ const Contact = () => {
 };
 
 export default Contact;
+
+

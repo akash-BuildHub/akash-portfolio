@@ -48,7 +48,7 @@ const About = () => {
         <div ref={contentRef} className="max-w-6xl mx-auto text-center">
           <h2 className="section-title">About Me</h2>
           
-          <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-8 md:p-12 transition-all duration-500">
+          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 md:p-12 transition-all duration-500">
             <p className="text-lg md:text-xl text-foreground/90 leading-[1.7] md:leading-[1.9] text-justify mb-8">
   I’m <span className="font-semibold text-foreground">Akash</span>, an{' '}
   <span className="gradient-text font-semibold">AI Developer</span> specializing in 
@@ -65,7 +65,7 @@ const About = () => {
               {highlights.map((item, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-3 px-6 py-3 rounded-full bg-card/60 border border-border/50 hover:border-primary/30 transition-all duration-300 hover:scale-105"
+                  className="flex items-center gap-3 px-6 py-3 rounded-full bg-card/60 border border-border/90 hover:border-primary/60 transition-all duration-300 hover:scale-105"
                 >
                   <item.icon className="w-5 h-5 text-primary" />
                   <span className="text-foreground/90">{item.label}</span>
@@ -80,3 +80,5 @@ const About = () => {
 };
 
 export default About;
+
+

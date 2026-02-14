@@ -91,7 +91,7 @@ const TimelineItemComponent = ({ item, index }: { item: TimelineItem; index: num
     >
       {/* Content */}
       <div className={`flex-1 ${isLeft ? 'md:text-right' : 'md:text-left'}`}>
-        <div className="bg-[#0a0a12]/80 border border-border/50 rounded-xl p-6 transition-all duration-500 inline-block">
+        <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-6 transition-all duration-500 inline-block">
           <h3 className="text-xl font-bold gradient-text mb-4">{item.title}</h3>
           <ul className="space-y-2">
             {item.content.map((text, i) => (
@@ -175,3 +175,4 @@ const Timeline = ({ show }: TimelineProps) => {
 };
 
 export default Timeline;
+
