@@ -15,39 +15,15 @@ interface Project {
 }
 
 const projects: Project[] = [
-  {
-    title: 'Tech Media Community',
-    year: '2023',
+    {
+    title: 'AI Batting Classification',
+    year: '2026',
     description:
-      'Designed and developed a tech media platform that encourages group learning and topic-based conversations. The platform enables members to exchange ideas, discuss emerging technologies, and collaborate on upcoming developments, creating a community-driven learning experience.',
-    features: ['Group Learning', 'Topic-Based Discussions', 'Community Collaboration'],
-    icon: Users,
-  },
-  {
-    title: 'Hospital Management System',
-    year: '2024',
-    description:
-      'Developed a hospital management system with dedicated login portals for patients and doctors. Integrated functionalities for managing treatment plans, brain tumor detection records, and visit histories, enhancing efficiency in medical data handling and patient care.',
-    features: ['Patient & Doctor Portals', 'Medical Records', 'Brain Tumor Detection'],
+      'AI Batting Classification – An intelligent computer vision system that processes uploaded cricket videos to identify and classify batting shots, analyze performance metrics, and predict outcomes for advanced sports analytics.',
+    features: ['Deep Learning','Prediction','clasification'],
     icon: Hospital,
   },
-  {
-    title: 'Vision Snap',
-    year: '2025',
-    description:
-      'Vision Snap is a web based tool for creating image datasets for computer vision. It captures images from live webcams and extracts frames from uploaded videos. Users can organize samples into custom classes and export them as machine learning ready datasets.',
-    features: ['Webcam Capture', 'Video Frame Extraction', 'Dataset Creation'],
-    icon: Calendar,
-  },
-  {
-    title: 'ALL IN ONE',
-    year: '2025',
-    description:
-      'ALL IN ONE is a web-based OCR tool that extracts content from images, PDFs, and web uploads. It converts scanned documents into readable and searchable text and extracts embedded images along with textual data. Supports structured output from multi-page PDF documents for fast and accurate digitization.',
-    features: ['OCR', 'Document AI', 'Text & Image Extraction'],
-    icon: Users,
-  },
-  {
+    {
     title: 'AI Recognition & Detection',
     year: '2026',
     description:
@@ -56,12 +32,36 @@ const projects: Project[] = [
     icon: Hospital,
   },
     {
-    title: 'AI Batting Classification',
-    year: '2026',
+    title: 'Vision Snap',
+    year: '2025',
     description:
-      'AI Batting Classification – An intelligent computer vision system that processes uploaded cricket videos to identify and classify batting shots, analyze performance metrics, and predict outcomes for advanced sports analytics.',
-    features: ['Deep Learning','Prediction','clasification'],
+      'Vision Snap is a web based tool for creating image datasets for computer vision. It captures images from live webcams and extracts frames from uploaded videos. Users can organize samples into custom classes and export them as machine learning ready datasets.',
+    features: ['Webcam Capture', 'Video Frame Extraction', 'Dataset Creation'],
+    icon: Calendar,
+  },
+    {
+    title: 'ALL IN ONE',
+    year: '2025',
+    description:
+      'ALL IN ONE is a web-based OCR tool that extracts content from images, PDFs, and web uploads. It converts scanned documents into readable and searchable text and extracts embedded images along with textual data. Supports structured output from multi-page PDF documents for fast and accurate digitization.',
+    features: ['OCR', 'Document AI', 'Text & Image Extraction'],
+    icon: Users,
+  },
+    {
+    title: 'Hospital Management System',
+    year: '2024',
+    description:
+      'Developed a hospital management system with dedicated login portals for patients and doctors. Integrated functionalities for managing treatment plans, brain tumor detection records, and visit histories, enhancing efficiency in medical data handling and patient care.',
+    features: ['Patient & Doctor Portals', 'Medical Records', 'Brain Tumor Detection'],
     icon: Hospital,
+  },
+    {
+    title: 'Tech Media Community',
+    year: '2023',
+    description:
+      'Designed and developed a tech media platform that encourages group learning and topic-based conversations. The platform enables members to exchange ideas, discuss emerging technologies, and collaborate on upcoming developments, creating a community-driven learning experience.',
+    features: ['Group Learning', 'Topic-Based Discussions', 'Community Collaboration'],
+    icon: Users,
   },
 ];
 
