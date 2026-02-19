@@ -16,10 +16,10 @@ interface Project {
 
 const projects: Project[] = [
     {
-    title: 'AI Batting Classification',
+    title: 'AI Cricket Batting Shot Classification',
     year: '2026',
     description:
-      'AI Batting Classification – An intelligent computer vision system that processes uploaded cricket videos to identify and classify batting shots, analyze performance metrics, and predict outcomes for advanced sports analytics.',
+      'AI-Based Cricket Shot Classification is a computer vision system that processes uploaded cricket videos to identify and classify batting shots, analyze performance metrics, and predict outcomes for advanced sports analytics.',
     features: ['Deep Learning','Prediction','clasification'],
     icon: Hospital,
   },
