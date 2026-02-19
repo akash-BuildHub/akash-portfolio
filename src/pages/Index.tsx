@@ -3,6 +3,7 @@ import Navbar from '@/components/portfolio/Navbar';
 import Hero from '@/components/portfolio/Hero';
 import About from '@/components/portfolio/About';
 import Experience from '@/components/portfolio/Experience';
+import TechStacks from '@/components/portfolio/TechStacks';
 import Projects from '@/components/portfolio/Projects';
 import Timeline from '@/components/portfolio/Timeline';
 import Contact from '@/components/portfolio/Contact';
@@ -58,6 +59,7 @@ const Index = ({ showTimeline, setShowTimeline }: IndexProps) => {
       <Hero setShowTimeline={setShowTimeline} />
       <About />
       <Experience />
+      <TechStacks />
       <Projects />
       <Timeline show={showTimeline} />
       <Contact />
