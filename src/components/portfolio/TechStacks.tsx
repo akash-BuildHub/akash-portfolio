@@ -57,19 +57,23 @@ const TechIcon = ({ tech }: { tech: TechItem }) => {
 
   if (tech.logo && !logoFailed) {
     return (
-      <img
-        src={tech.logo}
-        alt={`${tech.name} icon`}
-        className="tech-icon-visual w-8 h-8 object-contain flex-shrink-0 will-change-transform"
-        loading="lazy"
-        onError={() => setLogoFailed(true)}
-      />
+      <div className="tech-icon-float">
+        <img
+          src={tech.logo}
+          alt={`${tech.name} icon`}
+          className="tech-icon-visual w-8 h-8 object-contain flex-shrink-0 will-change-transform"
+          loading="lazy"
+          onError={() => setLogoFailed(true)}
+        />
+      </div>
     );
   }
 
   return (
-    <div className="tech-icon-visual w-8 h-8 rounded-md gradient-primary flex items-center justify-center flex-shrink-0 will-change-transform">
-      <Icon className="w-5 h-5 text-primary-foreground" />
+    <div className="tech-icon-float">
+      <div className="tech-icon-visual w-8 h-8 rounded-md gradient-primary flex items-center justify-center flex-shrink-0 will-change-transform">
+        <Icon className="w-5 h-5 text-primary-foreground" />
+      </div>
     </div>
   );
 };
@@ -123,6 +127,22 @@ const TechStacks = () => {
           },
         }
       );
+
+      const floatTargets = gsap.utils.toArray<HTMLElement>('.tech-icon-float');
+      floatTargets.forEach((target) => {
+        const drift = gsap.utils.random(2, 4, 0.1);
+        const duration = gsap.utils.random(1.8, 2.8, 0.1);
+        const delay = gsap.utils.random(0, 0.8, 0.1);
+
+        gsap.to(target, {
+          y: -drift,
+          repeat: -1,
+          yoyo: true,
+          duration,
+          delay,
+          ease: 'sine.inOut',
+        });
+      });
     }, sectionRef);
 
     return () => ctx.revert();
