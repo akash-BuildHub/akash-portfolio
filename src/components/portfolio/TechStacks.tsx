@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
@@ -60,7 +60,7 @@ const TechIcon = ({ tech }: { tech: TechItem }) => {
       <img
         src={tech.logo}
         alt={`${tech.name} icon`}
-        className="w-8 h-8 object-contain flex-shrink-0"
+        className="tech-icon-visual w-8 h-8 object-contain flex-shrink-0 will-change-transform"
         loading="lazy"
         onError={() => setLogoFailed(true)}
       />
@@ -68,7 +68,7 @@ const TechIcon = ({ tech }: { tech: TechItem }) => {
   }
 
   return (
-    <div className="w-8 h-8 rounded-md gradient-primary flex items-center justify-center flex-shrink-0">
+    <div className="tech-icon-visual w-8 h-8 rounded-md gradient-primary flex items-center justify-center flex-shrink-0 will-change-transform">
       <Icon className="w-5 h-5 text-primary-foreground" />
     </div>
   );
@@ -76,6 +76,34 @@ const TechIcon = ({ tech }: { tech: TechItem }) => {
 
 const TechStacks = () => {
   const sectionRef = useRef<HTMLElement>(null);
+
+  const handleIconHoverIn = (event: MouseEvent<HTMLDivElement>) => {
+    const icon = event.currentTarget.querySelector('.tech-icon-visual');
+    if (!icon) return;
+
+    gsap.to(icon, {
+      y: -6,
+      scale: 1.08,
+      duration: 0.22,
+      ease: 'power2.out',
+      filter: 'drop-shadow(0 0 10px rgba(59, 130, 246, 0.45))',
+      overwrite: 'auto',
+    });
+  };
+
+  const handleIconHoverOut = (event: MouseEvent<HTMLDivElement>) => {
+    const icon = event.currentTarget.querySelector('.tech-icon-visual');
+    if (!icon) return;
+
+    gsap.to(icon, {
+      y: 0,
+      scale: 1,
+      duration: 0.22,
+      ease: 'power2.out',
+      filter: 'drop-shadow(0 0 0 rgba(59, 130, 246, 0))',
+      overwrite: 'auto',
+    });
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -111,6 +139,8 @@ const TechStacks = () => {
               <div
                 key={tech.name}
                 className="tech-stack-item flex flex-col items-center justify-start text-center gap-2 min-h-[84px] min-w-0"
+                onMouseEnter={handleIconHoverIn}
+                onMouseLeave={handleIconHoverOut}
               >
                 <TechIcon tech={tech} />
                 <p className="text-xs md:text-sm font-medium text-foreground leading-tight break-words">
