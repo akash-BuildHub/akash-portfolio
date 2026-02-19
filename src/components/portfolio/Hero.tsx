@@ -71,7 +71,7 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
 
           <div ref={imageRef} className="flex justify-center">
             <img
-              src="/ak-profile.png"
+              src="/akash_profile.png"
               alt="Akash profile"
               className="w-[380px] rounded-2xl grayscale"
             />

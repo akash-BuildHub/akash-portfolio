@@ -21,7 +21,7 @@ const Index = ({ showTimeline, setShowTimeline }: IndexProps) => {
     const description =
       'Akash portfolio showcasing AI development, Python projects, web solutions, and real-world engineering work.';
     const url = `${window.location.origin}/`;
-    const image = `${window.location.origin}/ak-profile.png`;
+    const image = `${window.location.origin}/akash_profile.png`;
 
     document.title = title;
     setMetaName('description', description);

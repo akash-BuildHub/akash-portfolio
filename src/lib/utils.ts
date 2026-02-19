@@ -5,4 +5,4 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const RESUME_PATH = '/ak-resume.pdf';
+export const RESUME_PATH = '/akash_resume.pdf';
