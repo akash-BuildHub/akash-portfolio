@@ -65,7 +65,7 @@ const projects: Project[] = [
   },
 ];
 
-const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
+const ProjectCard = ({ project }: { project: Project }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -88,7 +88,7 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
     }, cardRef);
 
     return () => ctx.revert();
-  }, [index]);
+  }, []);
 
   return (
     <div
@@ -161,7 +161,7 @@ const Projects = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} />
+            <ProjectCard key={index} project={project} />
           ))}
         </div>
       </div>
@@ -170,5 +170,4 @@ const Projects = () => {
 };
 
 export default Projects;
-
 
