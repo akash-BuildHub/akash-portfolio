@@ -249,7 +249,7 @@ const Contact = () => {
               </div>
               <div className="flex items-center gap-4 text-foreground/80 hover:text-foreground transition-colors">
                 <Mail className="w-5 h-5 text-primary" />
-                <span>akashtechcore@gmail.com</span>
+                <span>akashrm.mail@gmail.com</span>
               </div>
               <div className="flex items-center gap-4 text-foreground/80 hover:text-foreground transition-colors">
                 <MapPin className="w-5 h-5 text-primary" />
