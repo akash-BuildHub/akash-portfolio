@@ -33,6 +33,7 @@ const techStacks: TechItem[] = [
   { name: 'HTML', logo: 'https://cdn.simpleicons.org/html5/E34F26', icon: FileCode2 },
   { name: 'CSS', logo: 'https://cdn.simpleicons.org/css/1572B6', icon: Paintbrush },
   { name: 'React', logo: 'https://cdn.simpleicons.org/react/61DAFB', icon: Atom },
+  { name: 'Figma', logo: 'https://cdn.simpleicons.org/figma/F24E1E', icon: Workflow },
   { name: 'FastAPI', logo: 'https://cdn.simpleicons.org/fastapi/009688', icon: Workflow },
   { name: 'Python', logo: 'https://cdn.simpleicons.org/python/3776AB', icon: FileCode2 },
   { name: 'JavaScript', logo: 'https://cdn.simpleicons.org/javascript/F7DF1E', icon: Braces },

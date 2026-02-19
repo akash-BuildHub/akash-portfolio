@@ -49,10 +49,12 @@ const timelineData: TimelineItem[] = [
     icon: Wrench,
     title: 'Skills',
     content: [
-      'Programming – HTML, CSS, JavaScript, React, Node.js',
-      'Backend & Databases – Python, Cloud, API Integration, PostgreSQL',
-      'Design – UI/UX (Figma), Graphic/Interior design',
-      'AI & Research – Computer vision, Network optimization, Deep Learning, Machine Learning, AI - Recognition | Detection | Classification',
+      'Web Development - HTML, CSS, React, FastAPI',
+      'Programming – Python, JavaScript, Node.js',
+      'Databases & Data Handling – PostgreSQL, Data Analysis',
+      'Deployment & Tools – API Integration, Data Handling, Figma',
+      'Research & Analysis - Research Documentation, Model Evaluation',
+      'AI & Real-Time Vision Systems – Artificial Intelligence, Machine Learning, Deep Learning, Computer Vision, Real-Time Processing',
     ],
   },
 ];
@@ -95,8 +97,20 @@ const TimelineItemComponent = ({ item, index }: { item: TimelineItem; index: num
           <h3 className="text-xl font-bold gradient-text mb-4">{item.title}</h3>
           <ul className="space-y-2">
             {item.content.map((text, i) => (
-              <li key={i} className="text-foreground/80 text-justify leading-relaxed md:leading-[1.8]">
-                {text}
+              <li key={i} className="text-foreground/80 text-justify leading-[1.55] md:leading-[1.7]">
+                {(() => {
+                  const parts = text.split(/\s[–-]\s(.+)/);
+                  if (parts.length >= 3) {
+                    return (
+                      <>
+                        <strong className="text-foreground">{parts[0]}</strong>
+                        {' - '}
+                        {parts[1]}
+                      </>
+                    );
+                  }
+                  return text;
+                })()}
               </li>
             ))}
           </ul>
@@ -175,4 +189,3 @@ const Timeline = ({ show }: TimelineProps) => {
 };
 
 export default Timeline;
-
