@@ -290,7 +290,7 @@ const Contact = () => {
         <div
           ref={chatFormRef}
           className={`overflow-hidden transition-all duration-500 ease-out mt-12 ${
-            showChatForm ? 'max-h-[850px] opacity-100' : 'max-h-0 opacity-0'
+            showChatForm ? 'max-h-[2000px] md:max-h-[1400px] opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
           <div className="max-w-4xl mx-auto">
@@ -434,11 +434,11 @@ const Contact = () => {
                   )}
 
                   {/* Submit Button */}
-                  <div className="flex justify-end">
+                  <div className="flex justify-stretch md:justify-end">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 shadow-lg hover:shadow-xl"
+                      className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
                     >
                       {isSubmitting ? (
                         <>
@@ -460,5 +460,4 @@ const Contact = () => {
 };
 
 export default Contact;
-
 
