@@ -21,7 +21,7 @@ const experiences: ExperienceItem[] = [
     location: 'Madiwala, Bengaluru',
     duration: '2026 — Present',
     description:
-      'Building real-time video analytics solutions that extract actionable insights using object detection, recognition, and event-driven AI processing.',
+      'Building real-time person detection and multi-object tracking systems for live video analytics, optimizing end-to-end stream processing and improving accuracy through threshold tuning and tracking refinement.',
   },
     {
     title: 'AI Developer',
@@ -30,7 +30,7 @@ const experiences: ExperienceItem[] = [
     location: 'Madiwala, Bengaluru',
     duration: '2025 — 2026',
     description:
-      'Designing and implementing computer vision AI project systems focused on intelligent automation and decision-driven workflows.',
+      'Designed and deployed deep learning models for detection and recognition tasks, building scalable ML pipelines from preprocessing to deployment and integrating AI solutions seamlessly into production backend systems.',
   },
   {
     title: 'Research Analyst',
@@ -39,7 +39,7 @@ const experiences: ExperienceItem[] = [
     location: 'Thuckalay, Tamil Nadu',
     duration: '2024 — 2025',
     description:
-      'Created documentation, technical reports, and research materials for deep learning projects, improving clarity, knowledge sharing, and supporting ongoing development and research efforts.',
+      'Produced technical documentation for deep learning and data science research, contributing to dataset analysis, experimental evaluation, and comparative model benchmarking.',
   },
   {
     title: 'Python-Intern',
