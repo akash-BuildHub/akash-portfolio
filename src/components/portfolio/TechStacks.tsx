@@ -1,59 +1,40 @@
 import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import {
-  Activity,
-  Atom,
-  BarChart3,
-  BrainCircuit,
-  Braces,
-  ClipboardCheck,
-  CloudCog,
-  Cpu,
-  Database,
-  FileCode2,
-  FileSearch,
-  Network,
-  Paintbrush,
-  PlugZap,
-  ScanEye,
-  ServerCog,
-  Workflow,
-} from 'lucide-react';
+import { FileCode2 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface TechItem {
   name: string;
-  icon?: React.ElementType;
   logo?: string;
 }
 
 const techStacks: TechItem[] = [
-  { name: 'HTML', logo: 'https://cdn.simpleicons.org/html5/E34F26', icon: FileCode2 },
-  { name: 'CSS', logo: 'https://cdn.simpleicons.org/css/1572B6', icon: Paintbrush },
-  { name: 'React', logo: 'https://cdn.simpleicons.org/react/61DAFB', icon: Atom },
-  { name: 'Figma', logo: 'https://cdn.simpleicons.org/figma/F24E1E', icon: Workflow },
-  { name: 'FastAPI', logo: 'https://cdn.simpleicons.org/fastapi/009688', icon: Workflow },
-  { name: 'Python', logo: 'https://cdn.simpleicons.org/python/3776AB', icon: FileCode2 },
-  { name: 'JavaScript', logo: 'https://cdn.simpleicons.org/javascript/F7DF1E', icon: Braces },
-  { name: 'Node.js', logo: 'https://cdn.simpleicons.org/nodedotjs/5FA04E', icon: ServerCog },
-  { name: 'PostgreSQL', logo: 'https://cdn.simpleicons.org/postgresql/4169E1', icon: Database },
-  { name: 'Data Analysis', logo: 'https://cdn.simpleicons.org/chartdotjs/FF6384', icon: BarChart3 },
-  { name: 'API Integration', logo: 'https://cdn.simpleicons.org/postman/FF6C37', icon: PlugZap },
-  { name: 'Data Handling', logo: 'https://cdn.simpleicons.org/googlecloud/4285F4', icon: CloudCog },
-  { name: 'Research Analyst', logo: 'https://cdn.simpleicons.org/readthedocs/8CA1AF', icon: FileSearch },
-  { name: 'Model Evaluation', logo: 'https://cdn.simpleicons.org/weightsandbiases/FFBE00', icon: ClipboardCheck },
-  { name: 'Artificial Intelligence', logo: 'https://img.icons8.com/ios-filled/100/FFFFFF/artificial-intelligence.png', icon: BrainCircuit },
-  { name: 'Machine Learning', logo: 'https://cdn.simpleicons.org/scikitlearn/F7931E', icon: Cpu },
-  { name: 'Deep Learning', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg', icon: Network },
-  { name: 'Computer Vision', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg', icon: ScanEye },
-  { name: 'Real-Time Processing', logo: 'https://cdn.simpleicons.org/apachekafka/FFFFFF', icon: Activity },
+  { name: 'HTML', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
+  { name: 'CSS', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
+  { name: 'JavaScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
+  { name: 'Node.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
+  { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
+  { name: 'Figma', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg' },
+  { name: 'FastAPI', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
+  { name: 'API Integration', logo: 'https://cdn-icons-png.flaticon.com/512/906/906334.png' },
+  { name: 'Python', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+  { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+  { name: 'Git', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Git_icon.svg?v=2' },
+  { name: 'Research Analyst', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jupyter/jupyter-original.svg' },
+  { name: 'Dataset Development', logo: '/icons/dataset_development.png' },
+  { name: 'Data Streaming', logo: 'https://cdn.simpleicons.org/apachekafka/FFFFFF' },
+  { name: 'Data Analysis', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg' },
+  { name: 'Model Evaluation', logo: 'https://cdn.simpleicons.org/weightsandbiases/FFBE00' },
+  { name: 'Machine Learning', logo: '/icons/machine_learning.png' },
+  { name: 'Deep Learning', logo: '/icons/deep_learning.png' },
+  { name: 'Computer Vision', logo: '/icons/computer_vision.png' },
+  { name: 'Artificial Intelligence', logo: '/icons/AI.png' },
 ];
 
 const TechIcon = ({ tech }: { tech: TechItem }) => {
   const [logoFailed, setLogoFailed] = useState(false);
-  const Icon = tech.icon ?? FileCode2;
 
   if (tech.logo && !logoFailed) {
     return (
@@ -72,7 +53,7 @@ const TechIcon = ({ tech }: { tech: TechItem }) => {
   return (
     <div className="tech-icon-float">
       <div className="tech-icon-visual w-8 h-8 rounded-md gradient-primary flex items-center justify-center flex-shrink-0 will-change-transform">
-        <Icon className="w-5 h-5 text-primary-foreground" />
+        <FileCode2 className="w-5 h-5 text-primary-foreground" />
       </div>
     </div>
   );
