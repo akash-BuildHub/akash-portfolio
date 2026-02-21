@@ -16,7 +16,7 @@ interface ExperienceItem {
 const experiences: ExperienceItem[] = [
   {
     title: 'AI Developer',
-    company: 'GROW',
+    company: 'GROW AI',
     parentCompany: 'iQue Ventures',
     location: 'Madiwala, Bengaluru',
     duration: '2026 — Present',
