@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Phone, Mail, MapPin, X, Loader } from 'lucide-react';
+import { prefersReducedMotion } from '@/lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -137,6 +138,8 @@ const Contact = () => {
   };
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const ctx = gsap.context(() => {
         gsap.fromTo(
         contentRef.current?.children || [],
@@ -171,7 +174,7 @@ const Contact = () => {
 
       window.scrollTo({
         top: Math.max(top, 0),
-        behavior: 'smooth',
+        behavior: prefersReducedMotion() ? 'auto' : 'smooth',
       });
     }, 120);
 
@@ -268,6 +271,7 @@ const Contact = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  aria-label={social.label}
                   className={`w-12 h-12 rounded-full ${social.bgColor} flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer`}
                   title={social.label}
                 >
@@ -307,22 +311,26 @@ const Contact = () => {
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit} noValidate>
                 {/* Two Column Layout */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 {/* Left Column */}
                     <div className="space-y-4">
                       {/* Name */}
                       <div>
-                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                        <label htmlFor="name" className="block text-sm font-semibold text-foreground/80 mb-2">
                           Name <span className="text-red-500">*</span>
                         </label>
                         <input
+                          id="name"
                           type="text"
                           name="name"
                           value={formData.name}
                           onChange={handleInputChange}
                           placeholder="Your name"
+                          autoComplete="name"
+                          required
+                          aria-invalid={Boolean(errors.name)}
                           className={`w-full px-4 py-3 bg-background/50 border rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all ${
                             errors.name ? 'border-red-500 focus:border-red-500' : 'border-border/90'
                           }`}
@@ -332,15 +340,19 @@ const Contact = () => {
 
                       {/* Email */}
                       <div>
-                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                        <label htmlFor="email" className="block text-sm font-semibold text-foreground/80 mb-2">
                           Email <span className="text-red-500">*</span>
                         </label>
                         <input
+                          id="email"
                           type="email"
                           name="email"
                           value={formData.email}
                           onChange={handleInputChange}
                           placeholder="your@email.com"
+                          autoComplete="email"
+                          required
+                          aria-invalid={Boolean(errors.email)}
                           className={`w-full px-4 py-3 bg-background/50 border rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all ${
                             errors.email ? 'border-red-500 focus:border-red-500' : 'border-border/90'
                           }`}
@@ -350,15 +362,19 @@ const Contact = () => {
 
                       {/* Mobile Number */}
                       <div>
-                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                        <label htmlFor="mobileNumber" className="block text-sm font-semibold text-foreground/80 mb-2">
                           Mobile Number <span className="text-red-500">*</span>
                         </label>
                         <input
+                          id="mobileNumber"
                           type="tel"
                           name="mobileNumber"
                           value={formData.mobileNumber}
                           onChange={handleInputChange}
                           placeholder="10-digit number"
+                          autoComplete="tel"
+                          required
+                          aria-invalid={Boolean(errors.mobileNumber)}
                           className={`w-full px-4 py-3 bg-background/50 border rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all ${
                             errors.mobileNumber ? 'border-red-500 focus:border-red-500' : 'border-border/90'
                           }`}
@@ -368,15 +384,17 @@ const Contact = () => {
 
                       {/* Company Name */}
                       <div>
-                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                        <label htmlFor="companyName" className="block text-sm font-semibold text-foreground/80 mb-2">
                           Company Name
                         </label>
                         <input
+                          id="companyName"
                           type="text"
                           name="companyName"
                           value={formData.companyName}
                           onChange={handleInputChange}
                           placeholder="Your company (optional)"
+                          autoComplete="organization"
                           className="w-full px-4 py-3 bg-background/50 border border-border/90 rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"
                         />
                       </div>
@@ -386,10 +404,11 @@ const Contact = () => {
                     <div className="space-y-4">
                       {/* Purpose */}
                       <div>
-                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                        <label htmlFor="purpose" className="block text-sm font-semibold text-foreground/80 mb-2">
                           Purpose
                         </label>
                         <select
+                          id="purpose"
                           name="purpose"
                           value={formData.purpose}
                           onChange={handleInputChange}
@@ -405,10 +424,11 @@ const Contact = () => {
 
                       {/* Message */}
                       <div className="md:row-span-3">
-                        <label className="block text-sm font-semibold text-foreground/80 mb-2">
+                        <label htmlFor="message" className="block text-sm font-semibold text-foreground/80 mb-2">
                           Message
                         </label>
                         <textarea
+                          id="message"
                           name="message"
                           value={formData.message}
                           onChange={handleInputChange}
@@ -428,6 +448,8 @@ const Contact = () => {
                           ? 'bg-green-500/20 text-green-300 border-green-500/40'
                           : 'bg-red-500/20 text-red-300 border-red-500/40'
                       }`}
+                      role="status"
+                      aria-live="polite"
                     >
                       {submitMessage.text}
                     </div>

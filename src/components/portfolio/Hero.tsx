@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ChevronRight, Heart } from "lucide-react";
+import { prefersReducedMotion } from "@/lib/motion";
 
 interface HeroProps {
   setShowTimeline: (show: boolean) => void;
@@ -15,11 +16,16 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
     setShowTimeline(true);
     requestAnimationFrame(() => {
       const section = document.getElementById("timeline");
-      section?.scrollIntoView({ behavior: "smooth" });
+      section?.scrollIntoView({
+        behavior: prefersReducedMotion() ? "auto" : "smooth",
+        block: "start",
+      });
     });
   };
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const ctx = gsap.context(() => {
       gsap.from(textRef.current, {
         opacity: 0,
@@ -43,26 +49,34 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
   return (
     <section
       ref={heroRef}
-      className="min-h-screen flex items-center justify-center bg-[#0a0a12] pt-16 md:pt-20"
+      className="min-h-screen bg-[#0a0a12] px-4 pt-20 sm:px-6 md:pt-24"
+      aria-label="Hero section"
     >
-      <div className="relative w-full max-w-6xl mx-auto rounded-3xl border border-purple-500/40 bg-gradient-to-br from-[#0e0e18] via-[#0b0b14] to-black shadow-[0_0_80px_-20_rgba(168,85,247,0.35)] overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-[55%_45%] items-center gap-14 px-14 py-20">
+      <div className="relative mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-6xl items-center overflow-hidden rounded-3xl border border-purple-500/40 bg-gradient-to-br from-[#0e0e18] via-[#0b0b14] to-black shadow-[0_0_80px_-20px_rgba(168,85,247,0.35)]">
+        <div className="grid w-full grid-cols-1 items-center gap-10 px-6 py-12 sm:px-10 sm:py-14 lg:grid-cols-[55%_45%] lg:gap-14 lg:px-14 lg:py-20">
           <div ref={textRef}>
-            <h1 className="text-5xl font-bold text-white">Welcome to</h1>
+            <p className="text-3xl font-bold text-white sm:text-4xl md:text-5xl">
+              Welcome to
+            </p>
 
-            <h1 className="mt-2 text-6xl font-bold text-purple-500">
+            <h1 className="mt-2 text-4xl font-bold text-purple-500 sm:text-5xl md:text-6xl">
               Akash Portfolio
-              <Heart className="inline-block ml-3 text-red-500" size={38} />
+              <Heart className="ml-3 inline-block text-red-500" size={36} />
             </h1>
 
-            <div className="mt-10">
-              <h2 className="text-3xl font-semibold text-white">AI Developer</h2>
-              <p className="mt-2 text-lg italic text-gray-400">think it, let the AI do it</p>
+            <div className="mt-8 sm:mt-10">
+              <h2 className="text-2xl font-semibold text-white sm:text-3xl">
+                AI Developer
+              </h2>
+              <p className="mt-2 text-base italic text-gray-400 sm:text-lg">
+                think it, let the AI do it
+              </p>
             </div>
 
             <button
               onClick={scrollToTimeline}
-              className="mt-14 inline-flex items-center gap-3 px-10 py-4 rounded-full border border-purple-500/40 text-white hover:bg-purple-500/10 transition"
+              className="mt-10 inline-flex items-center gap-3 rounded-full border border-purple-500/40 px-7 py-3 text-sm text-white transition hover:bg-purple-500/10 sm:mt-12 sm:px-10 sm:py-4 sm:text-base"
+              aria-label="Explore timeline section"
             >
               <ChevronRight className="text-purple-500" />
               Click here to explore more
@@ -73,7 +87,11 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
             <img
               src="/akash_profile.png"
               alt="Akash profile"
-              className="w-[380px] rounded-2xl grayscale"
+              width={380}
+              height={500}
+              loading="eager"
+              decoding="async"
+              className="w-full max-w-[300px] rounded-2xl grayscale sm:max-w-[340px] lg:max-w-[380px]"
             />
           </div>
         </div>
@@ -83,5 +101,3 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
 };
 
 export default Hero;
-
-

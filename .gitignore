@@ -17,11 +17,27 @@ pids
 node_modules
 dist
 dist-ssr
+build
+out
 *.local
 coverage
 .cache
 .vite
+.parcel-cache
+.next
+.nuxt
+.svelte-kit
 *.tsbuildinfo
+
+# Package manager caches
+.npm
+.pnpm-store
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # Editor directories and files
 .vscode/*
@@ -31,6 +47,9 @@ coverage
 .env
 .env.*
 !.env.example
+Thumbs.db
+tmp
+temp
 *.suo
 *.ntvs*
 *.njsproj

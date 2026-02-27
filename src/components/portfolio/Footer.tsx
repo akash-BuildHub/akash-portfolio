@@ -1,18 +1,18 @@
-import { Heart } from 'lucide-react';
+import { Heart } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="py-8 border-t border-border/90 relative">
+    <footer className="relative border-t border-border/90 py-8">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-2 text-center">
+        <div className="flex flex-col items-center justify-center gap-2 text-center md:flex-row">
           <p className="text-muted-foreground">
-            Designed and Developed by{' '}
-            <span className="gradient-text font-semibold glow-text">Akash</span>
+            Designed and Developed by{" "}
+            <span className="gradient-text glow-text font-semibold">Akash</span>
           </p>
-          <Heart className="w-4 h-4 text-red-500 animate-pulse" />
+          <Heart className="h-4 w-4 animate-pulse text-red-500" />
         </div>
-        <p className="text-center text-muted-foreground/60 text-sm mt-2">
-          © {new Date().getFullYear()} All rights reserved.
+        <p className="mt-2 text-center text-sm text-muted-foreground/60">
+          &copy; {new Date().getFullYear()} All rights reserved.
         </p>
       </div>
     </footer>
@@ -20,4 +20,3 @@ const Footer = () => {
 };
 
 export default Footer;
-

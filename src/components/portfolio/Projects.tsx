@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ExternalLink, Users, Hospital, Calendar } from 'lucide-react';
+import { prefersReducedMotion } from '@/lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -69,6 +70,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const ctx = gsap.context(() => {
         gsap.fromTo(
         cardRef.current,
@@ -95,7 +98,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
       ref={cardRef}
       className="h-full bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 transition-all duration-500 hover:scale-[1.02] group"
     >
-      <div className="flex items-start gap-6">
+      <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
         {/* Icon */}
         <div className="flex-shrink-0">
           <div className="w-16 h-16 rounded-xl gradient-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -105,8 +108,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
         {/* Content */}
         <div className="flex-1">
-          <div className="flex items-center gap-3 mb-3">
-            <h3 className="text-2xl font-bold text-foreground">{project.title}</h3>
+          <div className="mb-3 flex flex-wrap items-center gap-3">
+            <h3 className="text-xl font-bold text-foreground sm:text-2xl">{project.title}</h3>
             {project.year && (
               <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-primary/20 text-primary text-sm">
                 <Calendar className="w-3 h-3" />
@@ -123,7 +126,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           <div className="flex flex-wrap gap-2">
             {project.features.map((feature, i) => (
               <span
-                key={i}
+                key={`${feature}-${i}`}
                 className="px-3 py-1 rounded-full bg-secondary/80 text-foreground/80 text-sm border border-primary/40 hover:border-primary/60 transition-colors"
               >
                 {feature}
@@ -138,13 +141,13 @@ const ProjectCard = ({ project }: { project: Project }) => {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-shrink-0"
+            className="flex-shrink-0 self-start"
             title="Open project"
           >
             <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
           </a>
         ) : (
-          <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
+          <ExternalLink className="h-5 w-5 flex-shrink-0 self-start text-muted-foreground transition-colors group-hover:text-primary" />
         )}
       </div>
     </div>
@@ -170,4 +173,3 @@ const Projects = () => {
 };
 
 export default Projects;
-

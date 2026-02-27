@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FileCode2 } from 'lucide-react';
+import { prefersReducedMotion } from '@/lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -21,6 +22,8 @@ const techStacks: TechItem[] = [
   { name: 'API Integration', logo: 'https://cdn-icons-png.flaticon.com/512/906/906334.png' },
   { name: 'Python', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
   { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+  { name: 'Cloud EC2', logo: '/icons/cloud_EC2.png' },
+  { name: 'Supabase', logo: '/icons/supabase.png' },
   { name: 'Git', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Git_icon.svg?v=2' },
   { name: 'Research Analyst', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jupyter/jupyter-original.svg' },
   { name: 'Dataset Development', logo: '/icons/dataset_development.png' },
@@ -44,6 +47,7 @@ const TechIcon = ({ tech }: { tech: TechItem }) => {
           alt={`${tech.name} icon`}
           className="tech-icon-visual w-8 h-8 object-contain flex-shrink-0 will-change-transform"
           loading="lazy"
+          decoding="async"
           onError={() => setLogoFailed(true)}
         />
       </div>
@@ -63,6 +67,8 @@ const TechStacks = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   const handleIconHoverIn = (event: MouseEvent<HTMLDivElement>) => {
+    if (prefersReducedMotion()) return;
+
     const icon = event.currentTarget.querySelector('.tech-icon-visual');
     if (!icon) return;
 
@@ -77,6 +83,8 @@ const TechStacks = () => {
   };
 
   const handleIconHoverOut = (event: MouseEvent<HTMLDivElement>) => {
+    if (prefersReducedMotion()) return;
+
     const icon = event.currentTarget.querySelector('.tech-icon-visual');
     if (!icon) return;
 
@@ -91,6 +99,8 @@ const TechStacks = () => {
   };
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         '.tech-stack-item',

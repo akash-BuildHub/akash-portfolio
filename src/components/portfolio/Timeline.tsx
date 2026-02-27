@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { GraduationCap, Briefcase, TrendingUp, Wrench } from 'lucide-react';
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { GraduationCap, Briefcase, TrendingUp, Wrench } from "lucide-react";
+import { prefersReducedMotion } from "@/lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,51 +19,61 @@ interface TimelineItem {
 const timelineData: TimelineItem[] = [
   {
     icon: GraduationCap,
-    title: 'Education',
+    title: "Education",
     content: [
-      'HSE – Child Jesus Matriculation Higher Secondary School, Unnamalaikadai [2018 – 2020]',
-      'BE (CSE) – Bethlahem Institute of Engineering, Karungal [2020 – 2024]',
+      "HSE - Child Jesus Matriculation Higher Secondary School, Unnamalaikadai [2018 - 2020]",
+      "BE (CSE) - Bethlahem Institute of Engineering, Karungal [2020 - 2024]",
     ],
   },
-      {
+  {
     icon: Briefcase,
-    title: 'Career',
+    title: "Career",
     content: [
-      '2023 – Academic Project using Deep Learning',
-      '2024 – Research Analyst',
-      '2025 – Python Developer',
-      '2026 – AI Developer',
+      "2023 - Academic Project using Deep Learning",
+      "2024 - Research Analyst",
+      "2025 - Python Developer",
+      "2026 - AI Developer",
     ],
   },
   {
     icon: TrendingUp,
-    title: 'Personal Journey',
+    title: "Personal Journey",
     content: [
-      '2020 – Transitioned from school to engineering, building core technical foundations',
-      '2023 – Achieved significant research milestones and actively explored career opportunities',
-      '2024 – Placed in a Research Analyst role, working on data-driven research tasks',
-      '2025 – Exploring opportunities in Web Development and AI technologies',
-      '2026 – Focused on building AI-powered computer vision and real-time analytics projects',
+      "2020 - Transitioned from school to engineering, building core technical foundations",
+      "2023 - Achieved significant research milestones and actively explored career opportunities",
+      "2024 - Placed in a Research Analyst role, working on data-driven research tasks",
+      "2025 - Exploring opportunities in Web Development and AI technologies",
+      "2026 - Focused on building AI-powered computer vision and real-time analytics projects",
     ],
   },
   {
     icon: Wrench,
-    title: 'Skills',
+    title: "Skills",
     content: [
-      'Web Development - HTML, CSS, React, FastAPI',
-      'Programming – Python, JavaScript, Node.js',
-      'Databases & Data Handling – PostgreSQL, Data Analysis',
-      'Deployment & Tools – API Integration, Data Handling, Figma',
-      'Research & Analysis - Research Documentation, Model Evaluation',
-      'AI & Real-Time Vision Systems – Artificial Intelligence, Machine Learning, Deep Learning, Computer Vision, Real-Time Processing',
+      "Frontend Development",
+      "Backend Development",
+      "Databases & Cloud Services",
+      "Artificial Intelligence",
+      "Computer Vision Models",
+      "Optimization & Performance Tuning",
+      "Real-Time Video Streaming",
+      "DevOps & Version Control",
     ],
   },
 ];
 
-const TimelineItemComponent = ({ item, index }: { item: TimelineItem; index: number }) => {
+const TimelineItemComponent = ({
+  item,
+  index,
+}: {
+  item: TimelineItem;
+  index: number;
+}) => {
   const itemRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (prefersReducedMotion()) return;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         itemRef.current,
@@ -71,13 +82,13 @@ const TimelineItemComponent = ({ item, index }: { item: TimelineItem; index: num
           opacity: 1,
           x: 0,
           duration: 0.8,
-          ease: 'power3.out',
+          ease: "power3.out",
           scrollTrigger: {
             trigger: itemRef.current,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse',
+            start: "top 85%",
+            toggleActions: "play none none reverse",
           },
-        }
+        },
       );
     }, itemRef);
 
@@ -89,43 +100,37 @@ const TimelineItemComponent = ({ item, index }: { item: TimelineItem; index: num
   return (
     <div
       ref={itemRef}
-      className={`flex items-center gap-8 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+      className={`flex flex-col gap-4 md:items-center md:gap-8 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"}`}
     >
-      {/* Content */}
-      <div className={`flex-1 ${isLeft ? 'md:text-right' : 'md:text-left'}`}>
-        <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-6 transition-all duration-500 inline-block">
-          <h3 className="text-xl font-bold gradient-text mb-4">{item.title}</h3>
+      <div className={`flex-1 ${isLeft ? "md:text-right" : "md:text-left"}`}>
+        <div className="inline-block rounded-xl border border-border/90 bg-[#0a0a12]/80 p-6 transition-all duration-500">
+          <h3 className="gradient-text mb-4 text-xl font-bold">{item.title}</h3>
           <ul className="space-y-2">
-            {item.content.map((text, i) => (
-              <li key={i} className="text-foreground/80 text-justify leading-[1.55] md:leading-[1.7]">
-                {(() => {
-                  const parts = text.split(/\s[–-]\s(.+)/);
-                  if (parts.length >= 3) {
-                    return (
-                      <>
-                        <strong className="text-foreground">{parts[0]}</strong>
-                        {' - '}
-                        {parts[1]}
-                      </>
-                    );
-                  }
-                  return text;
-                })()}
-              </li>
-            ))}
+            {item.content.map((text, i) => {
+              const [lead, ...rest] = text.split(" - ");
+              return (
+                <li key={`${item.title}-${i}`} className="break-words text-justify leading-[1.55] text-foreground/80 md:leading-[1.7]">
+                  {rest.length > 0 ? (
+                    <>
+                      <strong className="text-foreground">{lead}</strong> - {rest.join(" - ")}
+                    </>
+                  ) : (
+                    text
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
 
-      {/* Icon */}
-      <div className="relative flex-shrink-0 z-10">
-        <div className="w-16 h-16 rounded-full gradient-primary flex items-center justify-center">
-          <item.icon className="w-7 h-7 text-primary-foreground" />
+      <div className="relative z-10 shrink-0 self-center">
+        <div className="gradient-primary flex h-16 w-16 items-center justify-center rounded-full">
+          <item.icon className="h-7 w-7 text-primary-foreground" />
         </div>
       </div>
 
-      {/* Spacer for alternating layout */}
-      <div className="flex-1 hidden md:block" />
+      <div className="hidden flex-1 md:block" />
     </div>
   );
 };
@@ -135,23 +140,22 @@ const Timeline = ({ show }: TimelineProps) => {
   const lineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!show) return;
+    if (!show || prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-      // Animate the vertical line
       gsap.fromTo(
         lineRef.current,
         { scaleY: 0 },
         {
           scaleY: 1,
           duration: 1.5,
-          ease: 'power2.out',
+          ease: "power2.out",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top 70%',
-            toggleActions: 'play none none reverse',
+            start: "top 70%",
+            toggleActions: "play none none reverse",
           },
-        }
+        },
       );
     }, sectionRef);
 
@@ -161,25 +165,19 @@ const Timeline = ({ show }: TimelineProps) => {
   if (!show) return null;
 
   return (
-    <section
-      id="timeline"
-      ref={sectionRef}
-      className="py-24 md:py-32 relative"
-    >
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="timeline" ref={sectionRef} className="relative py-24 md:py-32">
+      <div className="container relative z-10 mx-auto px-6">
         <h2 className="section-title">My Journey</h2>
 
-        <div className="relative max-w-4xl mx-auto">
-          {/* Vertical line */}
+        <div className="relative mx-auto max-w-4xl">
           <div
             ref={lineRef}
-            className="absolute left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-primary via-accent to-primary -translate-x-1/2 origin-top hidden md:block"
+            className="absolute bottom-0 left-1/2 top-0 hidden w-1 -translate-x-1/2 origin-top bg-gradient-to-b from-primary via-accent to-primary md:block"
           />
 
-          {/* Timeline items */}
           <div className="space-y-12">
             {timelineData.map((item, index) => (
-              <TimelineItemComponent key={index} item={item} index={index} />
+              <TimelineItemComponent key={`${item.title}-${index}`} item={item} index={index} />
             ))}
           </div>
         </div>

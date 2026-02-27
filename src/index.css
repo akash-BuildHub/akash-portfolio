@@ -82,6 +82,7 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    text-rendering: optimizeLegibility;
   }
 
   /* Disable text selection except contact info */
@@ -184,6 +185,7 @@
     line-height: 1.2;
     padding-top: 0.08em;
     padding-bottom: 0.08em;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -197,5 +199,21 @@
   }
   .animation-delay-600 {
     animation-delay: 600ms;
+  }
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
