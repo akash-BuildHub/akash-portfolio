@@ -83,16 +83,18 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
             </button>
           </div>
 
-          <div ref={imageRef} className="flex justify-center">
-            <img
-              src="/akash_profile.png"
-              alt="Akash profile"
-              width={380}
-              height={500}
-              loading="eager"
-              decoding="async"
-              className="w-full max-w-[300px] rounded-2xl grayscale sm:max-w-[340px] lg:max-w-[380px]"
-            />
+          <div ref={imageRef} className="flex justify-center lg:-translate-x-5 lg:justify-start">
+            <div className="avatar-ring reflect-card reflect-circle w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[400px]">
+              <img
+                src="/akash_profile.png"
+                alt="Akash profile"
+                width={380}
+                height={500}
+                loading="eager"
+                decoding="async"
+                className="reflect-circle aspect-square w-full object-cover grayscale"
+              />
+            </div>
           </div>
         </div>
       </div>
