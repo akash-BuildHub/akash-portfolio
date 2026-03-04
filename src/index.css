@@ -185,11 +185,10 @@
     border: 2px solid rgba(168, 85, 247, 0.4);
     padding: 0.6rem;
     box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.12),
+      0 0 0 1px rgba(255, 255, 255, 0.2),
       0 20px 46px rgba(0, 0, 0, 0.5);
     background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.02) 55%, transparent 70%);
   }
-
 
   /* Gradient text */
   .gradient-text {

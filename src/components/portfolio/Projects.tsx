@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ExternalLink, Users, Hospital, Calendar } from 'lucide-react';
+import { ExternalLink, Users, Hospital, Calendar, ArrowLeft } from 'lucide-react';
 import { prefersReducedMotion } from '@/lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,6 +13,7 @@ interface Project {
   features: string[];
   icon: React.ElementType;
   link?: string;
+  demoVideo?: string;
 }
 
 const projects: Project[] = [
@@ -23,6 +24,7 @@ const projects: Project[] = [
       'AI-Based Cricket Shot Classification is a computer vision system that processes uploaded cricket videos to identify and classify batting shots, analyze performance metrics, and predict outcomes for advanced sports analytics.',
     features: ['Deep Learning','Prediction','clasification'],
     icon: Hospital,
+    demoVideo: '/project_demo/ai_cricket.mp4',
   },
     {
     title: 'AI Recognition & Detection',
@@ -68,6 +70,9 @@ const projects: Project[] = [
 
 const ProjectCard = ({ project }: { project: Project }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [showDemo, setShowDemo] = useState(false);
+  const isDemoProject = Boolean(project.demoVideo);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -93,63 +98,135 @@ const ProjectCard = ({ project }: { project: Project }) => {
     return () => ctx.revert();
   }, []);
 
+  const handleBackToDetails = () => {
+    setShowDemo(false);
+
+    const video = videoRef.current;
+    if (video) {
+      video.pause();
+      try {
+        video.currentTime = 0;
+      } catch {
+        // Some browsers can throw if metadata isn't ready; flipping back should still work.
+      }
+    }
+  };
+
+  const frontContent = (
+    <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
+      {/* Icon */}
+      <div className="flex-shrink-0">
+        <div className="w-16 h-16 rounded-xl gradient-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          <project.icon className="w-8 h-8 text-primary-foreground" />
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1">
+        <div className="mb-3 flex flex-wrap items-center gap-3">
+          <h3 className="text-xl font-bold text-foreground sm:text-2xl">{project.title}</h3>
+          {project.year && (
+            <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-primary/20 text-primary text-sm">
+              <Calendar className="w-3 h-3" />
+              {project.year}
+            </div>
+          )}
+        </div>
+
+        <p className="text-muted-foreground mb-4 leading-relaxed text-justify">
+          {project.description}
+        </p>
+
+        {/* Features */}
+        <div className="flex flex-wrap gap-2">
+          {project.features.map((feature, i) => (
+            <span
+              key={`${feature}-${i}`}
+              className="px-3 py-1 rounded-full bg-secondary/80 text-foreground/80 text-sm border border-primary/40 hover:border-primary/60 transition-colors"
+            >
+              {feature}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {isDemoProject ? (
+        <button
+          type="button"
+          onClick={() => setShowDemo(true)}
+          className="flex-shrink-0 self-start"
+          title="View demo video"
+          aria-label={`View demo video for ${project.title}`}
+        >
+          <ExternalLink className="h-5 w-5 text-muted-foreground transition-colors hover:text-primary" />
+        </button>
+      ) : project.link ? (
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-shrink-0 self-start"
+          title="Open project"
+        >
+          <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+        </a>
+      ) : (
+        <ExternalLink className="h-5 w-5 flex-shrink-0 self-start text-muted-foreground transition-colors group-hover:text-primary" />
+      )}
+    </div>
+  );
+
+  if (!isDemoProject) {
+    return (
+      <div
+        ref={cardRef}
+        className="h-full bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 transition-all duration-500 hover:scale-[1.02] group"
+      >
+        {frontContent}
+      </div>
+    );
+  }
+
   return (
     <div
       ref={cardRef}
-      className="h-full bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 transition-all duration-500 hover:scale-[1.02] group"
+      className={`h-full min-h-[360px] bg-[#0a0a12]/80 border border-border/90 rounded-xl transition-all duration-500 ${
+        showDemo ? 'p-6' : 'p-8 hover:scale-[1.02] group'
+      }`}
     >
-      <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
-        {/* Icon */}
-        <div className="flex-shrink-0">
-          <div className="w-16 h-16 rounded-xl gradient-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-            <project.icon className="w-8 h-8 text-primary-foreground" />
+      {!showDemo ? (
+        frontContent
+      ) : (
+        <>
+          <div className="mb-4 flex items-center justify-between">
+            <h3 className="text-base font-semibold text-foreground sm:text-lg">
+              {project.title} Demo
+            </h3>
+            <button
+              type="button"
+              onClick={handleBackToDetails}
+              className="inline-flex items-center rounded-md border border-border/90 p-2 text-foreground/90 transition-colors hover:border-primary/60 hover:text-primary"
+              title="Back to project details"
+              aria-label={`Back to ${project.title} details`}
+            >
+              <ArrowLeft className="h-4 w-4" />
+            </button>
           </div>
-        </div>
 
-        {/* Content */}
-        <div className="flex-1">
-          <div className="mb-3 flex flex-wrap items-center gap-3">
-            <h3 className="text-xl font-bold text-foreground sm:text-2xl">{project.title}</h3>
-            {project.year && (
-              <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-primary/20 text-primary text-sm">
-                <Calendar className="w-3 h-3" />
-                {project.year}
-              </div>
-            )}
-          </div>
-
-          <p className="text-muted-foreground mb-4 leading-relaxed text-justify">
-            {project.description}
-          </p>
-
-          {/* Features */}
-          <div className="flex flex-wrap gap-2">
-            {project.features.map((feature, i) => (
-              <span
-                key={`${feature}-${i}`}
-                className="px-3 py-1 rounded-full bg-secondary/80 text-foreground/80 text-sm border border-primary/40 hover:border-primary/60 transition-colors"
-              >
-                {feature}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* External link icon - Clickable only if link exists */}
-        {project.link ? (
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex-shrink-0 self-start"
-            title="Open project"
+          <video
+            ref={videoRef}
+            autoPlay
+            muted
+            playsInline
+            loop
+            className="h-[calc(100%-2.5rem)] w-full rounded-lg border border-border/90 object-cover"
           >
-            <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-          </a>
-        ) : (
-          <ExternalLink className="h-5 w-5 flex-shrink-0 self-start text-muted-foreground transition-colors group-hover:text-primary" />
-        )}
-      </div>
+            <source src={project.demoVideo} type="video/mp4" />
+            <source src="/project-demo/ai_cricket.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </>
+      )}
     </div>
   );
 };

@@ -11,8 +11,6 @@ const About = () => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (prefersReducedMotion()) return;
-
     const ctx = gsap.context(() => {
       gsap.fromTo(
         contentRef.current,
@@ -20,11 +18,11 @@ const About = () => {
         {
           opacity: 1,
           y: 0,
-          duration: 1,
+          duration: prefersReducedMotion() ? 0 : 1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 80%",
+            start: "top 75%",
             end: "top 50%",
             toggleActions: "play none none reverse",
           },
@@ -44,7 +42,11 @@ const About = () => {
   return (
     <section id="about" ref={sectionRef} className="relative py-24 md:py-32">
       <div className="container relative z-10 mx-auto px-6">
-        <div ref={contentRef} className="mx-auto max-w-6xl text-center">
+        <div
+          ref={contentRef}
+          className="mx-auto max-w-6xl text-center"
+          style={{ opacity: 0, transform: "translateY(60px)" }}
+        >
           <h2 className="section-title">About Me</h2>
 
           <div className="rounded-xl border border-border/90 bg-[#0a0a12]/80 p-8 transition-all duration-500 md:p-12">

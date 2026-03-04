@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { GraduationCap, Briefcase, TrendingUp, Wrench } from "lucide-react";
+import { GraduationCap, Briefcase, TrendingUp, Wrench, Check } from "lucide-react";
 import { prefersReducedMotion } from "@/lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -50,14 +50,14 @@ const timelineData: TimelineItem[] = [
     icon: Wrench,
     title: "Skills",
     content: [
-      "Frontend Development",
-      "Backend Development",
-      "Databases & Cloud Services",
-      "Artificial Intelligence",
-      "Computer Vision Models",
-      "Optimization & Performance Tuning",
-      "Real-Time Video Streaming",
-      "DevOps & Version Control",
+      "- Frontend Development",
+      "- Backend Development",
+      "- Databases & Cloud Services",
+      "- Artificial Intelligence",
+      "- Computer Vision Models",
+      "- Optimization & Performance Tuning",
+      "- Real-Time Video Streaming",
+      "- DevOps & Version Control",
     ],
   },
 ];
@@ -107,15 +107,27 @@ const TimelineItemComponent = ({
           <h3 className="gradient-text mb-4 text-xl font-bold">{item.title}</h3>
           <ul className="space-y-2">
             {item.content.map((text, i) => {
+              const cleanedText = text.replace(/^\s*-\s*/, "");
               const [lead, ...rest] = text.split(" - ");
+              const isSkillsSection = item.title === "Skills";
               return (
-                <li key={`${item.title}-${i}`} className="break-words text-justify leading-[1.55] text-foreground/80 md:leading-[1.7]">
-                  {rest.length > 0 ? (
+                <li
+                  key={`${item.title}-${i}`}
+                  className={`break-words leading-[1.55] text-foreground/80 md:leading-[1.7] ${
+                    isSkillsSection ? "flex items-start gap-2 text-left" : "text-justify"
+                  }`}
+                >
+                  {isSkillsSection ? (
+                    <>
+                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                      <span>{cleanedText}</span>
+                    </>
+                  ) : rest.length > 0 ? (
                     <>
                       <strong className="text-foreground">{lead}</strong> - {rest.join(" - ")}
                     </>
                   ) : (
-                    text
+                    cleanedText
                   )}
                 </li>
               );

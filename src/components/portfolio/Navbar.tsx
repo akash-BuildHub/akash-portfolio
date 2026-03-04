@@ -4,9 +4,17 @@ import { Button } from "@/components/ui/button";
 import { RESUME_PATH } from "@/lib/utils";
 import { prefersReducedMotion } from "@/lib/motion";
 
+const NAV_ITEMS = [
+  { label: "About", id: "about" },
+  { label: "Experience", id: "experience" },
+  { label: "Projects", id: "projects" },
+  { label: "Contact", id: "contact" },
+];
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
   const clickTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -24,9 +32,51 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const getSectionOffsets = () =>
+      NAV_ITEMS
+        .map((item) => {
+          const section = document.getElementById(item.id);
+          return section ? { id: item.id, top: section.offsetTop } : null;
+        })
+        .filter((section): section is { id: string; top: number } => section !== null);
+
+    let sectionOffsets = getSectionOffsets();
+
+    const updateActiveSection = () => {
+      if (sectionOffsets.length === 0) return;
+
+      const scrollPosition = window.scrollY + 140;
+      let currentSection: string | null = null;
+
+      for (const section of sectionOffsets) {
+        if (scrollPosition >= section.top) {
+          currentSection = section.id;
+        }
+      }
+
+      setActiveSection(currentSection);
+    };
+
+    const handleResize = () => {
+      sectionOffsets = getSectionOffsets();
+      updateActiveSection();
+    };
+
+    updateActiveSection();
+    window.addEventListener("scroll", updateActiveSection, { passive: true });
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSection);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
+      setActiveSection(id);
       element.scrollIntoView({
         behavior: prefersReducedMotion() ? "auto" : "smooth",
         block: "start",
@@ -34,13 +84,6 @@ const Navbar = () => {
       setIsMobileMenuOpen(false);
     }
   };
-
-  const navItems = [
-    { label: "About", id: "about" },
-    { label: "Experience", id: "experience" },
-    { label: "Projects", id: "projects" },
-    { label: "Contact", id: "contact" },
-  ];
 
   return (
     <nav
@@ -88,14 +131,20 @@ const Navbar = () => {
         </button>
 
         <div className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className="group relative text-foreground/80 transition-all duration-300 hover:text-foreground hover:glow-text"
+              className={`group relative transition-all duration-300 hover:text-foreground hover:glow-text ${
+                activeSection === item.id ? "text-foreground" : "text-foreground/80"
+              }`}
             >
               {item.label}
-              <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-primary transition-all duration-300 group-hover:w-full" />
+              <span
+                className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                  activeSection === item.id ? "w-full" : "w-0 group-hover:w-full"
+                }`}
+              />
             </button>
           ))}
           <Button
@@ -122,11 +171,13 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div id="mobile-menu" className="glass mx-4 mt-2 rounded-xl p-6 md:hidden animate-fade-in">
           <div className="flex flex-col gap-4">
-            {navItems.map((item) => (
+            {NAV_ITEMS.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="py-2 text-left text-foreground/80 transition-colors hover:text-foreground"
+                className={`py-2 text-left transition-colors hover:text-foreground ${
+                  activeSection === item.id ? "text-foreground" : "text-foreground/80"
+                }`}
               >
                 {item.label}
               </button>
