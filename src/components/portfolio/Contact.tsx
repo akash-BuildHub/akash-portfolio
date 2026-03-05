@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Phone, Mail, MapPin, X, Loader } from 'lucide-react';
@@ -225,7 +225,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" ref={sectionRef} className="py-24 md:py-32 relative">
+    <section id="contact" ref={sectionRef} className="py-20 md:py-32 relative">
       <div className="container mx-auto px-6 relative z-10">
         <h2 className="section-title">Contact</h2>
 
@@ -264,7 +264,7 @@ const Contact = () => {
           {/* Social Links - Colored circular icons */}
           <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-5 md:min-h-[260px] md:p-6 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-6">Catch Me Online</h3>
-            <div className="flex justify-center gap-4 mb-8">
+            <div className="mb-8 flex flex-wrap justify-center gap-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -482,4 +482,5 @@ const Contact = () => {
 };
 
 export default Contact;
+
 

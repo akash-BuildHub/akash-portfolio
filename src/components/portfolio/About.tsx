@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+﻿import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Eye, Cpu, TrendingUp } from "lucide-react";
@@ -40,7 +40,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" ref={sectionRef} className="relative py-24 md:py-32">
+    <section id="about" ref={sectionRef} className="relative py-20 md:py-32">
       <div className="container relative z-10 mx-auto px-6">
         <div
           ref={contentRef}
@@ -49,8 +49,8 @@ const About = () => {
         >
           <h2 className="section-title">About Me</h2>
 
-          <div className="rounded-xl border border-border/90 bg-[#0a0a12]/80 p-8 transition-all duration-500 md:p-12">
-            <p className="mb-8 text-justify text-lg leading-[1.7] text-foreground/90 md:text-xl md:leading-[1.9]">
+          <div className="rounded-xl border border-border/90 bg-[#0a0a12]/80 p-5 transition-all duration-500 sm:p-7 md:p-12">
+            <p className="mb-8 text-justify text-base leading-[1.7] text-foreground/90 sm:text-lg md:text-xl md:leading-[1.9]">
               I'm <span className="font-semibold text-foreground">Akash</span>, an{" "}
               <span className="gradient-text font-semibold">AI Developer</span>{" "}
               specializing in machine learning, deep learning, and computer vision, with hands-on
@@ -81,3 +81,4 @@ const About = () => {
 };
 
 export default About;
+

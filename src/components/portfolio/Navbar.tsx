@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import { Menu, X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RESUME_PATH } from "@/lib/utils";
@@ -12,6 +12,7 @@ const NAV_ITEMS = [
 ];
 
 const Navbar = () => {
+  const navRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -33,53 +34,40 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
-    const getSectionOffsets = () =>
-      NAV_ITEMS
-        .map((item) => {
-          const section = document.getElementById(item.id);
-          return section ? { id: item.id, top: section.offsetTop } : null;
-        })
-        .filter((section): section is { id: string; top: number } => section !== null);
-
-    let sectionOffsets = getSectionOffsets();
-
     const updateActiveSection = () => {
-      if (sectionOffsets.length === 0) return;
-
-      const scrollPosition = window.scrollY + 140;
+      const navOffset = (navRef.current?.offsetHeight ?? 80) + 24;
+      const scrollPosition = window.scrollY + navOffset;
       let currentSection: string | null = null;
 
-      for (const section of sectionOffsets) {
-        if (scrollPosition >= section.top) {
-          currentSection = section.id;
+      for (const item of NAV_ITEMS) {
+        const section = document.getElementById(item.id);
+        if (section && scrollPosition >= section.offsetTop) {
+          currentSection = item.id;
         }
       }
 
       setActiveSection(currentSection);
     };
 
-    const handleResize = () => {
-      sectionOffsets = getSectionOffsets();
-      updateActiveSection();
-    };
-
     updateActiveSection();
     window.addEventListener("scroll", updateActiveSection, { passive: true });
-    window.addEventListener("resize", handleResize);
+    window.addEventListener("resize", updateActiveSection);
 
     return () => {
       window.removeEventListener("scroll", updateActiveSection);
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("resize", updateActiveSection);
     };
   }, []);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
+      const navOffset = (navRef.current?.offsetHeight ?? 80) + 12;
+      const top = element.getBoundingClientRect().top + window.scrollY - navOffset;
       setActiveSection(id);
-      element.scrollIntoView({
+      window.scrollTo({
+        top: Math.max(top, 0),
         behavior: prefersReducedMotion() ? "auto" : "smooth",
-        block: "start",
       });
       setIsMobileMenuOpen(false);
     }
@@ -87,6 +75,7 @@ const Navbar = () => {
 
   return (
     <nav
+      ref={navRef}
       className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
         isScrolled ? "glass py-3" : "bg-transparent py-5"
       }`}
@@ -125,9 +114,7 @@ const Navbar = () => {
             decoding="async"
             className="h-10 w-auto"
           />
-          <span className="shine animate-pulse text-2xl text-primary md:text-3xl">
-            ✯°
-          </span>
+          <span className="shine animate-pulse text-2xl text-primary md:text-3xl">{"\u272F\u00B0"}</span>
         </button>
 
         <div className="hidden items-center gap-8 md:flex">
@@ -149,7 +136,7 @@ const Navbar = () => {
           ))}
           <Button
             variant="outline"
-            className="mt-2 w-full border-primary/60 hover:border-primary"
+            className="border-primary/60 hover:border-primary"
             onClick={() => window.open(RESUME_PATH, "_blank")}
           >
             <Download className="mr-2 h-4 w-4" />
@@ -169,7 +156,7 @@ const Navbar = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <div id="mobile-menu" className="glass mx-4 mt-2 rounded-xl p-6 md:hidden animate-fade-in">
+        <div id="mobile-menu" className="glass mx-4 mt-2 max-h-[75vh] overflow-y-auto rounded-xl p-6 md:hidden animate-fade-in">
           <div className="flex flex-col gap-4">
             {NAV_ITEMS.map((item) => (
               <button
@@ -198,3 +185,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

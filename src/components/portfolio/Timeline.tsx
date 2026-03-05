@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+﻿import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GraduationCap, Briefcase, TrendingUp, Wrench, Check } from "lucide-react";
@@ -177,7 +177,7 @@ const Timeline = ({ show }: TimelineProps) => {
   if (!show) return null;
 
   return (
-    <section id="timeline" ref={sectionRef} className="relative py-24 md:py-32">
+    <section id="timeline" ref={sectionRef} className="relative py-20 md:py-32">
       <div className="container relative z-10 mx-auto px-6">
         <h2 className="section-title">My Journey</h2>
 
@@ -199,3 +199,4 @@ const Timeline = ({ show }: TimelineProps) => {
 };
 
 export default Timeline;
+

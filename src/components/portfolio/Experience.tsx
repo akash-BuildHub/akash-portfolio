@@ -1,4 +1,4 @@
-import { useEffect, useRef, type MouseEvent } from "react";
+﻿import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "@/lib/motion";
@@ -69,6 +69,10 @@ const ExperienceCard = ({
   index: number;
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  const hasFinePointer =
+    typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -96,7 +100,7 @@ const ExperienceCard = ({
   }, [index]);
 
   const handleCardMouseMove = (event: MouseEvent<HTMLDivElement>) => {
-    if (prefersReducedMotion() || !cardRef.current) return;
+    if (prefersReducedMotion() || !hasFinePointer || !cardRef.current) return;
 
     const rect = cardRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
@@ -128,14 +132,31 @@ const ExperienceCard = ({
     });
   };
 
+  const handleCardClick = () => {
+    if (hasFinePointer) return;
+    setIsFlipped((prev) => !prev);
+  };
+
+  const handleCardKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    setIsFlipped((prev) => !prev);
+  };
+
   return (
     <div
       ref={cardRef}
-      className="flip-card h-[280px] w-full cursor-pointer"
+      className="flip-card h-[300px] w-full cursor-pointer sm:h-[280px]"
       onMouseMove={handleCardMouseMove}
       onMouseLeave={handleCardMouseLeave}
+      onClick={handleCardClick}
+      onKeyDown={handleCardKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-label={`${experience.title} at ${experience.company}`}
+      aria-pressed={isFlipped}
     >
-      <div className="flip-card-inner">
+      <div className={`flip-card-inner ${isFlipped ? "is-flipped" : ""}`}>
         <div className="flip-card-front flex items-center justify-center rounded-xl border border-border/90 bg-[#0a0a12]/80 p-6 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_0_26px_rgba(168,85,247,0.2)]">
           <h3 className="gradient-text text-center text-2xl font-bold text-foreground">
             {experience.title}
@@ -150,7 +171,7 @@ const ExperienceCard = ({
           <p className="mb-4 text-sm text-muted-foreground">
             {experience.location} | {experience.duration}
           </p>
-          <p className="text-justify text-sm leading-relaxed text-foreground/80">
+          <p className="max-h-[110px] overflow-y-auto pr-1 text-justify text-sm leading-relaxed text-foreground/80">
             {experience.description}
           </p>
         </div>
@@ -161,7 +182,7 @@ const ExperienceCard = ({
 
 const Experience = () => {
   return (
-    <section id="experience" className="relative py-24 md:py-32">
+    <section id="experience" className="relative py-20 md:py-32">
       <div className="container relative z-10 mx-auto px-6">
         <h2 className="section-title">Experience</h2>
 
@@ -176,3 +197,4 @@ const Experience = () => {
 };
 
 export default Experience;
+

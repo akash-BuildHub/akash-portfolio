@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type MouseEvent } from 'react';
+﻿import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { FileCode2 } from 'lucide-react';
@@ -100,6 +100,8 @@ const TechStacks = () => {
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
+    const hasFinePointer =
+      typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
@@ -119,32 +121,34 @@ const TechStacks = () => {
         }
       );
 
-      const floatTargets = gsap.utils.toArray<HTMLElement>('.tech-icon-float');
-      floatTargets.forEach((target) => {
-        const drift = gsap.utils.random(2, 4, 0.1);
-        const duration = gsap.utils.random(1.8, 2.8, 0.1);
-        const delay = gsap.utils.random(0, 0.8, 0.1);
+      if (hasFinePointer) {
+        const floatTargets = gsap.utils.toArray<HTMLElement>('.tech-icon-float');
+        floatTargets.forEach((target) => {
+          const drift = gsap.utils.random(2, 4, 0.1);
+          const duration = gsap.utils.random(1.8, 2.8, 0.1);
+          const delay = gsap.utils.random(0, 0.8, 0.1);
 
-        gsap.to(target, {
-          y: -drift,
-          repeat: -1,
-          yoyo: true,
-          duration,
-          delay,
-          ease: 'sine.inOut',
+          gsap.to(target, {
+            y: -drift,
+            repeat: -1,
+            yoyo: true,
+            duration,
+            delay,
+            ease: 'sine.inOut',
+          });
         });
-      });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section id="tech-stacks" ref={sectionRef} className="py-24 md:py-32 relative">
+    <section id="tech-stacks" ref={sectionRef} className="py-20 md:py-32 relative">
       <div className="container mx-auto px-6 relative z-10">
         <h2 className="section-title">Tech Stacks</h2>
 
-        <div className="mx-auto flex w-full max-w-6xl min-h-[70vh] items-center overflow-x-hidden rounded-2xl border border-border/90 bg-[#0a0a12]/70 px-4 py-8 md:min-h-[75vh] md:px-6 md:py-10">
+        <div className="mx-auto flex w-full max-w-6xl items-center overflow-x-hidden rounded-2xl border border-border/90 bg-[#0a0a12]/70 px-4 py-8 sm:min-h-[520px] md:min-h-[640px] md:px-6 md:py-10">
           <div className="grid w-full grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5 lg:grid-rows-4">
             {techStacks.map((tech) => (
               <div
@@ -167,3 +171,4 @@ const TechStacks = () => {
 };
 
 export default TechStacks;
+

@@ -83,17 +83,12 @@
     @apply bg-background text-foreground antialiased;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
 
-  /* Disable text selection except contact info */
-  body {
+  .no-select {
     user-select: none;
     -webkit-user-select: none;
-  }
-
-  .selectable {
-    user-select: text;
-    -webkit-user-select: text;
   }
 
   /* Custom scrollbar */
@@ -221,6 +216,10 @@
     transform: rotateY(180deg);
   }
 
+  .flip-card-inner.is-flipped {
+    transform: rotateY(180deg);
+  }
+
   .flip-card-front,
   .flip-card-back {
     position: absolute;
@@ -243,6 +242,7 @@
     padding-bottom: 0.08em;
     overflow-wrap: anywhere;
   }
+
 }
 
 @layer utilities {
@@ -287,6 +287,18 @@
 img,
 svg {
   max-width: 100%;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .reflect-card:hover {
+    transform: none;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  }
+
+  .flip-card:hover .flip-card-inner,
+  .flip-card:focus .flip-card-inner {
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

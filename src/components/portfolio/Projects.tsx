@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ExternalLink, Users, Hospital, Calendar, ArrowLeft } from 'lucide-react';
@@ -71,6 +71,8 @@ const projects: Project[] = [
 const ProjectCard = ({ project }: { project: Project }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const demoMetaRef = useRef<HTMLDivElement>(null);
+  const demoMediaRef = useRef<HTMLDivElement>(null);
   const [showDemo, setShowDemo] = useState(false);
   const isDemoProject = Boolean(project.demoVideo);
 
@@ -97,6 +99,23 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
     return () => ctx.revert();
   }, []);
+
+  useEffect(() => {
+    if (!showDemo || prefersReducedMotion()) return;
+
+    const meta = demoMetaRef.current;
+    const media = demoMediaRef.current;
+    if (!meta || !media) return;
+
+    gsap.killTweensOf([meta, media]);
+    gsap.set([meta, media], { opacity: 0, y: 12 });
+
+    gsap.timeline().to(meta, { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out' }).to(
+      media,
+      { opacity: 1, y: 0, duration: 0.28, ease: 'power2.out' },
+      '-=0.1'
+    );
+  }, [showDemo]);
 
   const handleBackToDetails = () => {
     setShowDemo(false);
@@ -180,7 +199,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     return (
       <div
         ref={cardRef}
-        className="h-full bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 transition-all duration-500 hover:scale-[1.02] group"
+        className="h-full bg-[#0a0a12]/80 border border-border/90 rounded-xl p-5 transition-all duration-500 hover:scale-[1.02] group sm:p-6 lg:p-8"
       >
         {frontContent}
       </div>
@@ -191,14 +210,14 @@ const ProjectCard = ({ project }: { project: Project }) => {
     <div
       ref={cardRef}
       className={`h-full min-h-[360px] bg-[#0a0a12]/80 border border-border/90 rounded-xl transition-all duration-500 ${
-        showDemo ? 'p-6' : 'p-8 hover:scale-[1.02] group'
+        showDemo ? 'p-5 sm:p-6' : 'p-5 hover:scale-[1.02] group sm:p-6 lg:p-8'
       }`}
     >
       {!showDemo ? (
         frontContent
       ) : (
         <>
-          <div className="mb-4 flex items-center justify-between">
+          <div ref={demoMetaRef} className="mb-4 flex items-center justify-between">
             <h3 className="text-base font-semibold text-foreground sm:text-lg">
               {project.title} Demo
             </h3>
@@ -213,7 +232,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
             </button>
           </div>
 
-          <div className="w-full overflow-hidden rounded-lg border border-border/90 bg-black">
+          <div ref={demoMediaRef} className="w-full overflow-hidden rounded-lg border border-border/90 bg-black">
             <video
               ref={videoRef}
               autoPlay
@@ -237,7 +256,7 @@ const Projects = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   return (
-    <section id="projects" ref={sectionRef} className="py-24 md:py-32 relative">
+    <section id="projects" ref={sectionRef} className="py-20 md:py-32 relative">
       <div className="container mx-auto px-6 relative z-10">
         <h2 className="section-title">Projects</h2>
 
@@ -252,3 +271,4 @@ const Projects = () => {
 };
 
 export default Projects;
+
