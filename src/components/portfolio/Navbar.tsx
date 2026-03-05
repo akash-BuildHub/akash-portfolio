@@ -10,12 +10,16 @@ const NAV_ITEMS = [
   { label: "Projects", id: "projects" },
   { label: "Contact", id: "contact" },
 ];
+const SECTION_CONTENT_NUDGE = 0;
 
 const Navbar = () => {
   const navRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [theme, setTheme] = useState<"light" | "dark">(
+    document.documentElement.classList.contains("dark") ? "dark" : "light",
+  );
   const clickTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -34,8 +38,18 @@ const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    const root = document.documentElement;
+    const observer = new MutationObserver(() => {
+      setTheme(root.classList.contains("dark") ? "dark" : "light");
+    });
+
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
     const updateActiveSection = () => {
-      const navOffset = (navRef.current?.offsetHeight ?? 80) + 24;
+      const navOffset = (navRef.current?.offsetHeight ?? 80) + 10 + SECTION_CONTENT_NUDGE;
       const scrollPosition = window.scrollY + navOffset;
       let currentSection: string | null = null;
 
@@ -62,8 +76,11 @@ const Navbar = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const navOffset = (navRef.current?.offsetHeight ?? 80) + 12;
-      const top = element.getBoundingClientRect().top + window.scrollY - navOffset;
+      const navOffset = (navRef.current?.offsetHeight ?? 80) + 2;
+      const titleTarget = element.querySelector(".section-title") as HTMLElement | null;
+      const target = titleTarget ?? element;
+      const top =
+        target.getBoundingClientRect().top + window.scrollY - navOffset + SECTION_CONTENT_NUDGE;
       setActiveSection(id);
       window.scrollTo({
         top: Math.max(top, 0),
@@ -99,6 +116,8 @@ const Navbar = () => {
               clearTimeout(clickTimeout.current);
               clickTimeout.current = null;
             }
+            const currentTheme = document.documentElement.classList.contains("dark") ? "dark" : "light";
+            window.localStorage.setItem("portfolio-theme", currentTheme);
             sessionStorage.setItem("scrollToTopAfterReload", "1");
             window.location.reload();
           }}
@@ -106,15 +125,17 @@ const Navbar = () => {
           aria-label="Scroll to top. Double click to reload."
         >
           <img
-            src="/logo.png"
-            alt="Akash portfolio logo"
+            src={theme === "light" ? "/signature_logo_black.png" : "/signature_logo_white.png"}
+            alt="Akash signature logo"
             width={40}
             height={40}
             loading="eager"
             decoding="async"
             className="h-10 w-auto"
           />
-          <span className="shine animate-pulse text-2xl text-primary md:text-3xl">{"\u272F\u00B0"}</span>
+          <span className="shine animate-pulse text-2xl text-purple-500 md:text-3xl">
+            {"\u272F\u00B0"}
+          </span>
         </button>
 
         <div className="hidden items-center gap-8 md:flex">

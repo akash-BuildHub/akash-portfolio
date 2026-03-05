@@ -1,7 +1,7 @@
 ﻿import { useEffect, useRef, useState, type MouseEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FileCode2 } from 'lucide-react';
+import { Activity, FileCode2 } from 'lucide-react';
 import { prefersReducedMotion } from '@/lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -39,13 +39,29 @@ const techStacks: TechItem[] = [
 const TechIcon = ({ tech }: { tech: TechItem }) => {
   const [logoFailed, setLogoFailed] = useState(false);
 
+  if (tech.name === 'Data Streaming') {
+    return (
+      <div className="tech-icon-float">
+        <div className="tech-icon-visual flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md bg-slate-900/90 p-1 dark:bg-slate-100">
+          <Activity className="h-5 w-5 text-cyan-300 dark:text-slate-900" />
+        </div>
+      </div>
+    );
+  }
+
   if (tech.logo && !logoFailed) {
     return (
       <div className="tech-icon-float">
         <img
           src={tech.logo}
           alt={`${tech.name} icon`}
-          className="tech-icon-visual w-8 h-8 object-contain flex-shrink-0 will-change-transform"
+          className={`tech-icon-visual h-8 w-8 flex-shrink-0 object-contain will-change-transform ${
+            tech.name === 'Artificial Intelligence'
+              ? 'rounded-md bg-slate-900/90 p-1 dark:bg-transparent dark:p-0'
+              : tech.name === 'Data Streaming'
+                ? 'rounded-md bg-slate-900/90 p-1 dark:bg-transparent dark:p-0'
+                : ''
+          }`}
           loading="lazy"
           decoding="async"
           onError={() => setLogoFailed(true)}

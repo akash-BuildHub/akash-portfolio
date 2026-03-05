@@ -2,45 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Dark futuristic portfolio theme - All colors in HSL */
+/* Theme tokens - light + dark */
 
 @layer base {
   :root {
-    --background: 260 20% 6%;
-    --foreground: 0 0% 95%;
+    --background: 220 35% 98%;
+    --foreground: 230 25% 12%;
 
-    --card: 260 25% 10%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 100%;
+    --card-foreground: 230 25% 12%;
 
-    --popover: 260 25% 10%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 230 25% 12%;
 
-    --primary: 270 80% 65%;
+    --primary: 262 78% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 260 30% 15%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 220 25% 93%;
+    --secondary-foreground: 230 25% 16%;
 
-    --muted: 260 20% 18%;
-    --muted-foreground: 260 10% 60%;
+    --muted: 220 20% 92%;
+    --muted-foreground: 230 10% 40%;
 
-    --accent: 280 100% 70%;
+    --accent: 262 92% 60%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 260 32% 34%;
-    --input: 260 32% 34%;
-    --ring: 270 80% 65%;
+    --border: 225 18% 84%;
+    --input: 225 18% 84%;
+    --ring: 262 78% 55%;
 
     --radius: 0.75rem;
 
     /* Custom colors for portfolio */
-    --glass: 260 30% 15%;
-    --glass-border: 260 40% 30%;
-    --gradient-start: 280 100% 70%;
-    --gradient-end: 250 100% 60%;
+    --glass: 0 0% 100%;
+    --glass-border: 225 18% 80%;
+    --gradient-start: 270 80% 58%;
+    --gradient-end: 235 78% 60%;
   }
 
   .dark {
@@ -71,6 +71,11 @@
     --border: 260 32% 34%;
     --input: 260 32% 34%;
     --ring: 270 80% 65%;
+
+    --glass: 260 30% 15%;
+    --glass-border: 260 40% 30%;
+    --gradient-start: 280 100% 70%;
+    --gradient-end: 250 100% 60%;
   }
 }
 
@@ -287,6 +292,40 @@
 img,
 svg {
   max-width: 100%;
+}
+
+.light .bg-\[\#0a0a12\]\/80 {
+  background-color: hsl(var(--card) / 0.92) !important;
+}
+
+.light .bg-\[\#0a0a12\]\/70 {
+  background-color: hsl(var(--card) / 0.86) !important;
+}
+
+.light .bg-\[\#0a0a12\]\/20 {
+  background-color: hsl(var(--secondary) / 0.7) !important;
+}
+
+.light .bg-\[\#0a0a12\] {
+  background-color: hsl(var(--background)) !important;
+}
+
+.light .text-white {
+  color: hsl(var(--foreground)) !important;
+}
+
+.light .from-\[\#0e0e18\] {
+  --tw-gradient-from: hsl(var(--background)) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: hsl(var(--background) / 0) var(--tw-gradient-to-position) !important;
+}
+
+.light .via-\[\#0b0b14\] {
+  --tw-gradient-to: hsl(var(--background) / 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), hsl(var(--secondary)) var(--tw-gradient-via-position), var(--tw-gradient-to) !important;
+}
+
+.light .to-black {
+  --tw-gradient-to: hsl(var(--background)) var(--tw-gradient-to-position) !important;
 }
 
 @media (hover: none), (pointer: coarse) {

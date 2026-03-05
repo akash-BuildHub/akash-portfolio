@@ -264,7 +264,7 @@ const Contact = () => {
           {/* Social Links - Colored circular icons */}
           <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-5 md:min-h-[260px] md:p-6 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-6">Catch Me Online</h3>
-            <div className="mb-8 flex flex-wrap justify-center gap-4">
+            <div className="mb-8 flex flex-wrap justify-start gap-4">
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
@@ -283,7 +283,7 @@ const Contact = () => {
             {/* Let's Talk Button */}
             <button
               onClick={() => setShowChatForm(!showChatForm)}
-              className="w-full px-6 py-2 bg-gradient-to-r from-primary to-blue-600 text-white rounded-lg font-medium hover:shadow-lg transition-all duration-300 hover:scale-105"
+              className="w-full rounded-lg border border-slate-300 bg-white px-6 py-2 font-medium text-slate-900 transition-all duration-300 hover:scale-105 hover:bg-slate-100 hover:shadow-lg dark:border-transparent dark:bg-gradient-to-r dark:from-primary dark:to-blue-600 dark:text-white dark:hover:from-primary dark:hover:to-blue-500"
             >
               {showChatForm ? 'Close' : "Let's Talk"}
             </button>
@@ -301,7 +301,7 @@ const Contact = () => {
             <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-6 md:p-7 transition-all duration-500">
               {/* Header */}
               <div className="flex justify-between items-center mb-6">
-                <h3 className="text-xl md:text-2xl font-bold text-foreground">Drop a Message</h3>
+                <h3 className="gradient-text text-xl md:text-2xl font-bold">Drop a Message</h3>
                 <button
                   onClick={closeChatForm}
                   className="text-foreground/60 hover:text-foreground transition-colors p-1"
@@ -460,7 +460,7 @@ const Contact = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-semibold rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+                      className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-8 py-3 font-semibold text-slate-900 shadow-lg transition-all duration-300 hover:bg-slate-100 hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-50 md:w-auto dark:border-transparent dark:bg-gradient-to-r dark:from-purple-600 dark:to-blue-600 dark:text-white dark:hover:from-purple-500 dark:hover:to-blue-500"
                     >
                       {isSubmitting ? (
                         <>

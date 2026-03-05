@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent } from "react";
+﻿import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "@/lib/motion";
@@ -69,6 +69,7 @@ const ExperienceCard = ({
   index: number;
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const [isFlipped, setIsFlipped] = useState(false);
 
   const hasFinePointer =
@@ -132,9 +133,26 @@ const ExperienceCard = ({
     });
   };
 
-  const handleCardClick = () => {
-    if (hasFinePointer) return;
-    setIsFlipped((prev) => !prev);
+  const handleCardPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse") return;
+    touchStartRef.current = { x: event.clientX, y: event.clientY };
+  };
+
+  const handleCardPointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse") return;
+    const start = touchStartRef.current;
+    if (!start) return;
+
+    const moved =
+      Math.abs(event.clientX - start.x) > 10 || Math.abs(event.clientY - start.y) > 10;
+    if (!moved) {
+      setIsFlipped((prev) => !prev);
+    }
+    touchStartRef.current = null;
+  };
+
+  const handleCardPointerCancel = () => {
+    touchStartRef.current = null;
   };
 
   const handleCardKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -146,10 +164,12 @@ const ExperienceCard = ({
   return (
     <div
       ref={cardRef}
-      className="flip-card h-[300px] w-full cursor-pointer sm:h-[280px]"
+      className="flip-card h-[320px] w-full cursor-pointer touch-manipulation sm:h-[310px]"
       onMouseMove={handleCardMouseMove}
       onMouseLeave={handleCardMouseLeave}
-      onClick={handleCardClick}
+      onPointerDown={handleCardPointerDown}
+      onPointerUp={handleCardPointerUp}
+      onPointerCancel={handleCardPointerCancel}
       onKeyDown={handleCardKeyDown}
       tabIndex={0}
       role="button"
@@ -163,15 +183,15 @@ const ExperienceCard = ({
           </h3>
         </div>
 
-        <div className="flip-card-back flex flex-col justify-center rounded-xl border border-primary/60 bg-[#0a0a12]/20 p-6">
+        <div className="flip-card-back flex flex-col justify-center rounded-xl border border-border/90 bg-card/95 p-6 dark:border-primary/60 dark:bg-[#0a0a12]/20">
           <h3 className="mb-1 text-xl font-bold text-foreground">{experience.company}</h3>
           {experience.parentCompany && (
             <p className="mb-2 text-sm text-primary">({experience.parentCompany})</p>
           )}
-          <p className="mb-4 text-sm text-muted-foreground">
+          <p className="mb-4 text-sm text-foreground/70 dark:text-muted-foreground">
             {experience.location} | {experience.duration}
           </p>
-          <p className="max-h-[110px] overflow-y-auto pr-1 text-justify text-sm leading-relaxed text-foreground/80">
+          <p className="text-justify text-sm leading-relaxed text-foreground/85 dark:text-foreground/80">
             {experience.description}
           </p>
         </div>
@@ -197,4 +217,5 @@ const Experience = () => {
 };
 
 export default Experience;
+
 
