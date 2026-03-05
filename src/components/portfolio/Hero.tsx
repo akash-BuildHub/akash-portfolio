@@ -86,13 +86,13 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
           <div ref={imageRef} className="flex justify-center lg:-translate-x-5 lg:justify-start">
             <div className="avatar-ring reflect-card reflect-circle w-full max-w-[320px] sm:max-w-[360px] lg:max-w-[400px]">
               <img
-                src="/akash_profile.png"
+                src="/akash_profile-1.jpeg"
                 alt="Akash profile"
                 width={380}
                 height={500}
                 loading="eager"
                 decoding="async"
-                className="reflect-circle aspect-square w-full object-cover grayscale"
+                className="reflect-circle aspect-square w-full object-cover"
               />
             </div>
           </div>
