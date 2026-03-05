@@ -78,7 +78,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     if (prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
-        gsap.fromTo(
+      gsap.fromTo(
         cardRef.current,
         { opacity: 0, y: 20 },
         {
@@ -213,18 +213,20 @@ const ProjectCard = ({ project }: { project: Project }) => {
             </button>
           </div>
 
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            playsInline
-            loop
-            className="h-[calc(100%-2.5rem)] w-full rounded-lg border border-border/90 object-cover"
-          >
-            <source src={project.demoVideo} type="video/mp4" />
-            <source src="/project-demo/ai_cricket.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
+          <div className="w-full overflow-hidden rounded-lg border border-border/90 bg-black">
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              playsInline
+              loop
+              className="aspect-video w-full object-cover"
+            >
+              <source src={project.demoVideo} type="video/mp4" />
+              <source src="/project_demo/ai_cricket.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </>
       )}
     </div>

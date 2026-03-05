@@ -49,11 +49,11 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
   return (
     <section
       ref={heroRef}
-      className="min-h-screen bg-[#0a0a12] px-4 pt-20 sm:px-6 md:pt-24"
+      className="min-h-screen bg-[#0a0a12] px-4 pt-16 sm:px-6 sm:pt-20 flex items-center"
       aria-label="Hero section"
     >
-      <div className="relative mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-6xl items-center overflow-hidden rounded-3xl border border-purple-500/40 bg-gradient-to-br from-[#0e0e18] via-[#0b0b14] to-black shadow-[0_0_80px_-20px_rgba(168,85,247,0.35)]">
-        <div className="grid w-full grid-cols-1 items-center gap-10 px-6 py-12 sm:px-10 sm:py-14 lg:grid-cols-[55%_45%] lg:gap-14 lg:px-14 lg:py-20">
+      <div className="relative mx-auto flex min-h-[70vh] w-full max-w-6xl items-center overflow-hidden rounded-3xl border border-purple-500/40 bg-gradient-to-br from-[#0e0e18] via-[#0b0b14] to-black shadow-[0_0_80px_-20px_rgba(168,85,247,0.35)] md:min-h-[75vh]">
+        <div className="grid w-full grid-cols-1 items-center gap-10 px-6 py-10 sm:px-10 sm:py-12 lg:grid-cols-[55%_45%] lg:gap-14 lg:px-14 lg:py-14">
           <div ref={textRef}>
             <p className="text-3xl font-bold text-white sm:text-4xl md:text-5xl">
               Welcome to

@@ -231,10 +231,10 @@ const Contact = () => {
 
         <div
           ref={contentRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto"
+          className="mx-auto grid w-full max-w-6xl grid-cols-1 items-start gap-8 md:grid-cols-3"
         >
           {/* Personal Message */}
-          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 transition-all duration-300">
+          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-5 md:min-h-[260px] md:p-6 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-4">Akash's Portfolio</h3>
             <p className="text-foreground/80 leading-relaxed">
               Thanks for exploring my little corner of the web.<br />
@@ -243,7 +243,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 transition-all duration-300">
+          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-5 md:min-h-[260px] md:p-6 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-6">Reach Out</h3>
             <div className="space-y-4 selectable">
               <div className="flex items-center gap-4 text-foreground/80 hover:text-foreground transition-colors">
@@ -262,7 +262,7 @@ const Contact = () => {
           </div>
 
           {/* Social Links - Colored circular icons */}
-          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-8 transition-all duration-300">
+          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-5 md:min-h-[260px] md:p-6 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-6">Catch Me Online</h3>
             <div className="flex justify-center gap-4 mb-8">
               {socialLinks.map((social) => (
@@ -293,12 +293,12 @@ const Contact = () => {
         {/* Chat Form Section - Styled as Card Like About Section */}
         <div
           ref={chatFormRef}
-          className={`overflow-hidden transition-all duration-500 ease-out mt-12 ${
-            showChatForm ? 'max-h-[2000px] md:max-h-[1400px] opacity-100' : 'max-h-0 opacity-0'
+          className={`overflow-hidden transition-all duration-500 ease-out ${
+            showChatForm ? 'mt-12 max-h-[2000px] md:max-h-[1400px] opacity-100' : 'mt-0 max-h-0 opacity-0'
           }`}
         >
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-6 md:p-8 transition-all duration-500">
+          <div className="mx-auto w-full max-w-6xl">
+            <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-6 md:p-7 transition-all duration-500">
               {/* Header */}
               <div className="flex justify-between items-center mb-6">
                 <h3 className="text-xl md:text-2xl font-bold text-foreground">Drop a Message</h3>

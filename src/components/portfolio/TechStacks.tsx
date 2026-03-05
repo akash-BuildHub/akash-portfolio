@@ -144,8 +144,8 @@ const TechStacks = () => {
       <div className="container mx-auto px-6 relative z-10">
         <h2 className="section-title">Tech Stacks</h2>
 
-        <div className="max-w-4xl mx-auto bg-[#0a0a12]/70 border border-border/90 rounded-2xl px-4 py-6 md:px-6 md:py-7 overflow-x-hidden">
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:grid-rows-4">
+        <div className="mx-auto flex w-full max-w-6xl min-h-[70vh] items-center overflow-x-hidden rounded-2xl border border-border/90 bg-[#0a0a12]/70 px-4 py-8 md:min-h-[75vh] md:px-6 md:py-10">
+          <div className="grid w-full grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5 lg:grid-rows-4">
             {techStacks.map((tech) => (
               <div
                 key={tech.name}
