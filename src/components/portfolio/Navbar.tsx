@@ -10,7 +10,6 @@ const NAV_ITEMS = [
   { label: "Projects", id: "projects" },
   { label: "Contact", id: "contact" },
 ];
-const SECTION_CONTENT_NUDGE = 0;
 
 const Navbar = () => {
   const navRef = useRef<HTMLElement>(null);
@@ -49,7 +48,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const updateActiveSection = () => {
-      const navOffset = (navRef.current?.offsetHeight ?? 80) + 10 + SECTION_CONTENT_NUDGE;
+      const navOffset = (navRef.current?.offsetHeight ?? 80) + 10;
       const scrollPosition = window.scrollY + navOffset;
       let currentSection: string | null = null;
 
@@ -80,7 +79,7 @@ const Navbar = () => {
       const titleTarget = element.querySelector(".section-title") as HTMLElement | null;
       const target = titleTarget ?? element;
       const top =
-        target.getBoundingClientRect().top + window.scrollY - navOffset + SECTION_CONTENT_NUDGE;
+        target.getBoundingClientRect().top + window.scrollY - navOffset;
       setActiveSection(id);
       window.scrollTo({
         top: Math.max(top, 0),
@@ -206,4 +205,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
 

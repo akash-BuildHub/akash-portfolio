@@ -216,8 +216,7 @@
     transform-style: preserve-3d;
   }
 
-  .flip-card:hover .flip-card-inner,
-  .flip-card:focus .flip-card-inner {
+  .flip-card:hover .flip-card-inner {
     transform: rotateY(180deg);
   }
 
@@ -334,8 +333,7 @@ svg {
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
   }
 
-  .flip-card:hover .flip-card-inner,
-  .flip-card:focus .flip-card-inner {
+  .flip-card:hover .flip-card-inner {
     transform: none;
   }
 }

@@ -1,4 +1,11 @@
-﻿import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent, type PointerEvent } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type MouseEvent as ReactMouseEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { prefersReducedMotion } from "@/lib/motion";
@@ -64,13 +71,15 @@ const experiences: ExperienceItem[] = [
 const ExperienceCard = ({
   experience,
   index,
+  isFlipped,
+  onTapFlip,
 }: {
   experience: ExperienceItem;
   index: number;
+  isFlipped: boolean;
+  onTapFlip: () => void;
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
-  const [isFlipped, setIsFlipped] = useState(false);
 
   const hasFinePointer =
     typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -100,7 +109,7 @@ const ExperienceCard = ({
     return () => ctx.revert();
   }, [index]);
 
-  const handleCardMouseMove = (event: MouseEvent<HTMLDivElement>) => {
+  const handleCardMouseMove = (event: ReactMouseEvent<HTMLDivElement>) => {
     if (prefersReducedMotion() || !hasFinePointer || !cardRef.current) return;
 
     const rect = cardRef.current.getBoundingClientRect();
@@ -133,32 +142,15 @@ const ExperienceCard = ({
     });
   };
 
-  const handleCardPointerDown = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType === "mouse") return;
-    touchStartRef.current = { x: event.clientX, y: event.clientY };
-  };
-
-  const handleCardPointerUp = (event: PointerEvent<HTMLDivElement>) => {
-    if (event.pointerType === "mouse") return;
-    const start = touchStartRef.current;
-    if (!start) return;
-
-    const moved =
-      Math.abs(event.clientX - start.x) > 10 || Math.abs(event.clientY - start.y) > 10;
-    if (!moved) {
-      setIsFlipped((prev) => !prev);
-    }
-    touchStartRef.current = null;
-  };
-
-  const handleCardPointerCancel = () => {
-    touchStartRef.current = null;
-  };
-
   const handleCardKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key !== "Enter" && event.key !== " ") return;
     event.preventDefault();
-    setIsFlipped((prev) => !prev);
+    onTapFlip();
+  };
+
+  const handleCardPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === "mouse" || hasFinePointer) return;
+    onTapFlip();
   };
 
   return (
@@ -167,9 +159,7 @@ const ExperienceCard = ({
       className="flip-card h-[320px] w-full cursor-pointer touch-manipulation sm:h-[310px]"
       onMouseMove={handleCardMouseMove}
       onMouseLeave={handleCardMouseLeave}
-      onPointerDown={handleCardPointerDown}
       onPointerUp={handleCardPointerUp}
-      onPointerCancel={handleCardPointerCancel}
       onKeyDown={handleCardKeyDown}
       tabIndex={0}
       role="button"
@@ -201,6 +191,12 @@ const ExperienceCard = ({
 };
 
 const Experience = () => {
+  const [flippedCardIndex, setFlippedCardIndex] = useState<number | null>(null);
+
+  const handleTapFlip = (index: number) => {
+    setFlippedCardIndex((prev) => (prev === index ? null : index));
+  };
+
   return (
     <section id="experience" className="relative py-20 md:py-32">
       <div className="container relative z-10 mx-auto px-6">
@@ -208,7 +204,13 @@ const Experience = () => {
 
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {experiences.map((exp, index) => (
-            <ExperienceCard key={`${exp.company}-${exp.duration}`} experience={exp} index={index} />
+            <ExperienceCard
+              key={`${exp.company}-${exp.duration}`}
+              experience={exp}
+              index={index}
+              isFlipped={flippedCardIndex === index}
+              onTapFlip={() => handleTapFlip(index)}
+            />
           ))}
         </div>
       </div>
@@ -217,5 +219,3 @@ const Experience = () => {
 };
 
 export default Experience;
-
-
