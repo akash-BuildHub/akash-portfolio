@@ -1,10 +1,7 @@
 import {
   useEffect,
   useRef,
-  useState,
-  type KeyboardEvent,
   type MouseEvent as ReactMouseEvent,
-  type TouchEvent as ReactTouchEvent,
 } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -71,16 +68,11 @@ const experiences: ExperienceItem[] = [
 const ExperienceCard = ({
   experience,
   index,
-  isFlipped,
-  onTapFlip,
 }: {
   experience: ExperienceItem;
   index: number;
-  isFlipped: boolean;
-  onTapFlip: () => void;
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const lastTouchTimeRef = useRef(0);
 
   const hasFinePointer =
     typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -143,37 +135,15 @@ const ExperienceCard = ({
     });
   };
 
-  const handleCardKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key !== "Enter" && event.key !== " ") return;
-    event.preventDefault();
-    onTapFlip();
-  };
-
-  const handleCardTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
-    lastTouchTimeRef.current = event.timeStamp;
-    onTapFlip();
-  };
-
-  const handleCardClick = (event: ReactMouseEvent<HTMLDivElement>) => {
-    if (event.timeStamp - lastTouchTimeRef.current < 500) return;
-    onTapFlip();
-  };
-
   return (
     <div
       ref={cardRef}
       className="flip-card h-[320px] w-full cursor-pointer touch-manipulation sm:h-[310px]"
-      onClick={handleCardClick}
-      onTouchStart={handleCardTouchStart}
       onMouseMove={handleCardMouseMove}
       onMouseLeave={handleCardMouseLeave}
-      onKeyDown={handleCardKeyDown}
-      tabIndex={0}
-      role="button"
       aria-label={`${experience.title} at ${experience.company}`}
-      aria-pressed={isFlipped}
     >
-      <div className={`flip-card-inner ${isFlipped ? "is-flipped" : ""}`}>
+      <div className="flip-card-inner">
         <div className="flip-card-front flex items-center justify-center rounded-xl border border-border/90 bg-[#0a0a12]/80 p-6 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_0_26px_rgba(168,85,247,0.2)]">
           <h3 className="gradient-text text-center text-2xl font-bold text-foreground">
             {experience.title}
@@ -198,12 +168,6 @@ const ExperienceCard = ({
 };
 
 const Experience = () => {
-  const [flippedCardIndex, setFlippedCardIndex] = useState<number | null>(null);
-
-  const handleTapFlip = (index: number) => {
-    setFlippedCardIndex((prev) => (prev === index ? null : index));
-  };
-
   return (
     <section id="experience" className="relative py-20 md:py-32">
       <div className="container relative z-10 mx-auto px-6">
@@ -215,8 +179,6 @@ const Experience = () => {
               key={`${exp.company}-${exp.duration}`}
               experience={exp}
               index={index}
-              isFlipped={flippedCardIndex === index}
-              onTapFlip={() => handleTapFlip(index)}
             />
           ))}
         </div>
