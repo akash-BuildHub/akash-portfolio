@@ -245,14 +245,14 @@ const Contact = () => {
           {/* Contact Info */}
           <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-5 md:min-h-[260px] md:p-6 transition-all duration-300">
             <h3 className="text-xl font-bold gradient-text mb-6">Reach Out</h3>
-            <div className="space-y-4 selectable">
+            <div className="space-y-4 no-select">
               <div className="flex items-center gap-4 text-foreground/80 hover:text-foreground transition-colors">
                 <Phone className="w-5 h-5 text-primary" />
-                <span>+91 96268 63389</span>
+                <span className="allow-copy">+91 96268 63389</span>
               </div>
               <div className="flex items-center gap-4 text-foreground/80 hover:text-foreground transition-colors">
                 <Mail className="w-5 h-5 text-primary" />
-                <span>akashrm.mail@gmail.com</span>
+                <span className="allow-copy">akashrm.mail@gmail.com</span>
               </div>
               <div className="flex items-center gap-4 text-foreground/80 hover:text-foreground transition-colors">
                 <MapPin className="w-5 h-5 text-primary" />

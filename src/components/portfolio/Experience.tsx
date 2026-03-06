@@ -4,7 +4,7 @@ import {
   useState,
   type KeyboardEvent,
   type MouseEvent as ReactMouseEvent,
-  type PointerEvent as ReactPointerEvent,
+  type TouchEvent as ReactTouchEvent,
 } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -80,6 +80,7 @@ const ExperienceCard = ({
   onTapFlip: () => void;
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const lastTouchTimeRef = useRef(0);
 
   const hasFinePointer =
     typeof window !== "undefined" && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -148,8 +149,13 @@ const ExperienceCard = ({
     onTapFlip();
   };
 
-  const handleCardPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (event.pointerType === "mouse" || hasFinePointer) return;
+  const handleCardTouchStart = (event: ReactTouchEvent<HTMLDivElement>) => {
+    lastTouchTimeRef.current = event.timeStamp;
+    onTapFlip();
+  };
+
+  const handleCardClick = (event: ReactMouseEvent<HTMLDivElement>) => {
+    if (event.timeStamp - lastTouchTimeRef.current < 500) return;
     onTapFlip();
   };
 
@@ -157,9 +163,10 @@ const ExperienceCard = ({
     <div
       ref={cardRef}
       className="flip-card h-[320px] w-full cursor-pointer touch-manipulation sm:h-[310px]"
+      onClick={handleCardClick}
+      onTouchStart={handleCardTouchStart}
       onMouseMove={handleCardMouseMove}
       onMouseLeave={handleCardMouseLeave}
-      onPointerUp={handleCardPointerUp}
       onKeyDown={handleCardKeyDown}
       tabIndex={0}
       role="button"
