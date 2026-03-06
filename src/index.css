@@ -229,14 +229,9 @@
     transform-style: preserve-3d;
     -webkit-transform-style: preserve-3d;
     will-change: transform;
-    transform: translateZ(0);
   }
 
   .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-
-  .flip-card-inner.is-flipped {
     transform: rotateY(180deg);
   }
 
@@ -352,6 +347,10 @@ svg {
 
   .flip-card:hover .flip-card-inner {
     transform: none;
+  }
+
+  .flip-card:active .flip-card-inner {
+    transform: rotateY(180deg);
   }
 }
 
