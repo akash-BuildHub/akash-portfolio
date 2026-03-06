@@ -135,12 +135,25 @@ const ExperienceCard = ({
     });
   };
 
+  const handleCardTouchStart = () => {
+    const innerCard = cardRef.current?.querySelector<HTMLElement>(".flip-card-inner");
+    innerCard?.classList.add("is-flipped");
+  };
+
+  const handleCardTouchEnd = () => {
+    const innerCard = cardRef.current?.querySelector<HTMLElement>(".flip-card-inner");
+    innerCard?.classList.remove("is-flipped");
+  };
+
   return (
     <div
       ref={cardRef}
       className="flip-card h-[320px] w-full cursor-pointer touch-manipulation sm:h-[310px]"
       onMouseMove={handleCardMouseMove}
       onMouseLeave={handleCardMouseLeave}
+      onTouchStart={handleCardTouchStart}
+      onTouchEnd={handleCardTouchEnd}
+      onTouchCancel={handleCardTouchEnd}
       aria-label={`${experience.title} at ${experience.company}`}
     >
       <div className="flip-card-inner">
