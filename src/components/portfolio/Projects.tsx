@@ -74,6 +74,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
   const demoMetaRef = useRef<HTMLDivElement>(null);
   const demoMediaRef = useRef<HTMLDivElement>(null);
   const [showDemo, setShowDemo] = useState(false);
+  const [videoSrc, setVideoSrc] = useState(project.demoVideo);
+  const [didRetryVideo, setDidRetryVideo] = useState(false);
   const isDemoProject = Boolean(project.demoVideo);
 
   useEffect(() => {
@@ -116,6 +118,24 @@ const ProjectCard = ({ project }: { project: Project }) => {
       '-=0.1'
     );
   }, [showDemo]);
+
+  useEffect(() => {
+    if (!showDemo) return;
+
+    const video = videoRef.current;
+    if (!video) return;
+
+    const playPromise = video.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {});
+    }
+  }, [showDemo]);
+
+  useEffect(() => {
+    if (!showDemo || !project.demoVideo) return;
+    setVideoSrc(project.demoVideo);
+    setDidRetryVideo(false);
+  }, [showDemo, project.demoVideo]);
 
   const handleBackToDetails = () => {
     setShowDemo(false);
@@ -235,13 +255,21 @@ const ProjectCard = ({ project }: { project: Project }) => {
           <div ref={demoMediaRef} className="w-full overflow-hidden rounded-lg border border-border/90 bg-black">
             <video
               ref={videoRef}
+              key={videoSrc}
               autoPlay
               muted
               playsInline
               loop
+              preload="metadata"
               className="aspect-video w-full object-cover"
+              onError={() => {
+                if (!project.demoVideo || didRetryVideo) return;
+                const bust = `${project.demoVideo}${project.demoVideo.includes('?') ? '&' : '?'}v=${Date.now()}`;
+                setDidRetryVideo(true);
+                setVideoSrc(bust);
+              }}
             >
-              <source src={project.demoVideo} type="video/mp4" />
+              {videoSrc ? <source src={videoSrc} type="video/mp4" /> : null}
               <source src="/project_demo/ai_cricket.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
