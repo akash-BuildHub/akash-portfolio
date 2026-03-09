@@ -74,6 +74,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
   const demoMetaRef = useRef<HTMLDivElement>(null);
   const demoMediaRef = useRef<HTMLDivElement>(null);
   const [showDemo, setShowDemo] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [videoSrc, setVideoSrc] = useState(project.demoVideo);
   const [didRetryVideo, setDidRetryVideo] = useState(false);
   const isDemoProject = Boolean(project.demoVideo);
@@ -101,6 +102,20 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
     return () => ctx.revert();
   }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const update = () => setIsMobile(mediaQuery.matches);
+    update();
+    mediaQuery.addEventListener('change', update);
+    return () => mediaQuery.removeEventListener('change', update);
+  }, []);
+
+  useEffect(() => {
+    if (isDemoProject && isMobile) {
+      setShowDemo(true);
+    }
+  }, [isDemoProject, isMobile]);
 
   useEffect(() => {
     if (!showDemo || prefersReducedMotion()) return;
@@ -189,7 +204,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
         </div>
       </div>
 
-      {isDemoProject ? (
+      {isDemoProject && !isMobile ? (
         <button
           type="button"
           onClick={() => setShowDemo(true)}
@@ -237,20 +252,22 @@ const ProjectCard = ({ project }: { project: Project }) => {
         frontContent
       ) : (
         <>
-          <div ref={demoMetaRef} className="mb-4 flex items-center justify-between">
-            <h3 className="text-base font-semibold text-foreground sm:text-lg">
-              {project.title} Demo
-            </h3>
-            <button
-              type="button"
-              onClick={handleBackToDetails}
-              className="inline-flex items-center rounded-md border border-border/90 p-2 text-foreground/90 transition-colors hover:border-primary/60 hover:text-primary"
-              title="Back to project details"
-              aria-label={`Back to ${project.title} details`}
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </button>
-          </div>
+          {!isMobile ? (
+            <div ref={demoMetaRef} className="mb-4 flex items-center justify-between">
+              <h3 className="text-base font-semibold text-foreground sm:text-lg">
+                {project.title} Demo
+              </h3>
+              <button
+                type="button"
+                onClick={handleBackToDetails}
+                className="inline-flex items-center rounded-md border border-border/90 p-2 text-foreground/90 transition-colors hover:border-primary/60 hover:text-primary"
+                title="Back to project details"
+                aria-label={`Back to ${project.title} details`}
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </button>
+            </div>
+          ) : null}
 
           <div ref={demoMediaRef} className="w-full overflow-hidden rounded-lg border border-border/90 bg-black">
             <video
