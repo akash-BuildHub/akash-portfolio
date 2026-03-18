@@ -52,6 +52,13 @@ const projects: Project[] = [
       'Vision Snap is a web based tool for creating image datasets for computer vision. It captures images from live webcams and extracts frames from uploaded videos. Users can organize samples into custom classes and export them as machine learning ready datasets.',
     features: ['Webcam Capture', 'Video Frame Extraction', 'Dataset Creation'],
     icon: Calendar,
+    demoImages: [
+      '/project_demo/vision_snap/1.png',
+      '/project_demo/vision_snap/2.png',
+      '/project_demo/vision_snap/3.png',
+      '/project_demo/vision_snap/4.png',
+      '/project_demo/vision_snap/5.png',
+    ],
   },
   {
     title: 'ALL IN ONE',
@@ -384,7 +391,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                         key={image}
                         type="button"
                         onClick={() => setActiveImageIndex(index)}
-                        className="absolute left-1/2 top-1/2 flex h-[86%] w-[94%] sm:h-[90%] sm:w-[82%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-md bg-black shadow-[0_16px_40px_rgba(0,0,0,0.55)] transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
+                        className="absolute left-1/2 top-1/2 flex h-[92%] w-[99%] sm:h-[96%] sm:w-[89%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-md bg-black shadow-[0_16px_40px_rgba(0,0,0,0.55)] transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
                         style={{
                           transform: `translate(-50%, -50%) translateY(${translateY}%) rotateX(${rotateX}deg) scale(${scale})`,
                           opacity,
@@ -396,7 +403,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                         <img
                           src={image}
                           alt={`${project.title} screenshot ${index + 1}`}
-                          className="block h-full w-full p-[2px] object-contain object-center"
+                          className="block h-full w-full object-cover object-center"
                         />
                       </button>
                     );
