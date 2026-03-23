@@ -225,8 +225,8 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" ref={sectionRef} className="py-20 md:py-32 relative">
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="contact" ref={sectionRef} className="relative py-16 sm:py-20 md:py-32">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <h2 className="section-title">Contact</h2>
 
         <div
@@ -234,7 +234,7 @@ const Contact = () => {
           className="mx-auto grid w-full max-w-6xl grid-cols-1 items-start gap-8 md:grid-cols-3"
         >
           {/* Personal Message */}
-          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-5 md:min-h-[260px] md:p-6 transition-all duration-300">
+          <div className="rounded-xl border border-border/90 bg-[#0a0a12]/80 p-4 transition-all duration-300 sm:p-5 md:min-h-[260px] md:p-6">
             <h3 className="text-xl font-bold gradient-text mb-4">Akash's Portfolio</h3>
             <p className="text-foreground/80 leading-relaxed">
               Thanks for exploring my little corner of the web.<br />
@@ -243,7 +243,7 @@ const Contact = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-5 md:min-h-[260px] md:p-6 transition-all duration-300">
+          <div className="rounded-xl border border-border/90 bg-[#0a0a12]/80 p-4 transition-all duration-300 sm:p-5 md:min-h-[260px] md:p-6">
             <h3 className="text-xl font-bold gradient-text mb-6">Reach Out</h3>
             <div className="space-y-4 no-select">
               <div className="flex items-center gap-4 text-foreground/80 hover:text-foreground transition-colors">
@@ -252,7 +252,7 @@ const Contact = () => {
               </div>
               <div className="flex items-center gap-4 text-foreground/80 hover:text-foreground transition-colors">
                 <Mail className="w-5 h-5 text-primary" />
-                <span className="allow-copy">akashrm.mail@gmail.com</span>
+                <span className="allow-copy break-all">akashrm.mail@gmail.com</span>
               </div>
               <div className="flex items-center gap-4 text-foreground/80 hover:text-foreground transition-colors">
                 <MapPin className="w-5 h-5 text-primary" />
@@ -262,7 +262,7 @@ const Contact = () => {
           </div>
 
           {/* Social Links - Colored circular icons */}
-          <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-5 md:min-h-[260px] md:p-6 transition-all duration-300">
+          <div className="rounded-xl border border-border/90 bg-[#0a0a12]/80 p-4 transition-all duration-300 sm:p-5 md:min-h-[260px] md:p-6">
             <h3 className="text-xl font-bold gradient-text mb-6">Catch Me Online</h3>
             <div className="mb-8 flex flex-wrap justify-start gap-4">
               {socialLinks.map((social) => (
@@ -272,7 +272,7 @@ const Contact = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className={`w-12 h-12 rounded-full ${social.bgColor} flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg cursor-pointer`}
+                  className={`flex h-11 w-11 items-center justify-center rounded-full ${social.bgColor} cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg sm:h-12 sm:w-12`}
                   title={social.label}
                 >
                   {social.icon}
@@ -294,14 +294,14 @@ const Contact = () => {
         <div
           ref={chatFormRef}
           className={`overflow-hidden transition-all duration-500 ease-out ${
-            showChatForm ? 'mt-12 max-h-[2000px] md:max-h-[1400px] opacity-100' : 'mt-0 max-h-0 opacity-0'
+            showChatForm ? 'mt-8 max-h-[2600px] opacity-100 sm:mt-12 md:max-h-[1500px]' : 'mt-0 max-h-0 opacity-0'
           }`}
         >
           <div className="mx-auto w-full max-w-6xl">
-            <div className="bg-[#0a0a12]/80 border border-border/90 rounded-xl p-6 md:p-7 transition-all duration-500">
+            <div className="rounded-xl border border-border/90 bg-[#0a0a12]/80 p-4 transition-all duration-500 sm:p-6 md:p-7">
               {/* Header */}
-              <div className="flex justify-between items-center mb-6">
-                <h3 className="gradient-text text-xl md:text-2xl font-bold">Drop a Message</h3>
+              <div className="mb-4 flex items-center justify-between sm:mb-6">
+                <h3 className="gradient-text text-lg font-bold sm:text-xl md:text-2xl">Drop a Message</h3>
                 <button
                   onClick={closeChatForm}
                   className="text-foreground/60 hover:text-foreground transition-colors p-1"
@@ -313,7 +313,7 @@ const Contact = () => {
 
               <form onSubmit={handleSubmit} noValidate>
                 {/* Two Column Layout */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              <div className="mb-6 grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
                 {/* Left Column */}
                     <div className="space-y-4">
                       {/* Name */}
@@ -433,7 +433,7 @@ const Contact = () => {
                           value={formData.message}
                           onChange={handleInputChange}
                           placeholder="Tell me what's on your mind..."
-                          rows={8}
+                          rows={6}
                           className="w-full px-4 py-3 bg-background/50 border border-border/90 rounded-lg text-foreground placeholder-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all resize-none"
                         />
                       </div>

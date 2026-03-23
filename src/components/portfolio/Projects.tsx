@@ -279,7 +279,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           )}
         </div>
 
-        <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-3 leading-relaxed text-justify sm:mb-4">
+        <p className="mb-3 text-left text-xs leading-relaxed text-muted-foreground sm:mb-4 sm:text-sm sm:text-justify md:text-base">
           {project.description}
         </p>
 
@@ -335,7 +335,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
   return (
     <div
       ref={cardRef}
-      className={`h-full min-h-[360px] bg-[#0a0a12]/80 border border-border/90 rounded-xl p-4 sm:p-6 lg:p-8 transition-transform duration-500 ${
+      className={`h-full min-h-[320px] bg-[#0a0a12]/80 border border-border/90 rounded-xl p-4 sm:min-h-[360px] sm:p-6 lg:p-8 transition-transform duration-500 ${
         showDemo ? '' : 'hover:scale-[1.02] group'
       }`}
       style={lockedCardHeight ? { height: `${lockedCardHeight}px` } : undefined}
@@ -344,14 +344,14 @@ const ProjectCard = ({ project }: { project: Project }) => {
         frontContent
       ) : (
         <>
-          <div ref={demoMetaRef} className="mb-3 sm:mb-4 relative flex items-center justify-end gap-3">
-            <h3 className="absolute left-1/2 -translate-x-1/2 text-sm font-semibold text-foreground sm:text-lg">
+          <div ref={demoMetaRef} className="mb-3 flex flex-col gap-2 sm:relative sm:mb-4 sm:flex-row sm:items-center sm:justify-end sm:gap-3">
+            <h3 className="text-xs font-semibold tracking-[0.14em] text-foreground sm:absolute sm:left-1/2 sm:-translate-x-1/2 sm:text-lg sm:tracking-normal">
               PROJECT GALLERY
             </h3>
             <button
               type="button"
               onClick={handleBackToDetails}
-              className="inline-flex items-center rounded-md border border-border/90 p-2 text-foreground/90 transition-colors hover:border-primary/60 hover:text-primary"
+              className="inline-flex self-start items-center rounded-md border border-border/90 p-2 text-foreground/90 transition-colors hover:border-primary/60 hover:text-primary sm:self-auto"
               title="Back to project details"
               aria-label={`Back to ${project.title} details`}
             >
@@ -362,7 +362,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           <div ref={demoMediaRef}>
             <div className="relative w-full overflow-hidden rounded-lg bg-black py-1.5 sm:py-3">
               <div
-                className="relative mx-auto h-[180px] w-full max-w-[640px] touch-none sm:h-[240px] [perspective:1000px]"
+                className="relative mx-auto h-[160px] w-full max-w-[640px] touch-none sm:h-[220px] md:h-[240px] [perspective:1000px]"
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
                 onPointerUp={handlePointerEnd}
@@ -391,7 +391,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                         key={image}
                         type="button"
                         onClick={() => setActiveImageIndex(index)}
-                        className="absolute left-1/2 top-1/2 flex h-[92%] w-[99%] sm:h-[96%] sm:w-[89%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-md bg-black shadow-[0_16px_40px_rgba(0,0,0,0.55)] transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
+                        className="absolute left-1/2 top-1/2 flex h-[94%] w-[96%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-md bg-black shadow-[0_16px_40px_rgba(0,0,0,0.55)] transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] sm:h-[96%] sm:w-[89%]"
                         style={{
                           transform: `translate(-50%, -50%) translateY(${translateY}%) rotateX(${rotateX}deg) scale(${scale})`,
                           opacity,
@@ -427,11 +427,11 @@ const Projects = () => {
   const sectionRef = useRef<HTMLElement>(null);
 
   return (
-    <section id="projects" ref={sectionRef} className="py-16 md:py-32 relative">
+    <section id="projects" ref={sectionRef} className="relative py-12 sm:py-16 md:py-32">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <h2 className="section-title">Projects</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 max-w-6xl mx-auto">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
           {projects.map((project, index) => (
             <ProjectCard key={index} project={project} />
           ))}

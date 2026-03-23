@@ -103,7 +103,7 @@ const TimelineItemComponent = ({
       className={`flex flex-col gap-4 md:items-center md:gap-8 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"}`}
     >
       <div className={`flex-1 ${isLeft ? "md:text-right" : "md:text-left"}`}>
-        <div className="inline-block rounded-xl border border-border/90 bg-[#0a0a12]/80 p-6 transition-all duration-500">
+        <div className="inline-block rounded-xl border border-border/90 bg-[#0a0a12]/80 p-4 transition-all duration-500 sm:p-6">
           <h3 className="gradient-text mb-4 text-xl font-bold">{item.title}</h3>
           <ul className="space-y-2">
             {item.content.map((text, i) => {
@@ -137,8 +137,8 @@ const TimelineItemComponent = ({
       </div>
 
       <div className="relative z-10 shrink-0 self-center">
-        <div className="gradient-primary flex h-16 w-16 items-center justify-center rounded-full">
-          <item.icon className="h-7 w-7 text-primary-foreground" />
+        <div className="gradient-primary flex h-14 w-14 items-center justify-center rounded-full sm:h-16 sm:w-16">
+          <item.icon className="h-6 w-6 text-primary-foreground sm:h-7 sm:w-7" />
         </div>
       </div>
 
@@ -177,8 +177,8 @@ const Timeline = ({ show }: TimelineProps) => {
   if (!show) return null;
 
   return (
-    <section id="timeline" ref={sectionRef} className="relative py-20 md:py-32">
-      <div className="container relative z-10 mx-auto px-6">
+    <section id="timeline" ref={sectionRef} className="relative py-16 sm:py-20 md:py-32">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <h2 className="section-title">My Journey</h2>
 
         <div className="relative mx-auto max-w-4xl">
@@ -187,7 +187,7 @@ const Timeline = ({ show }: TimelineProps) => {
             className="absolute bottom-0 left-1/2 top-0 hidden w-1 -translate-x-1/2 origin-top bg-gradient-to-b from-primary via-accent to-primary md:block"
           />
 
-          <div className="space-y-12">
+          <div className="space-y-10 sm:space-y-12">
             {timelineData.map((item, index) => (
               <TimelineItemComponent key={`${item.title}-${index}`} item={item} index={index} />
             ))}

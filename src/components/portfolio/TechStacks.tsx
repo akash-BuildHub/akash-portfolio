@@ -164,17 +164,17 @@ const TechStacks = () => {
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <h2 className="section-title">Tech Stacks</h2>
 
-        <div className="mx-auto flex w-full max-w-6xl items-center overflow-x-hidden rounded-2xl border border-border/90 bg-[#0a0a12]/70 px-3 py-6 sm:px-4 sm:py-8 md:px-6 md:py-10">
-          <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-4 sm:gap-5 md:grid-cols-4 md:gap-6 lg:grid-cols-5 lg:grid-rows-4">
+        <div className="mx-auto flex w-full max-w-6xl items-center overflow-x-hidden rounded-2xl border border-border/90 bg-[#0a0a12]/70 px-3 py-5 sm:px-4 sm:py-8 md:px-6 md:py-10">
+          <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5 md:grid-cols-4 md:gap-6 lg:grid-cols-5 lg:grid-rows-4">
             {techStacks.map((tech) => (
               <div
                 key={tech.name}
-                className="tech-stack-item flex flex-col items-center justify-start text-center gap-1.5 min-h-[72px] min-w-0 sm:gap-2 sm:min-h-[84px]"
+                className="tech-stack-item flex min-w-0 min-h-[72px] flex-col items-center justify-start gap-1.5 text-center sm:gap-2 sm:min-h-[84px]"
                 onMouseEnter={handleIconHoverIn}
                 onMouseLeave={handleIconHoverOut}
               >
                 <TechIcon tech={tech} />
-                <p className="text-[10px] sm:text-xs md:text-sm font-medium text-foreground leading-tight break-words">
+                <p className="break-words text-[11px] font-medium leading-tight text-foreground sm:text-xs md:text-sm">
                   {tech.name}
                 </p>
               </div>

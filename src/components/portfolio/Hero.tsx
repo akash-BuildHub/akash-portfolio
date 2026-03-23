@@ -129,11 +129,11 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
   };
 
   return (
-    <section className="relative py-12 sm:py-16 md:py-24 lg:py-32" aria-label="Hero section">
+    <section className="relative pb-12 pt-24 sm:py-16 md:py-24 lg:py-32" aria-label="Hero section">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="mx-auto max-w-6xl rounded-xl border border-border/90 bg-[#0a0a12]/80 p-4 transition-all duration-500 sm:p-6 md:p-10 lg:p-12">
           <div className="grid w-full grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-[55%_45%] lg:gap-14">
-            <div>
+            <div className="text-center lg:text-left">
               <p className="text-2xl font-bold text-white sm:text-3xl md:text-4xl lg:text-5xl">Welcome to</p>
 
               <h1 className="mt-2 text-3xl font-bold text-purple-500 sm:text-4xl md:text-5xl lg:text-6xl">
@@ -148,7 +148,7 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
 
               <button
                 onClick={scrollToTimeline}
-                className="mt-8 inline-flex items-center gap-2 rounded-full border border-purple-500/40 px-5 py-2.5 text-xs text-white transition hover:bg-purple-500/10 sm:mt-10 sm:gap-3 sm:px-7 sm:py-3 sm:text-sm md:mt-12 md:px-10 md:py-4 md:text-base"
+                className="mx-auto mt-8 inline-flex items-center gap-2 rounded-full border border-purple-500/40 px-5 py-2.5 text-xs text-white transition hover:bg-purple-500/10 sm:mt-10 sm:gap-3 sm:px-7 sm:py-3 sm:text-sm md:mt-12 md:px-10 md:py-4 md:text-base lg:mx-0"
                 aria-label="Explore timeline section"
               >
                 <ChevronRight className="h-4 w-4 text-purple-500 sm:h-5 sm:w-5" />
@@ -162,7 +162,7 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
             >
               <div
                 ref={avatarCardRef}
-                className={`reflect-circle w-full max-w-[200px] cursor-grab touch-pan-y transform-gpu rounded-full border-2 border-purple-500/50 p-[4px] [transform-style:preserve-3d] active:cursor-grabbing sm:max-w-[280px] sm:p-[6px] md:max-w-[340px] lg:max-w-[400px] ${
+                className={`reflect-circle w-full max-w-[180px] cursor-grab touch-pan-y transform-gpu rounded-full border-2 border-purple-500/50 p-[4px] [transform-style:preserve-3d] active:cursor-grabbing sm:max-w-[280px] sm:p-[6px] md:max-w-[340px] lg:max-w-[400px] ${
                   theme === "dark"
                     ? "bg-[#2a2a2a] shadow-[0_10px_24px_rgba(0,0,0,0.4)] sm:shadow-[0_14px_34px_rgba(0,0,0,0.45)]"
                     : "bg-transparent"

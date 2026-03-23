@@ -3,9 +3,9 @@ import { Heart } from "lucide-react";
 const Footer = () => {
   return (
     <footer className="relative border-t border-border/90 py-8">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-4 sm:px-6">
         <div className="flex flex-col items-center justify-center gap-2 text-center md:flex-row">
-          <p className="text-muted-foreground">
+          <p className="text-sm text-muted-foreground sm:text-base">
             Designed and Developed by{" "}
             <span className="gradient-text glow-text font-semibold">Akash</span>
           </p>
