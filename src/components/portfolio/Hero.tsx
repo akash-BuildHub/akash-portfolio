@@ -129,7 +129,7 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
   };
 
   return (
-    <section className="relative pb-12 pt-24 sm:py-16 md:py-24 lg:py-32" aria-label="Hero section">
+    <section className="relative pb-16 pt-24 sm:py-16 md:py-24 lg:py-32" aria-label="Hero section">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="mx-auto max-w-6xl rounded-xl border border-border/90 bg-[#0a0a12]/80 p-4 transition-all duration-500 sm:p-6 md:p-10 lg:p-12">
           <div className="grid w-full grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-[55%_45%] lg:gap-14">

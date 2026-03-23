@@ -71,7 +71,7 @@ const Index = ({ showTimeline, setShowTimeline }: IndexProps) => {
         Skip to main content
       </a>
       <Navbar />
-      <main id="main-content">
+      <main id="main-content" className="px-1 space-y-2 sm:px-0 sm:space-y-0">
         <Hero setShowTimeline={setShowTimeline} />
         <About />
         <Experience />
