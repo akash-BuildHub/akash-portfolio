@@ -40,8 +40,8 @@ const About = () => {
   ];
 
   return (
-    <section id="about" ref={sectionRef} className="relative py-20 md:py-32">
-      <div className="container relative z-10 mx-auto px-6">
+    <section id="about" ref={sectionRef} className="relative py-12 sm:py-16 md:py-24 lg:py-32">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <div
           ref={contentRef}
           className="mx-auto max-w-6xl text-center"
@@ -49,8 +49,8 @@ const About = () => {
         >
           <h2 className="section-title">About Me</h2>
 
-          <div className="rounded-xl border border-border/90 bg-[#0a0a12]/80 p-5 transition-all duration-500 sm:p-7 md:p-12">
-            <p className="mb-8 text-justify text-base leading-[1.7] text-foreground/90 sm:text-lg md:text-xl md:leading-[1.9]">
+          <div className="rounded-xl border border-border/90 bg-[#0a0a12]/80 p-4 transition-all duration-500 sm:p-6 md:p-10 lg:p-12">
+            <p className="mb-6 text-justify text-sm leading-[1.7] text-foreground/90 sm:mb-8 sm:text-base md:text-lg lg:text-xl md:leading-[1.9]">
               I'm <span className="font-semibold text-foreground">Akash</span>, an{" "}
               <span className="gradient-text font-semibold">AI Developer</span>{" "}
               specializing in machine learning, deep learning, and computer vision, with hands-on
@@ -62,13 +62,13 @@ const About = () => {
               that bridge cutting-edge research with practical applications.
             </p>
 
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6">
               {highlights.map((item) => (
                 <div
                   key={item.label}
-                  className="flex items-center gap-3 rounded-full border border-border/90 bg-card/60 px-6 py-3 transition-all duration-300 hover:scale-105 hover:border-primary/60"
+                  className="flex items-center gap-2 rounded-full border border-border/90 bg-card/60 px-4 py-2 text-sm transition-all duration-300 hover:scale-105 hover:border-primary/60 sm:gap-3 sm:px-6 sm:py-3 sm:text-base"
                 >
-                  <item.icon className="h-5 w-5 text-primary" />
+                  <item.icon className="h-4 w-4 text-primary sm:h-5 sm:w-5" />
                   <span className="text-foreground/90">{item.label}</span>
                 </div>
               ))}

@@ -160,21 +160,21 @@ const TechStacks = () => {
   }, []);
 
   return (
-    <section id="tech-stacks" ref={sectionRef} className="py-20 md:py-32 relative">
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="tech-stacks" ref={sectionRef} className="py-12 sm:py-16 md:py-24 lg:py-32 relative">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <h2 className="section-title">Tech Stacks</h2>
 
-        <div className="mx-auto flex w-full max-w-6xl items-center overflow-x-hidden rounded-2xl border border-border/90 bg-[#0a0a12]/70 px-4 py-8 sm:min-h-[520px] md:min-h-[640px] md:px-6 md:py-10">
-          <div className="grid w-full grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5 lg:grid-rows-4">
+        <div className="mx-auto flex w-full max-w-6xl items-center overflow-x-hidden rounded-2xl border border-border/90 bg-[#0a0a12]/70 px-3 py-6 sm:px-4 sm:py-8 md:px-6 md:py-10">
+          <div className="grid w-full grid-cols-3 gap-4 sm:grid-cols-4 sm:gap-5 md:grid-cols-4 md:gap-6 lg:grid-cols-5 lg:grid-rows-4">
             {techStacks.map((tech) => (
               <div
                 key={tech.name}
-                className="tech-stack-item flex flex-col items-center justify-start text-center gap-2 min-h-[84px] min-w-0"
+                className="tech-stack-item flex flex-col items-center justify-start text-center gap-1.5 min-h-[72px] min-w-0 sm:gap-2 sm:min-h-[84px]"
                 onMouseEnter={handleIconHoverIn}
                 onMouseLeave={handleIconHoverOut}
               >
                 <TechIcon tech={tech} />
-                <p className="text-xs md:text-sm font-medium text-foreground leading-tight break-words">
+                <p className="text-[10px] sm:text-xs md:text-sm font-medium text-foreground leading-tight break-words">
                   {tech.name}
                 </p>
               </div>

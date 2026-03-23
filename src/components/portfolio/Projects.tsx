@@ -261,33 +261,33 @@ const ProjectCard = ({ project }: { project: Project }) => {
   };
 
   const frontContent = (
-    <div className="flex flex-col gap-4 sm:gap-6 sm:flex-row sm:items-start">
+    <div className="flex flex-col gap-3 sm:gap-4 md:gap-6 sm:flex-row sm:items-start">
       <div className="flex-shrink-0">
-        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl gradient-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-          <project.icon className="w-7 h-7 sm:w-8 sm:h-8 text-primary-foreground" />
+        <div className="w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl gradient-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+          <project.icon className="w-5 h-5 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary-foreground" />
         </div>
       </div>
 
-      <div className="flex-1">
-        <div className="mb-3 flex flex-wrap items-center gap-3">
-          <h3 className="text-lg font-bold text-foreground sm:text-2xl">{project.title}</h3>
+      <div className="flex-1 min-w-0">
+        <div className="mb-2 flex flex-wrap items-center gap-2 sm:mb-3 sm:gap-3">
+          <h3 className="text-base font-bold text-foreground sm:text-lg md:text-2xl">{project.title}</h3>
           {project.year && (
-            <div className="flex items-center gap-1 px-3 py-1 rounded-full bg-primary/20 text-primary text-sm">
+            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-xs sm:px-3 sm:py-1 sm:text-sm">
               <Calendar className="w-3 h-3" />
               {project.year}
             </div>
           )}
         </div>
 
-        <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed text-justify">
+        <p className="text-xs sm:text-sm md:text-base text-muted-foreground mb-3 leading-relaxed text-justify sm:mb-4">
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-1.5 sm:gap-2">
           {project.features.map((feature, i) => (
             <span
               key={`${feature}-${i}`}
-              className="px-3 py-1 rounded-full bg-secondary/80 text-foreground/80 text-sm border border-primary/40 hover:border-primary/60 transition-colors"
+              className="px-2 py-0.5 rounded-full bg-secondary/80 text-foreground/80 text-xs border border-primary/40 hover:border-primary/60 transition-colors sm:px-3 sm:py-1 sm:text-sm"
             >
               {feature}
             </span>
@@ -303,7 +303,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           title="View project images"
           aria-label={`View project images for ${project.title}`}
         >
-          <ExternalLink className="h-5 w-5 text-muted-foreground transition-colors hover:text-primary" />
+          <ExternalLink className="h-4 w-4 text-muted-foreground transition-colors hover:text-primary sm:h-5 sm:w-5" />
         </button>
       ) : project.link ? (
         <a
@@ -313,10 +313,10 @@ const ProjectCard = ({ project }: { project: Project }) => {
           className="flex-shrink-0 self-start"
           title="Open project"
         >
-          <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+          <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors sm:w-5 sm:h-5" />
         </a>
       ) : (
-        <ExternalLink className="h-5 w-5 flex-shrink-0 self-start text-muted-foreground transition-colors group-hover:text-primary" />
+        <ExternalLink className="h-4 w-4 flex-shrink-0 self-start text-muted-foreground transition-colors group-hover:text-primary sm:h-5 sm:w-5" />
       )}
     </div>
   );

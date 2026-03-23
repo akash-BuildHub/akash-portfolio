@@ -153,7 +153,13 @@
       transform 0.25s ease,
       box-shadow 0.25s ease,
       filter 0.25s ease;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  @media (min-width: 640px) {
+    .reflect-card {
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+    }
   }
 
   .reflect-card::before {
@@ -252,7 +258,7 @@
 
   /* Section styling */
   .section-title {
-    @apply text-4xl md:text-5xl font-bold gradient-text mb-12 text-center;
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold gradient-text mb-8 sm:mb-10 md:mb-12 text-center;
     line-height: 1.2;
     padding-top: 0.08em;
     padding-bottom: 0.08em;

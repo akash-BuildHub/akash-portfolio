@@ -138,27 +138,27 @@ const ExperienceCard = ({
   return (
     <div
       ref={cardRef}
-      className="flip-card h-[320px] w-full cursor-pointer touch-manipulation sm:h-[310px]"
+      className="flip-card h-[280px] w-full cursor-pointer touch-manipulation sm:h-[300px] md:h-[320px]"
       onMouseMove={handleCardMouseMove}
       onMouseLeave={handleCardMouseLeave}
       aria-label={`${experience.title} at ${experience.company}`}
     >
       <div className="flip-card-inner">
-        <div className="flip-card-front flex items-center justify-center rounded-xl border border-border/90 bg-[#0a0a12]/80 p-6 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_0_26px_rgba(168,85,247,0.2)]">
-          <h3 className="gradient-text text-center text-2xl font-bold text-foreground">
+        <div className="flip-card-front flex items-center justify-center rounded-xl border border-border/90 bg-[#0a0a12]/80 p-4 transition-all duration-300 hover:border-primary/60 hover:shadow-[0_0_26px_rgba(168,85,247,0.2)] sm:p-6">
+          <h3 className="gradient-text text-center text-xl font-bold text-foreground sm:text-2xl">
             {experience.title}
           </h3>
         </div>
 
-        <div className="flip-card-back flex flex-col justify-center rounded-xl border border-border/90 bg-card/95 p-6 dark:border-primary/60 dark:bg-[#0a0a12]/20">
-          <h3 className="mb-1 text-xl font-bold text-foreground">{experience.company}</h3>
+        <div className="flip-card-back flex flex-col justify-center rounded-xl border border-border/90 bg-card/95 p-4 dark:border-primary/60 dark:bg-[#0a0a12]/20 sm:p-6">
+          <h3 className="mb-1 text-lg font-bold text-foreground sm:text-xl">{experience.company}</h3>
           {experience.parentCompany && (
-            <p className="mb-2 text-sm text-primary">({experience.parentCompany})</p>
+            <p className="mb-1.5 text-xs text-primary sm:mb-2 sm:text-sm">({experience.parentCompany})</p>
           )}
-          <p className="mb-4 text-sm text-foreground/70 dark:text-muted-foreground">
+          <p className="mb-3 text-xs text-foreground/70 dark:text-muted-foreground sm:mb-4 sm:text-sm">
             {experience.location} | {experience.duration}
           </p>
-          <p className="text-justify text-sm leading-relaxed text-foreground/85 dark:text-foreground/80">
+          <p className="text-justify text-xs leading-relaxed text-foreground/85 dark:text-foreground/80 sm:text-sm">
             {experience.description}
           </p>
         </div>
@@ -169,11 +169,11 @@ const ExperienceCard = ({
 
 const Experience = () => {
   return (
-    <section id="experience" className="relative py-20 md:py-32">
-      <div className="container relative z-10 mx-auto px-6">
+    <section id="experience" className="relative py-12 sm:py-16 md:py-24 lg:py-32">
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <h2 className="section-title">Experience</h2>
 
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 md:gap-6 lg:grid-cols-3">
           {experiences.map((exp, index) => (
             <ExperienceCard
               key={`${exp.company}-${exp.duration}`}
