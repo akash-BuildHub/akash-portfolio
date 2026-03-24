@@ -42,8 +42,8 @@ const TechIcon = ({ tech }: { tech: TechItem }) => {
   if (tech.name === 'Data Streaming') {
     return (
       <div className="tech-icon-float">
-        <div className="tech-icon-visual flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-md bg-slate-900/90 p-1 dark:bg-slate-100">
-          <Activity className="h-5 w-5 text-cyan-300 dark:text-slate-900" />
+        <div className="tech-icon-visual flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-white/25 bg-white/10 shadow-[0_8px_24px_rgba(15,23,42,0.25)] backdrop-blur-md dark:border-white/15 dark:bg-white/10">
+          <Activity className="h-5 w-5 text-cyan-300 dark:text-cyan-200" />
         </div>
       </div>
     );
@@ -52,28 +52,24 @@ const TechIcon = ({ tech }: { tech: TechItem }) => {
   if (tech.logo && !logoFailed) {
     return (
       <div className="tech-icon-float">
-        <img
-          src={tech.logo}
-          alt={`${tech.name} icon`}
-          className={`tech-icon-visual h-8 w-8 flex-shrink-0 object-contain will-change-transform ${
-            tech.name === 'Artificial Intelligence'
-              ? 'rounded-md bg-slate-900/90 p-1 dark:bg-transparent dark:p-0'
-              : tech.name === 'Data Streaming'
-                ? 'rounded-md bg-slate-900/90 p-1 dark:bg-transparent dark:p-0'
-                : ''
-          }`}
-          loading="lazy"
-          decoding="async"
-          onError={() => setLogoFailed(true)}
-        />
+        <div className="tech-icon-visual flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-white/25 bg-white/10 shadow-[0_8px_24px_rgba(15,23,42,0.25)] backdrop-blur-md dark:border-white/15 dark:bg-white/10">
+          <img
+            src={tech.logo}
+            alt={`${tech.name} icon`}
+            className="h-7 w-7 object-contain"
+            loading="lazy"
+            decoding="async"
+            onError={() => setLogoFailed(true)}
+          />
+        </div>
       </div>
     );
   }
 
   return (
     <div className="tech-icon-float">
-      <div className="tech-icon-visual w-8 h-8 rounded-md gradient-primary flex items-center justify-center flex-shrink-0 will-change-transform">
-        <FileCode2 className="w-5 h-5 text-primary-foreground" />
+      <div className="tech-icon-visual flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-white/25 bg-white/10 shadow-[0_8px_24px_rgba(15,23,42,0.25)] backdrop-blur-md dark:border-white/15 dark:bg-white/10">
+        <FileCode2 className="w-5 h-5 text-primary" />
       </div>
     </div>
   );
