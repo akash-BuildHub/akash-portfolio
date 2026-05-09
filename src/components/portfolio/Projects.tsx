@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ExternalLink, Users, Hospital, Calendar, ArrowLeft, Trophy } from 'lucide-react';
+import { ExternalLink, Users, Hospital, Calendar, ArrowLeft, Trophy, Vote, UserCheck } from 'lucide-react';
 import { prefersReducedMotion } from '@/lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -17,6 +17,37 @@ interface Project {
 }
 
 const projects: Project[] = [
+  {
+    title: 'AI Election Prediction',
+    year: '2026',
+    description:
+      'A data-driven election forecasting system that leverages machine learning models on historical voting data, demographic indicators, and sentiment signals to predict constituency-level outcomes with confidence scoring and interactive visual analytics.',
+    features: ['Machine Learning', 'Forecasting', 'Data Analytics'],
+    icon: Vote,
+    demoImages: [
+      '/project_demo/election_prediction/1.png',
+      '/project_demo/election_prediction/2.png',
+      '/project_demo/election_prediction/3.png',
+      '/project_demo/election_prediction/4.png',
+      '/project_demo/election_prediction/5.png',
+    ],
+  },
+  {
+    title: 'AI Attendance System',
+    year: '2026',
+    description:
+      'An AI-powered attendance system using face recognition and computer vision to automate check-ins in real time. It securely records attendance, prevents proxy entries, and offers a dashboard for live tracking, reporting, and analytics.',
+    features: ['Face Recognition', 'Computer Vision', 'Real-Time Tracking'],
+    icon: UserCheck,
+    demoImages: [
+      '/project_demo/AI_attendance_system/1.jpeg',
+      '/project_demo/AI_attendance_system/2.png',
+      '/project_demo/AI_attendance_system/3.png',
+      '/project_demo/AI_attendance_system/4.png',
+      '/project_demo/AI_attendance_system/5.png',
+      '/project_demo/AI_attendance_system/6.png',
+    ],
+  },
   {
     title: 'AI Cricket Batting Shot Classification',
     year: '2026',
@@ -67,6 +98,10 @@ const projects: Project[] = [
       'ALL IN ONE is a web-based OCR tool that extracts content from images, PDFs, and web uploads. It converts scanned documents into readable and searchable text and extracts embedded images along with textual data. Supports structured output from multi-page PDF documents for fast and accurate digitization.',
     features: ['OCR', 'Document AI', 'Text & Image Extraction'],
     icon: Users,
+    demoImages: [
+      '/project_demo/all_in_one/1.png',
+      '/project_demo/all_in_one/2.png',
+    ],
   },
   {
     title: 'Hospital Management System',
@@ -403,7 +438,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                         <img
                           src={image}
                           alt={`${project.title} screenshot ${index + 1}`}
-                          className="block h-full w-full object-cover object-center"
+                          className="block h-full w-full object-contain object-center"
                         />
                       </button>
                     );
