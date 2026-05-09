@@ -459,10 +459,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
 };
 
 const Projects = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-
   return (
-    <section id="projects" ref={sectionRef} className="relative py-12 sm:py-16 md:py-32">
+    <section id="projects" className="relative py-12 sm:py-16 md:py-32">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <h2 className="section-title">Projects</h2>
 
