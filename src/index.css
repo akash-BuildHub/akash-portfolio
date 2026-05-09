@@ -345,6 +345,10 @@ svg {
   --tw-gradient-to: hsl(var(--background)) var(--tw-gradient-to-position) !important;
 }
 
+.light .tech-icon-visual img[src*="/icons/AI.png"] {
+  filter: invert(1);
+}
+
 @media (hover: none), (pointer: coarse) {
   .reflect-card:hover {
     transform: none;
