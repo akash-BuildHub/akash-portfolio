@@ -314,15 +314,15 @@ const ProjectCard = ({ project }: { project: Project }) => {
           )}
         </div>
 
-        <p className="mb-3 text-left text-xs leading-relaxed text-muted-foreground sm:mb-4 sm:text-sm sm:text-justify md:text-base">
+        <p className="mb-3 text-justify text-xs leading-relaxed text-muted-foreground sm:mb-4 sm:text-sm md:text-base">
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-1.5 sm:gap-2">
+        <div className="flex flex-nowrap items-center justify-between gap-1 sm:gap-1.5">
           {project.features.map((feature, i) => (
             <span
               key={`${feature}-${i}`}
-              className="px-2 py-0.5 rounded-full bg-secondary/80 text-foreground/80 text-xs border border-primary/40 hover:border-primary/60 transition-colors sm:px-3 sm:py-1 sm:text-sm"
+              className="whitespace-nowrap px-1.5 py-0.5 rounded-full bg-secondary/80 text-foreground/80 text-[10px] border border-primary/40 hover:border-primary/60 transition-colors sm:px-2 sm:text-xs"
             >
               {feature}
             </span>
