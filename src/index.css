@@ -231,6 +231,11 @@
     animation: shimmerText 6s linear infinite;
   }
 
+  /* Slow, soft fade-in for the hero "Akash" watermark (no initial flash) */
+  .watermark-fade {
+    animation: watermarkFade 2.2s ease-out both;
+  }
+
   /* Primary gradient */
   .gradient-primary {
     background: linear-gradient(135deg, hsl(var(--gradient-start)), hsl(var(--gradient-end)));
@@ -328,6 +333,15 @@
   }
   to {
     background-position: -220% 0;
+  }
+}
+
+@keyframes watermarkFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 

@@ -61,9 +61,11 @@ const Navbar = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const navOffset = (navRef.current?.offsetHeight ?? 80) + 2;
-      const titleTarget = element.querySelector(".section-title") as HTMLElement | null;
-      const target = titleTarget ?? element;
+      const navOffset = (navRef.current?.offsetHeight ?? 80) + 32;
+      const target =
+        (element.querySelector(".section-title") as HTMLElement | null) ??
+        (element.querySelector(".container") as HTMLElement | null) ??
+        element;
       const top =
         target.getBoundingClientRect().top + window.scrollY - navOffset;
       setActiveSection(id);

@@ -44,6 +44,23 @@ const About = () => {
             },
           },
         );
+
+        gsap.fromTo(
+          ".about-highlight",
+          { opacity: 0, x: -18 },
+          {
+            opacity: 1,
+            x: 0,
+            duration: 0.5,
+            ease: "power3.out",
+            stagger: 0.12,
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 60%",
+              toggleActions: "play none none reverse",
+            },
+          },
+        );
       }
     }, sectionRef);
 
@@ -52,8 +69,8 @@ const About = () => {
 
   const highlights = [
     { icon: Brain, label: "Deep Learning" },
-    { icon: Cpu, label: "Machine Learning" },
     { icon: Eye, label: "Computer Vision" },
+    { icon: Cpu, label: "Machine Learning" },
     { icon: Rocket, label: "AI Implementation" },
   ];
 
@@ -117,7 +134,7 @@ const About = () => {
                 {highlights.map((item, i) => (
                   <div
                     key={item.label}
-                    className="group flex items-center gap-4 text-xs uppercase tracking-[0.2em] text-foreground/70 transition-colors hover:text-foreground"
+                    className="about-highlight group flex items-center gap-4 text-xs uppercase tracking-[0.2em] text-foreground/70 transition-colors hover:text-foreground"
                   >
                     <span className="text-sm font-semibold text-primary">
                       {String(i + 1).padStart(2, "0")}

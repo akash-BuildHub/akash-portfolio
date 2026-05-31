@@ -422,7 +422,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                         key={image}
                         type="button"
                         onClick={() => setActiveImageIndex(index)}
-                        className="absolute left-1/2 top-1/2 flex h-[94%] w-[96%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-md bg-black shadow-[0_16px_40px_rgba(0,0,0,0.55)] transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] sm:h-[96%] sm:w-[89%]"
+                        className="absolute left-1/2 top-1/2 flex h-[94%] w-[96%] -translate-x-1/2 -translate-y-1/2 items-center justify-center overflow-hidden rounded-md bg-black shadow-[0_16px_40px_rgba(0,0,0,0.55)] transition-all duration-500 ease-smooth sm:h-[96%] sm:w-[89%]"
                         style={{
                           transform: `translate(-50%, -50%) translateY(${translateY}%) rotateX(${rotateX}deg) scale(${scale})`,
                           opacity,

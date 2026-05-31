@@ -39,9 +39,9 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
           {
             opacity: 0,
             yPercent: 120,
-            duration: 0.6,
-            ease: "power4.out",
-            stagger: 0.035,
+            duration: 1.1,
+            ease: "power3.out",
+            stagger: 0.08,
           },
           0.25,
         );
@@ -67,7 +67,7 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden pb-20 pt-28 sm:py-24 md:py-28 lg:py-36"
+      className="relative min-h-[100svh] overflow-hidden pb-16 pt-28 sm:py-24 md:py-28 lg:py-32"
       aria-label="Hero section"
     >
       {/* Profile image as the home section background */}
@@ -84,7 +84,7 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
       {/* Giant faint watermark */}
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute left-0 top-[70%] -z-0 -translate-y-1/2 scale-y-75 select-none whitespace-nowrap text-[24vw] font-extrabold uppercase leading-none tracking-[0.1em] text-white/[0.04]"
+        className="watermark-fade pointer-events-none absolute left-0 top-[78%] -z-0 -translate-y-1/2 scale-y-75 select-none whitespace-nowrap text-[24vw] font-extrabold uppercase leading-none tracking-[0.1em] text-white/[0.04]"
       >
         Akash
       </span>
@@ -146,7 +146,7 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
 
             <button
               onClick={scrollToTimeline}
-              className="hero-reveal group mt-16 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.3em] text-primary transition sm:mt-20"
+              className="group mt-6 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.3em] text-primary transition sm:mt-8"
               aria-label="Explore timeline section"
             >
               Explore
