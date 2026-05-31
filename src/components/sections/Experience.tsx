@@ -86,26 +86,6 @@ const Experience = () => {
           },
         },
       );
-
-      // Pin the section and step through each experience as the user scrolls.
-      if (window.matchMedia("(min-width: 1024px)").matches) {
-        let lastIdx = -1;
-        ScrollTrigger.create({
-          trigger: sectionRef.current,
-          start: "top top",
-          end: () => "+=" + (experiences.length - 1) * 300,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: (self) => {
-            const idx = Math.round(self.progress * (experiences.length - 1));
-            if (idx !== lastIdx) {
-              lastIdx = idx;
-              setActive(idx);
-            }
-          },
-        });
-      }
     }, sectionRef);
 
     return () => ctx.revert();

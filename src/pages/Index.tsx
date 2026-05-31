@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import Navbar from "@/components/portfolio/Navbar";
-import Hero from "@/components/portfolio/Hero";
-import About from "@/components/portfolio/About";
-import Experience from "@/components/portfolio/Experience";
-import TechStacks from "@/components/portfolio/TechStacks";
-import Projects from "@/components/portfolio/Projects";
-import Timeline from "@/components/portfolio/Timeline";
-import Contact from "@/components/portfolio/Contact";
-import Footer from "@/components/portfolio/Footer";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import Hero from "@/components/sections/Hero";
+import About from "@/components/sections/About";
+import Experience from "@/components/sections/Experience";
+import TechStacks from "@/components/sections/TechStacks";
+import Projects from "@/components/sections/Projects";
+import Timeline from "@/components/sections/Timeline";
+import Contact from "@/components/sections/Contact";
 import {
   setCanonical,
   setJsonLd,
@@ -27,7 +27,7 @@ const Index = ({ showTimeline, setShowTimeline }: IndexProps) => {
     const description =
       "Akash portfolio showcasing AI development, Python projects, web solutions, and real-world engineering work.";
     const url = `${window.location.origin}/`;
-    const image = `${window.location.origin}/akash_profile.png`;
+    const image = `${window.location.origin}/akash_profile.jpeg`;
 
     document.title = title;
     setMetaName("description", description);
