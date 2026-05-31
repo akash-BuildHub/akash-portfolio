@@ -91,6 +91,26 @@ const Experience = () => {
     return () => ctx.revert();
   }, []);
 
+  // Reveal the active experience's description line-by-line whenever it changes.
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        ".exp-desc",
+        { clipPath: "inset(0 0 100% 0)", opacity: 0 },
+        {
+          clipPath: "inset(0 0 0% 0)",
+          opacity: 1,
+          duration: 0.7,
+          ease: "power3.out",
+        },
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [active]);
+
   return (
     <section
       id="experience"
@@ -100,7 +120,7 @@ const Experience = () => {
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <div data-reveal className="mx-auto flex max-w-6xl items-center gap-4">
           <span className="h-px w-10 bg-primary" />
-          <span className="text-base font-semibold uppercase tracking-[0.4em] text-foreground/60 sm:text-lg md:text-xl">
+          <span className="shimmer-text text-base font-semibold uppercase tracking-[0.4em] sm:text-lg md:text-xl">
             My Experience
           </span>
         </div>
@@ -148,7 +168,7 @@ const Experience = () => {
                 {activeExp.duration}
               </p>
               <div className="mt-6 h-px w-12 bg-primary" />
-              <p className="mt-6 text-sm leading-[1.9] text-foreground/75 text-justify">
+              <p className="exp-desc mt-6 text-sm leading-[1.9] text-foreground/75 text-justify">
                 {activeExp.description}
               </p>
             </div>

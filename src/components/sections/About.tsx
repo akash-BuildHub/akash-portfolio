@@ -28,6 +28,23 @@ const About = () => {
           },
         },
       );
+
+      if (!prefersReducedMotion()) {
+        gsap.fromTo(
+          ".about-line",
+          { clipPath: "inset(0 0 100% 0)" },
+          {
+            clipPath: "inset(0 0 0% 0)",
+            duration: 1,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: "top 68%",
+              toggleActions: "play none none reverse",
+            },
+          },
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -67,7 +84,7 @@ const About = () => {
           {/* Micro label */}
           <div className="mb-7 flex items-center gap-4">
             <span className="h-px w-10 bg-primary" />
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.4em] text-foreground/60">
+            <span className="shimmer-text text-[0.7rem] font-semibold uppercase tracking-[0.4em]">
               About Me
             </span>
           </div>
@@ -90,7 +107,7 @@ const About = () => {
 
             {/* Right: short paragraph + numbered focus index */}
             <div className="lg:pt-2">
-              <p className="text-sm leading-[1.9] tracking-wide text-foreground/60">
+              <p className="about-line text-sm leading-[1.9] tracking-wide text-foreground/60">
                 Specialize in machine learning, deep learning, and computer
                 vision &mdash; building end-to-end AI systems that are fast,
                 accurate, scalable, and ready for real-world deployment.

@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { prefersReducedMotion } from "@/lib/motion";
 
@@ -6,8 +6,14 @@ interface HeroProps {
   setShowTimeline: (show: boolean) => void;
 }
 
+const HEADLINE = "My Universe";
+const ROLE = "AI Developer";
+
 const Hero = ({ setShowTimeline }: HeroProps) => {
-  const avatarCardRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [typedRole, setTypedRole] = useState(() =>
+    prefersReducedMotion() ? ROLE : "",
+  );
 
   const scrollToTimeline = () => {
     setShowTimeline(true);
@@ -20,79 +26,47 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
     });
   };
 
+  // Entrance: staggered fade-up for the column + a character cascade on the headline.
   useEffect(() => {
     if (prefersReducedMotion()) return;
-    if (typeof window !== "undefined" && !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 
-    const card = avatarCardRef.current;
-    if (!card) return;
-
-    let isPressed = false;
-
-    const rotateXTo = gsap.quickTo(card, "rotationX", { duration: 0.2, ease: "power3.out" });
-    const rotateYTo = gsap.quickTo(card, "rotationY", { duration: 0.2, ease: "power3.out" });
-    const xTo = gsap.quickTo(card, "x", { duration: 0.24, ease: "power3.out" });
-    const yTo = gsap.quickTo(card, "y", { duration: 0.24, ease: "power3.out" });
-    const zTo = gsap.quickTo(card, "z", { duration: 0.24, ease: "power3.out" });
-
-    const onMove = (event: PointerEvent) => {
-      const rect = card.getBoundingClientRect();
-      const px = (event.clientX - rect.left) / rect.width - 0.5;
-      const py = (event.clientY - rect.top) / rect.height - 0.5;
-
-      const tiltStrength = isPressed ? 24 : 18;
-      rotateXTo(-py * tiltStrength);
-      rotateYTo(px * tiltStrength);
-      xTo(px * (isPressed ? 7 : 12));
-      yTo(py * (isPressed ? 7 : 12));
-    };
-
-    const onDown = () => {
-      isPressed = true;
-      gsap.to(card, { scale: 0.95, duration: 0.12, ease: "power2.out" });
-      zTo(-22);
-    };
-
-    const onUp = () => {
-      isPressed = false;
+    const ctx = gsap.context(() => {
       gsap
-        .timeline()
-        .to(card, { scale: 1.055, duration: 0.18, ease: "power2.out" })
-        .to(card, { scale: 1.03, duration: 0.24, ease: "back.out(2.1)" });
-      zTo(24);
-    };
+        .timeline({ defaults: { ease: "power3.out" } })
+        .from(".hero-reveal", { opacity: 0, y: 24, duration: 0.7, stagger: 0.09 })
+        .from(
+          ".hero-char",
+          {
+            opacity: 0,
+            yPercent: 120,
+            duration: 0.6,
+            ease: "power4.out",
+            stagger: 0.035,
+          },
+          0.25,
+        );
+    }, sectionRef);
 
-    const onLeave = () => {
-      isPressed = false;
-      rotateXTo(0);
-      rotateYTo(0);
-      xTo(0);
-      yTo(0);
-      zTo(0);
-      gsap.to(card, { scale: 1, duration: 0.35, ease: "back.out(1.8)" });
-    };
+    return () => ctx.revert();
+  }, []);
 
-    card.addEventListener("pointermove", onMove);
-    card.addEventListener("pointerdown", onDown);
-    card.addEventListener("pointerup", onUp);
-    card.addEventListener("pointercancel", onUp);
-    card.addEventListener("pointerleave", onLeave);
-    window.addEventListener("pointerup", onUp);
-    window.addEventListener("pointercancel", onUp);
+  // Typewriter effect for the role line.
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
 
-    return () => {
-      card.removeEventListener("pointermove", onMove);
-      card.removeEventListener("pointerdown", onDown);
-      card.removeEventListener("pointerup", onUp);
-      card.removeEventListener("pointercancel", onUp);
-      card.removeEventListener("pointerleave", onLeave);
-      window.removeEventListener("pointerup", onUp);
-      window.removeEventListener("pointercancel", onUp);
-    };
+    let i = 0;
+    const id = window.setInterval(() => {
+      i += 1;
+      setTypedRole(ROLE.slice(0, i));
+      if (i >= ROLE.length) window.clearInterval(id);
+    }, 95);
+
+    return () => window.clearInterval(id);
   }, []);
 
   return (
     <section
+      ref={sectionRef}
       className="relative overflow-hidden pb-20 pt-28 sm:py-24 md:py-28 lg:py-36"
       aria-label="Hero section"
     >
@@ -120,7 +94,7 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
           {/* Left: editorial text column */}
           <div className="text-left">
             {/* Vertical indicator: dot + line + label */}
-            <div className="mb-8 flex items-center gap-4 lg:mb-10">
+            <div className="hero-reveal mb-8 flex items-center gap-4 lg:mb-10">
               <span className="flex flex-col items-center gap-2">
                 <span className="h-2 w-2 rounded-full border border-primary" />
                 <span className="h-10 w-px bg-gradient-to-b from-primary/70 to-transparent" />
@@ -130,23 +104,39 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
               </span>
             </div>
 
-            <p className="mb-3 text-sm font-medium uppercase tracking-[0.35em] text-foreground/60">
+            <p className="hero-reveal shimmer-text mb-3 text-sm font-medium uppercase tracking-[0.35em]">
               Welcome to
             </p>
 
-            <h1 className="text-5xl font-extrabold uppercase leading-[0.9] tracking-[0.06em] text-white sm:text-6xl md:text-7xl lg:text-8xl">
-              My Universe
-              <span className="text-primary">&#176;</span>
+            <h1
+              aria-label={`${HEADLINE}°`}
+              className="text-5xl font-extrabold uppercase leading-[0.9] tracking-[0.06em] text-white sm:text-6xl md:text-7xl lg:text-8xl"
+            >
+              {HEADLINE.split("").map((ch, i) => (
+                <span key={i} aria-hidden="true" className="hero-char inline-block">
+                  {ch === " " ? " " : ch}
+                </span>
+              ))}
+              <span aria-hidden="true" className="hero-char inline-block text-primary">
+                &#176;
+              </span>
             </h1>
 
-            <div className="mt-7 flex items-center gap-4 sm:mt-9">
+            <div className="hero-reveal mt-7 flex items-center gap-4 sm:mt-9">
               <span className="h-px w-12 bg-primary sm:w-16" />
-              <h2 className="text-sm font-semibold uppercase tracking-[0.28em] text-foreground/85 sm:text-base">
-                AI Developer
+              <h2
+                aria-label={ROLE}
+                className="text-sm font-semibold uppercase tracking-[0.28em] text-foreground/85 sm:text-base"
+              >
+                <span aria-hidden="true">{typedRole}</span>
+                <span
+                  aria-hidden="true"
+                  className="ml-1 inline-block h-[1em] w-[2px] animate-pulse bg-primary align-middle"
+                />
               </h2>
             </div>
 
-            <div className="mt-6 max-w-md text-xs uppercase leading-[2.1] tracking-[0.18em] text-foreground/55 sm:text-sm">
+            <div className="hero-reveal mt-6 max-w-md text-xs uppercase leading-[2.1] tracking-[0.18em] text-foreground/55 sm:text-sm">
               <p>Think it, let the AI do it.</p>
               <p className="mt-5">
                 Designing, building, and deploying intelligent systems for
@@ -156,7 +146,7 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
 
             <button
               onClick={scrollToTimeline}
-              className="group mt-16 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.3em] text-primary transition sm:mt-20"
+              className="hero-reveal group mt-16 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.3em] text-primary transition sm:mt-20"
               aria-label="Explore timeline section"
             >
               Explore

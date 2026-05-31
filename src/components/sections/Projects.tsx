@@ -486,7 +486,7 @@ const Projects = () => {
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div ref={headingRef} className="mx-auto mb-8 flex max-w-6xl items-center gap-4 sm:mb-10">
           <span className="h-px w-10 bg-primary" />
-          <span className="text-base font-semibold uppercase tracking-[0.4em] text-foreground/60 sm:text-lg md:text-xl">
+          <span className="shimmer-text text-base font-semibold uppercase tracking-[0.4em] sm:text-lg md:text-xl">
             Projects
           </span>
         </div>
