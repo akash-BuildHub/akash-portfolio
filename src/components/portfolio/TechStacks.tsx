@@ -43,7 +43,7 @@ const TechIcon = ({ tech }: { tech: TechItem }) => {
     return (
       <div className="tech-icon-float">
         <div className="tech-icon-visual flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-white/25 bg-white/10 shadow-[0_8px_24px_rgba(15,23,42,0.25)] backdrop-blur-md dark:border-white/15 dark:bg-white/10">
-          <Activity className="h-5 w-5 text-cyan-300 dark:text-cyan-200" />
+          <Activity className="h-5 w-5 text-primary dark:text-primary" />
         </div>
       </div>
     );
@@ -117,6 +117,22 @@ const TechStacks = () => {
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
+        '.ts-heading',
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 88%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+
+      gsap.fromTo(
         '.tech-stack-item',
         { opacity: 0, y: 18 },
         {
@@ -158,9 +174,14 @@ const TechStacks = () => {
   return (
     <section id="tech-stacks" ref={sectionRef} className="py-12 sm:py-16 md:py-24 lg:py-32 relative">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <h2 className="section-title">Tech Stacks</h2>
+        <div className="ts-heading mx-auto mb-8 flex max-w-6xl items-center gap-4 sm:mb-10">
+          <span className="h-px w-10 bg-primary" />
+          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.4em] text-foreground/60">
+            Tech Stacks
+          </span>
+        </div>
 
-        <div className="mx-auto flex w-full max-w-6xl items-center overflow-x-hidden rounded-2xl border border-border/90 bg-[#0a0a12]/70 px-3 py-5 sm:px-4 sm:py-8 md:px-6 md:py-10">
+        <div className="mx-auto flex w-full max-w-6xl items-center overflow-x-hidden px-3 py-5 sm:px-4 sm:py-8 md:px-6 md:py-10">
           <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5 md:grid-cols-4 md:gap-6 lg:grid-cols-5 lg:grid-rows-4">
             {techStacks.map((tech) => (
               <div

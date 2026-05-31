@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ExternalLink, Users, Hospital, Calendar, ArrowLeft, Trophy, Vote, UserCheck } from 'lucide-react';
+import { Users, Hospital, Calendar, ArrowLeft, Trophy, Vote, UserCheck } from 'lucide-react';
 import { prefersReducedMotion } from '@/lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -24,13 +24,7 @@ const projects: Project[] = [
       'A data-driven election forecasting system that leverages machine learning models on historical voting data, demographic indicators, and sentiment signals to predict constituency-level outcomes with confidence scoring and interactive visual analytics.',
     features: ['Machine Learning', 'Forecasting', 'Data Analytics'],
     icon: Vote,
-    demoImages: [
-      '/project_demo/election_prediction/1.png',
-      '/project_demo/election_prediction/2.png',
-      '/project_demo/election_prediction/3.png',
-      '/project_demo/election_prediction/4.png',
-      '/project_demo/election_prediction/5.png',
-    ],
+    link: 'https://owlytics-election-prediction.vercel.app/',
   },
   {
     title: 'AI Attendance System',
@@ -55,18 +49,7 @@ const projects: Project[] = [
       'AI-Based Cricket Shot Classification is a computer vision system that processes uploaded cricket videos to identify and classify batting shots, analyze performance metrics, and predict outcomes for advanced sports analytics.',
     features: ['Deep Learning', 'Prediction', 'Classification'],
     icon: Trophy,
-    demoImages: [
-      '/project_demo/ai_cricket/1.jpg',
-      '/project_demo/ai_cricket/2.jpg',
-      '/project_demo/ai_cricket/3.jpg',
-      '/project_demo/ai_cricket/4.jpg',
-      '/project_demo/ai_cricket/5.jpg',
-      '/project_demo/ai_cricket/6.jpg',
-      '/project_demo/ai_cricket/7.jpg',
-      '/project_demo/ai_cricket/8.jpg',
-      '/project_demo/ai_cricket/9.jpg',
-      '/project_demo/ai_cricket/10.jpg',
-    ],
+    link: 'https://ai-batting-classifier.vercel.app/',
   },
   {
     title: 'AI Recognition & Detection',
@@ -83,13 +66,7 @@ const projects: Project[] = [
       'Vision Snap is a web based tool for creating image datasets for computer vision. It captures images from live webcams and extracts frames from uploaded videos. Users can organize samples into custom classes and export them as machine learning ready datasets.',
     features: ['Webcam Capture', 'Video Frame Extraction', 'Dataset Creation'],
     icon: Calendar,
-    demoImages: [
-      '/project_demo/vision_snap/1.png',
-      '/project_demo/vision_snap/2.png',
-      '/project_demo/vision_snap/3.png',
-      '/project_demo/vision_snap/4.png',
-      '/project_demo/vision_snap/5.png',
-    ],
+    link: 'https://vision-snap-two.vercel.app/',
   },
   {
     title: 'ALL IN ONE',
@@ -98,10 +75,7 @@ const projects: Project[] = [
       'ALL IN ONE is a web-based OCR tool that extracts content from images, PDFs, and web uploads. It converts scanned documents into readable and searchable text and extracts embedded images along with textual data. Supports structured output from multi-page PDF documents for fast and accurate digitization.',
     features: ['OCR', 'Document AI', 'Text & Image Extraction'],
     icon: Users,
-    demoImages: [
-      '/project_demo/all_in_one/1.png',
-      '/project_demo/all_in_one/2.png',
-    ],
+    link: 'https://allinone-snowy.vercel.app/',
   },
   {
     title: 'Hospital Management System',
@@ -120,6 +94,20 @@ const projects: Project[] = [
     icon: Users,
   },
 ];
+
+const renderTwoToneTitle = (title: string) => {
+  const words = title.trim().split(/\s+/);
+  if (words.length === 1) {
+    return <span className="text-primary">{title}</span>;
+  }
+  const last = words.pop();
+  return (
+    <>
+      <span className="text-white">{words.join(" ")} </span>
+      <span className="text-primary">{last}</span>
+    </>
+  );
+};
 
 const ProjectCard = ({ project }: { project: Project }) => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -183,15 +171,15 @@ const ProjectCard = ({ project }: { project: Project }) => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
         cardRef.current,
-        { opacity: 0, y: 20 },
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
-          duration: 0.35,
-          ease: 'power2.out',
+          duration: 0.6,
+          ease: 'power3.out',
           scrollTrigger: {
             trigger: cardRef.current,
-            start: 'top 95%',
+            start: 'top 90%',
             toggleActions: 'play none none reverse',
           },
         }
@@ -296,62 +284,70 @@ const ProjectCard = ({ project }: { project: Project }) => {
   };
 
   const frontContent = (
-    <div className="flex flex-col gap-3 sm:gap-4 md:gap-6 sm:flex-row sm:items-start">
-      <div className="flex-shrink-0">
-        <div className="w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-xl gradient-primary flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-          <project.icon className="w-5 h-5 sm:w-7 sm:h-7 md:w-8 md:h-8 text-primary-foreground" />
-        </div>
+    <div className="flex h-full flex-col">
+      {/* Icon + year */}
+      <div className="flex items-start justify-between">
+        <project.icon
+          className="h-9 w-9 text-primary transition-transform duration-300 group-hover:scale-110 sm:h-10 sm:w-10"
+          strokeWidth={1.25}
+        />
+        {project.year && (
+          <span className="text-[0.7rem] font-medium tracking-[0.25em] text-foreground/35">
+            {project.year}
+          </span>
+        )}
       </div>
 
-      <div className="flex-1 min-w-0">
-        <div className="mb-2 flex flex-wrap items-center gap-2 sm:mb-3 sm:gap-3">
-          <h3 className="text-base font-bold text-foreground sm:text-lg md:text-2xl">{project.title}</h3>
-          {project.year && (
-            <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary/20 text-primary text-xs sm:px-3 sm:py-1 sm:text-sm">
-              <Calendar className="w-3 h-3" />
-              {project.year}
-            </div>
+      {/* Two-tone title */}
+      <h3 className="mt-6 text-lg font-bold uppercase tracking-wide sm:text-xl md:text-[1.4rem]">
+        {renderTwoToneTitle(project.title)}
+      </h3>
+
+      {/* Description */}
+      <p className="mt-4 text-sm leading-[1.8] text-foreground/55">
+        {project.description}
+      </p>
+
+      {/* Features */}
+      <div className="mt-5 flex flex-wrap gap-x-4 gap-y-1.5 text-[0.65rem] font-medium uppercase tracking-[0.15em] text-foreground/40">
+        {project.features.map((feature, i) => (
+          <span key={`${feature}-${i}`} className="flex items-center gap-1.5">
+            <span className="h-1 w-1 rounded-full bg-primary/60" />
+            {feature}
+          </span>
+        ))}
+      </div>
+
+      {/* View link */}
+      {(isDemoProject || project.link) && (
+        <div className="mt-auto pt-7">
+          {isDemoProject ? (
+            <button
+              type="button"
+              onClick={handleOpenDemo}
+              className="group/link inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary"
+              aria-label={`View project images for ${project.title}`}
+            >
+              <span className="border-b border-primary/40 pb-1 transition-colors group-hover/link:border-primary">
+                View Project
+              </span>
+              <span className="transition-transform duration-300 group-hover/link:translate-x-1">&rsaquo;</span>
+            </button>
+          ) : (
+            <a
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group/link inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-primary"
+              title="Open project"
+            >
+              <span className="border-b border-primary/40 pb-1 transition-colors group-hover/link:border-primary">
+                View Project
+              </span>
+              <span className="transition-transform duration-300 group-hover/link:translate-x-1">&rsaquo;</span>
+            </a>
           )}
         </div>
-
-        <p className="mb-3 text-justify text-xs leading-relaxed text-muted-foreground sm:mb-4 sm:text-sm md:text-base">
-          {project.description}
-        </p>
-
-        <div className="flex flex-nowrap items-center justify-between gap-1 sm:gap-1.5">
-          {project.features.map((feature, i) => (
-            <span
-              key={`${feature}-${i}`}
-              className="whitespace-nowrap px-1.5 py-0.5 rounded-full bg-secondary/80 text-foreground/80 text-[10px] border border-primary/40 hover:border-primary/60 transition-colors sm:px-2 sm:text-xs"
-            >
-              {feature}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {isDemoProject ? (
-        <button
-          type="button"
-          onClick={handleOpenDemo}
-          className="flex-shrink-0 self-start"
-          title="View project images"
-          aria-label={`View project images for ${project.title}`}
-        >
-          <ExternalLink className="h-4 w-4 text-muted-foreground transition-colors hover:text-primary sm:h-5 sm:w-5" />
-        </button>
-      ) : project.link ? (
-        <a
-          href={project.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-shrink-0 self-start"
-          title="Open project"
-        >
-          <ExternalLink className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors sm:w-5 sm:h-5" />
-        </a>
-      ) : (
-        <ExternalLink className="h-4 w-4 flex-shrink-0 self-start text-muted-foreground transition-colors group-hover:text-primary sm:h-5 sm:w-5" />
       )}
     </div>
   );
@@ -360,7 +356,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     return (
       <div
         ref={cardRef}
-        className="h-full bg-[#0a0a12]/80 border border-border/90 rounded-xl p-4 transition-transform duration-500 hover:scale-[1.02] group sm:p-6 lg:p-8"
+        className="group h-full rounded-xl border border-border/50 bg-card/50 p-6 transition-colors duration-300 hover:border-primary/40 sm:p-7 lg:p-8"
       >
         {frontContent}
       </div>
@@ -370,8 +366,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
   return (
     <div
       ref={cardRef}
-      className={`h-full min-h-[320px] bg-[#0a0a12]/80 border border-border/90 rounded-xl p-4 sm:min-h-[360px] sm:p-6 lg:p-8 transition-transform duration-500 ${
-        showDemo ? '' : 'hover:scale-[1.02] group'
+      className={`h-full min-h-[340px] rounded-xl border border-border/50 bg-card/50 p-6 transition-colors duration-300 sm:min-h-[380px] sm:p-7 lg:p-8 ${
+        showDemo ? '' : 'group hover:border-primary/40'
       }`}
       style={lockedCardHeight ? { height: `${lockedCardHeight}px` } : undefined}
     >
@@ -459,10 +455,41 @@ const ProjectCard = ({ project }: { project: Project }) => {
 };
 
 const Projects = () => {
+  const headingRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        headingRef.current,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.7,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: headingRef.current,
+            start: 'top 90%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }, headingRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="projects" className="relative py-12 sm:py-16 md:py-32">
+    <section id="projects" className="relative pb-12 pt-6 sm:pb-16 sm:pt-10 md:pb-32 md:pt-24">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <h2 className="section-title">Projects</h2>
+        <div ref={headingRef} className="mx-auto mb-8 flex max-w-6xl items-center gap-4 sm:mb-10">
+          <span className="h-px w-10 bg-primary" />
+          <span className="text-base font-semibold uppercase tracking-[0.4em] text-foreground/60 sm:text-lg md:text-xl">
+            Projects
+          </span>
+        </div>
 
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
           {projects.map((project, index) => (

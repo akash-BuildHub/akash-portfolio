@@ -16,10 +16,6 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [theme, setTheme] = useState<"light" | "dark">(
-    document.documentElement.classList.contains("dark") ? "dark" : "light",
-  );
-  const clickTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (sessionStorage.getItem("scrollToTopAfterReload") === "1") {
@@ -34,16 +30,6 @@ const Navbar = () => {
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const observer = new MutationObserver(() => {
-      setTheme(root.classList.contains("dark") ? "dark" : "light");
-    });
-
-    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
-    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -100,31 +86,16 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between px-4 sm:px-6">
         <button
           onClick={() => {
-            if (clickTimeout.current) return;
-
-            clickTimeout.current = setTimeout(() => {
-              window.scrollTo({
-                top: 0,
-                behavior: prefersReducedMotion() ? "auto" : "smooth",
-              });
-              clickTimeout.current = null;
-            }, 250);
-          }}
-          onDoubleClick={() => {
-            if (clickTimeout.current) {
-              clearTimeout(clickTimeout.current);
-              clickTimeout.current = null;
-            }
-            const currentTheme = document.documentElement.classList.contains("dark") ? "dark" : "light";
-            window.localStorage.setItem("portfolio-theme", currentTheme);
-            sessionStorage.setItem("scrollToTopAfterReload", "1");
-            window.location.reload();
+            window.scrollTo({
+              top: 0,
+              behavior: prefersReducedMotion() ? "auto" : "smooth",
+            });
           }}
           className="flex cursor-pointer items-center gap-2 transition-all duration-300 hover:scale-105 hover:opacity-80"
-          aria-label="Scroll to top. Double click to reload."
+          aria-label="Scroll to top"
         >
           <img
-            src={theme === "light" ? "/signature_logo_black.png" : "/signature_logo_white.png"}
+            src="/signature_logo_white.png"
             alt="Akash signature logo"
             width={40}
             height={40}
@@ -132,7 +103,7 @@ const Navbar = () => {
             decoding="async"
             className="h-10 w-auto"
           />
-          <span className="shine animate-pulse text-2xl text-purple-500 md:text-3xl">
+          <span className="shine animate-pulse text-2xl text-primary md:text-3xl">
             {"\u272F\u00B0"}
           </span>
         </button>
@@ -142,7 +113,7 @@ const Navbar = () => {
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`group relative transition-all duration-300 hover:text-foreground hover:glow-text ${
+              className={`group relative text-sm uppercase tracking-[0.2em] transition-all duration-300 hover:text-foreground hover:glow-text ${
                 activeSection === item.id ? "text-foreground" : "text-foreground/80"
               }`}
             >

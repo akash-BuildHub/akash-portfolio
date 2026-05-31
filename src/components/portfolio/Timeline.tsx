@@ -103,7 +103,7 @@ const TimelineItemComponent = ({
       className={`flex flex-col gap-4 md:items-center md:gap-8 ${isLeft ? "md:flex-row" : "md:flex-row-reverse"}`}
     >
       <div className={`flex-1 ${isLeft ? "md:text-right" : "md:text-left"}`}>
-        <div className="inline-block rounded-xl border border-border/90 bg-[#0a0a12]/80 p-4 transition-all duration-500 sm:p-6">
+        <div className="inline-block p-4 transition-all duration-500 sm:p-6">
           <h3 className="gradient-text mb-4 text-xl font-bold">{item.title}</h3>
           <ul className="space-y-2">
             {item.content.map((text, i) => {

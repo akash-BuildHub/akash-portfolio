@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0a0a12" />
+    <meta name="theme-color" content="#1b1b1d" />
     <meta name="format-detection" content="telephone=no" />
     <link rel="icon" type="image/png" href="/title-logo.png" />
     <link rel="apple-touch-icon" href="/title-logo.png" />
@@ -44,179 +44,20 @@
     <meta name="twitter:image" content="/akash_profile.png" />
 
     <script>
-      (function () {
-        try {
-          var savedTheme = localStorage.getItem("portfolio-theme");
-          var theme = savedTheme === "light" ? "light" : "dark";
-          var root = document.documentElement;
-          root.classList.remove("light", "dark");
-          root.classList.add(theme);
-        } catch (e) {
-          document.documentElement.classList.add("dark");
-        }
-      })();
+      // Dark mode only.
+      document.documentElement.classList.add("dark");
     </script>
 
     <style>
-      :root {
-        --boot-bg: #000000;
-        --loader-bg: #000000;
-        --loader-accent: hsl(260 32% 34%);
-        --loader-track: rgba(255, 255, 255, 0.2);
-        --loader-label: hsl(260 32% 34%);
-        --loader-label-shadow: rgba(101, 76, 139, 0.4);
-        --loader-inner-track: rgba(255, 255, 255, 0.12);
-      }
-
-      html.light {
-        --boot-bg: #f7f8fc;
-        --loader-bg: #f7f8fc;
-        --loader-accent: hsl(262 78% 55%);
-        --loader-track: rgba(30, 41, 59, 0.25);
-        --loader-label: hsl(230 25% 22%);
-        --loader-label-shadow: rgba(0, 0, 0, 0.12);
-        --loader-inner-track: rgba(30, 41, 59, 0.2);
-      }
-
       html, body, #root {
         margin: 0;
         min-height: 100%;
-        background: var(--boot-bg);
-      }
-
-      #initial-loader {
-        position: fixed;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        background: var(--loader-bg);
-        z-index: 9999;
-        transition: opacity 240ms ease;
-      }
-
-      #initial-loader.is-hidden {
-        opacity: 0;
-        pointer-events: none;
-      }
-
-      .initial-loader-visual {
-        position: relative;
-        width: 270px;
-        height: 270px;
-      }
-
-      .initial-loader-label {
-        position: absolute;
-        inset: 0;
-        display: grid;
-        place-items: center;
-        font-family: "Inter", system-ui, -apple-system, sans-serif;
-        font-size: 1.3rem;
-        font-weight: 600;
-        letter-spacing: 0.08em;
-        text-indent: 0.08em;
-        text-transform: uppercase;
-        color: var(--loader-label);
-        text-shadow: 0 0 10px var(--loader-label-shadow);
-      }
-
-      .initial-loader-outer,
-      .initial-loader-inner {
-        position: absolute;
-        inset: 0;
-        border-radius: 9999px;
-      }
-
-      .initial-loader-outer {
-        border: 2px solid var(--loader-track);
-      }
-
-      .initial-loader-outer::before {
-        content: "";
-        position: absolute;
-        inset: -2px;
-        border-radius: inherit;
-        background:
-          conic-gradient(
-            from 12deg,
-            var(--loader-accent) 0deg 44deg,
-            transparent 44deg 84deg,
-            var(--loader-accent) 84deg 126deg,
-            transparent 126deg 184deg,
-            var(--loader-accent) 184deg 228deg,
-            transparent 228deg 280deg,
-            var(--loader-accent) 280deg 328deg,
-            transparent 328deg 360deg
-          );
-        -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 12px), #000 calc(100% - 12px));
-        mask: radial-gradient(farthest-side, transparent calc(100% - 12px), #000 calc(100% - 12px));
-        animation: initial-spin 2.3s linear infinite;
-      }
-
-      .initial-loader-inner {
-        inset: 24px;
-        border: 2px solid var(--loader-inner-track);
-      }
-
-      .initial-loader-inner::before {
-        content: "";
-        position: absolute;
-        inset: -2px;
-        border-radius: inherit;
-        background:
-          conic-gradient(
-            from -28deg,
-            rgba(255, 255, 255, 0.34) 0deg 30deg,
-            transparent 30deg 94deg,
-            rgba(255, 255, 255, 0.24) 94deg 120deg,
-            transparent 120deg 206deg,
-            rgba(255, 255, 255, 0.3) 206deg 236deg,
-            transparent 236deg 320deg,
-            rgba(255, 255, 255, 0.2) 320deg 348deg,
-            transparent 348deg 360deg
-          );
-        -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 10px));
-        mask: radial-gradient(farthest-side, transparent calc(100% - 10px), #000 calc(100% - 10px));
-        animation: initial-spin-reverse 2.7s linear infinite;
-      }
-
-      @keyframes initial-spin {
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      @keyframes initial-spin-reverse {
-        to {
-          transform: rotate(-360deg);
-        }
-      }
-
-      @media (max-width: 640px) {
-        .initial-loader-visual {
-          width: 190px;
-          height: 190px;
-        }
-
-        .initial-loader-label {
-          font-size: 1rem;
-        }
-
-        .initial-loader-inner {
-          inset: 18px;
-        }
+        background: #1b1b1d;
       }
     </style>
   </head>
 
   <body>
-    <div id="initial-loader" aria-hidden="true">
-      <div class="initial-loader-visual">
-        <div class="initial-loader-outer"></div>
-        <div class="initial-loader-inner"></div>
-        <div class="initial-loader-label">Loading...</div>
-      </div>
-    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

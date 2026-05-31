@@ -1,21 +1,13 @@
-﻿import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ChevronRight, Heart } from "lucide-react";
 import { prefersReducedMotion } from "@/lib/motion";
 
 interface HeroProps {
   setShowTimeline: (show: boolean) => void;
 }
 
-const THEME_KEY = "portfolio-theme";
-
 const Hero = ({ setShowTimeline }: HeroProps) => {
-  const imageRef = useRef<HTMLDivElement>(null);
   const avatarCardRef = useRef<HTMLDivElement>(null);
-  const lastTapRef = useRef(0);
-  const [theme, setTheme] = useState<"light" | "dark">(
-    document.documentElement.classList.contains("dark") ? "dark" : "light",
-  );
 
   const scrollToTimeline = () => {
     setShowTimeline(true);
@@ -27,27 +19,6 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
       });
     });
   };
-
-  const toggleTheme = () => {
-    const root = document.documentElement;
-    const isDark = root.classList.contains("dark");
-    const nextTheme = isDark ? "light" : "dark";
-
-    root.classList.remove("light", "dark");
-    root.classList.add(nextTheme);
-    window.localStorage.setItem(THEME_KEY, nextTheme);
-    setTheme(nextTheme);
-  };
-
-  useEffect(() => {
-    const root = document.documentElement;
-    const observer = new MutationObserver(() => {
-      setTheme(root.classList.contains("dark") ? "dark" : "light");
-    });
-
-    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
@@ -120,67 +91,77 @@ const Hero = ({ setShowTimeline }: HeroProps) => {
     };
   }, []);
 
-  const handleProfilePointerUp = () => {
-    const now = Date.now();
-    if (now - lastTapRef.current < 320) {
-      toggleTheme();
-    }
-    lastTapRef.current = now;
-  };
-
   return (
-    <section className="relative pb-16 pt-24 sm:py-16 md:py-24 lg:py-32" aria-label="Hero section">
-      <div className="container mx-auto px-4 sm:px-6">
-        <div className="mx-auto max-w-6xl rounded-xl border border-border/90 bg-[#0a0a12]/80 p-4 transition-all duration-500 sm:p-6 md:p-10 lg:p-12">
-          <div className="grid w-full grid-cols-1 items-center gap-6 sm:gap-8 lg:grid-cols-[55%_45%] lg:gap-14">
-            <div className="text-center lg:text-left">
-              <p className="text-2xl font-bold text-white sm:text-3xl md:text-4xl lg:text-5xl">Welcome to</p>
+    <section
+      className="relative overflow-hidden pb-20 pt-28 sm:py-24 md:py-28 lg:py-36"
+      aria-label="Hero section"
+    >
+      {/* Profile image as the home section background */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 bg-no-repeat opacity-30"
+        style={{
+          backgroundImage: "url('/akash_profile.jpeg')",
+          backgroundPosition: "114% 12%",
+          backgroundSize: "66%",
+        }}
+      />
 
-              <h1 className="mt-2 text-3xl font-bold text-purple-500 sm:text-4xl md:text-5xl lg:text-6xl">
-                Akash Portfolio
-                <Heart className="ml-1.5 inline-block text-red-500 sm:ml-2 md:ml-3" size={22} />
-              </h1>
+      {/* Giant faint watermark */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute left-0 top-[70%] -z-0 -translate-y-1/2 scale-y-75 select-none whitespace-nowrap text-[24vw] font-extrabold uppercase leading-none tracking-[0.1em] text-white/[0.04]"
+      >
+        Akash
+      </span>
 
-              <div className="mt-6 sm:mt-8 md:mt-10">
-                <h2 className="text-xl font-semibold text-white sm:text-2xl md:text-3xl">AI Developer</h2>
-                <p className="mt-1.5 text-sm italic text-gray-400 sm:mt-2 sm:text-base md:text-lg">think it, let the AI do it</p>
-              </div>
-
-              <button
-                onClick={scrollToTimeline}
-                className="mx-auto mt-8 inline-flex items-center gap-2 rounded-full border border-purple-500/40 px-5 py-2.5 text-xs text-white transition hover:bg-purple-500/10 sm:mt-10 sm:gap-3 sm:px-7 sm:py-3 sm:text-sm md:mt-12 md:px-10 md:py-4 md:text-base lg:mx-0"
-                aria-label="Explore timeline section"
-              >
-                <ChevronRight className="h-4 w-4 text-purple-500 sm:h-5 sm:w-5" />
-                Click here to explore more
-              </button>
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
+        <div className="grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[1fr_auto] lg:gap-16">
+          {/* Left: editorial text column */}
+          <div className="text-left">
+            {/* Vertical indicator: dot + line + label */}
+            <div className="mb-8 flex items-center gap-4 lg:mb-10">
+              <span className="flex flex-col items-center gap-2">
+                <span className="h-2 w-2 rounded-full border border-primary" />
+                <span className="h-10 w-px bg-gradient-to-b from-primary/70 to-transparent" />
+              </span>
+              <span className="text-[0.7rem] font-medium uppercase tracking-[0.4em] text-foreground/55">
+                Portfolio
+              </span>
             </div>
 
-            <div
-              ref={imageRef}
-              className="flex justify-center [perspective:1200px] lg:-translate-x-5 lg:justify-start"
+            <p className="mb-3 text-sm font-medium uppercase tracking-[0.35em] text-foreground/60">
+              Welcome to
+            </p>
+
+            <h1 className="text-5xl font-extrabold uppercase leading-[0.9] tracking-[0.06em] text-white sm:text-6xl md:text-7xl lg:text-8xl">
+              My Universe
+              <span className="text-primary">&#176;</span>
+            </h1>
+
+            <div className="mt-7 flex items-center gap-4 sm:mt-9">
+              <span className="h-px w-12 bg-primary sm:w-16" />
+              <h2 className="text-sm font-semibold uppercase tracking-[0.28em] text-foreground/85 sm:text-base">
+                AI Developer
+              </h2>
+            </div>
+
+            <div className="mt-6 max-w-md text-xs uppercase leading-[2.1] tracking-[0.18em] text-foreground/55 sm:text-sm">
+              <p>Think it, let the AI do it.</p>
+              <p className="mt-5">
+                Designing, building, and deploying intelligent systems for
+                real-world applications.
+              </p>
+            </div>
+
+            <button
+              onClick={scrollToTimeline}
+              className="group mt-16 inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.3em] text-primary transition sm:mt-20"
+              aria-label="Explore timeline section"
             >
-              <div
-                ref={avatarCardRef}
-                className={`reflect-circle w-full max-w-[180px] cursor-grab touch-pan-y transform-gpu rounded-full border-2 border-purple-500/50 p-[4px] [transform-style:preserve-3d] active:cursor-grabbing sm:max-w-[280px] sm:p-[6px] md:max-w-[340px] lg:max-w-[400px] ${
-                  theme === "dark"
-                    ? "bg-[#2a2a2a] shadow-[0_10px_24px_rgba(0,0,0,0.4)] sm:shadow-[0_14px_34px_rgba(0,0,0,0.45)]"
-                    : "bg-transparent"
-                }`}
-                onPointerUp={handleProfilePointerUp}
-              >
-                <img
-                  src={theme === "light" ? "/akash_profile_white.jpeg" : "/akash_profile_black.png"}
-                  alt="Akash profile"
-                width={380}
-                height={500}
-                loading="eager"
-                decoding="async"
-                draggable={false}
-                className="reflect-circle aspect-square w-full select-none object-cover"
-              />
-              </div>
-            </div>
+              Explore
+              <span className="h-px w-10 bg-primary transition-all duration-300 group-hover:w-16" />
+            </button>
           </div>
         </div>
       </div>
