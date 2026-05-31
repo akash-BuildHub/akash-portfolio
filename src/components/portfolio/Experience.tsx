@@ -31,7 +31,7 @@ const experiences: ExperienceItem[] = [
     location: "Madiwala, Bengaluru",
     duration: "2025 - 2026",
     description:
-      "Designed and deployed deep learning models for detection and recognition tasks, building scalable ML pipelines from preprocessing to deployment and integrating AI solutions seamlessly into production backend systems.",
+      "Designed and deployed AI-powered deep learning models for detection, recognition, and intelligent automation tasks. Built scalable machine learning pipelines from data preprocessing and model training to API integration and production deployment, ensuring seamless performance within backend systems. Focused on improving model accuracy, workflow efficiency, and real-world AI implementation for business-ready solutions.",
   },
   {
     title: "Research Analyst",
@@ -40,7 +40,7 @@ const experiences: ExperienceItem[] = [
     location: "Thuckalay, Tamil Nadu",
     duration: "2024 - 2025",
     description:
-      "Produced technical documentation for deep learning and data science research, contributing to dataset analysis, experimental evaluation, and comparative model benchmarking.",
+      "Produced technical documentation and research support for deep learning and data science projects. Worked on dataset analysis, experimental evaluation, model comparison, and performance benchmarking to support AI research workflows. Contributed to preparing structured reports, research summaries, and technical references for model development and validation.",
   },
   {
     title: "Python-Intern",
@@ -49,7 +49,7 @@ const experiences: ExperienceItem[] = [
     location: "Thiruvananthapuram, Kerala",
     duration: "July 2023",
     description:
-      "Enhanced Python programming skills and explored software development methodologies through hands-on projects and practical applications.",
+      "Learned the fundamentals of Python programming through an internship training program. Developed a strong understanding of basic syntax, variables, data types, conditional statements, loops, functions, and beginner-level problem-solving through hands-on coding practice.",
   },
   {
     title: "Inplant Training",
@@ -57,7 +57,7 @@ const experiences: ExperienceItem[] = [
     location: "Marthandam, Tamil Nadu",
     duration: "July 2022",
     description:
-      "Gained industry exposure to software development practices and team collaboration, strengthening practical understanding of real-world workflows.",
+      "Gained industry exposure through in-plant training at ITrobes Technologies Pvt. Ltd., understanding software development practices, company workflows, team collaboration, and real-world IT project environments.",
   },
 ];
 
@@ -153,7 +153,7 @@ const Experience = () => {
           {/* Detail panel for the active item */}
           <div data-reveal className="lg:pt-1">
             <div key={active} className="animate-fade-in">
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary sm:text-base">
                 {activeExp.company}
               </p>
               {activeExp.parentCompany && (
@@ -168,7 +168,7 @@ const Experience = () => {
                 {activeExp.duration}
               </p>
               <div className="mt-6 h-px w-12 bg-primary" />
-              <p className="mt-6 text-sm leading-[1.9] text-foreground/75">
+              <p className="mt-6 text-sm leading-[1.9] text-foreground/75 text-justify">
                 {activeExp.description}
               </p>
             </div>
