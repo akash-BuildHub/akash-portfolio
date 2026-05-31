@@ -49,11 +49,9 @@ const About = () => {
       {/* aboutme image anchored to the left end, fading toward the center */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 left-0 z-0 w-3/4 bg-left bg-no-repeat opacity-20 sm:w-2/3 lg:w-1/2"
+        className="pointer-events-none absolute inset-y-0 left-0 z-0 w-3/4 bg-contain bg-left bg-no-repeat opacity-20 sm:w-2/3 lg:w-1/2 lg:bg-[length:auto_135%] lg:bg-[position:left_15%]"
         style={{
           backgroundImage: "url('/aboutme.jpeg')",
-          backgroundSize: "auto 135%",
-          backgroundPosition: "left 15%",
           WebkitMaskImage:
             "linear-gradient(to right, rgba(0,0,0,0.9), transparent 72%)",
           maskImage:
