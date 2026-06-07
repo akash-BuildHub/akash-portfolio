@@ -47,13 +47,14 @@ const About = () => {
 
         gsap.fromTo(
           ".about-highlight",
-          { opacity: 0, x: -18 },
+          { opacity: 0, x: -36, y: 12 },
           {
             opacity: 1,
             x: 0,
-            duration: 0.5,
+            y: 0,
+            duration: 0.9,
             ease: "power3.out",
-            stagger: 0.12,
+            stagger: 0.4,
             scrollTrigger: {
               trigger: sectionRef.current,
               start: "top 60%",
