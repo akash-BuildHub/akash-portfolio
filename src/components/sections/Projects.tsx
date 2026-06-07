@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Users, Hospital, Calendar, ArrowLeft, Trophy, Vote, UserCheck } from 'lucide-react';
+import { Users, Hospital, Calendar, ArrowLeft, Trophy, Vote, UserCheck, Smile } from 'lucide-react';
 import { prefersReducedMotion } from '@/lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -60,6 +60,15 @@ const projects: Project[] = [
     icon: Hospital,
   },
   {
+    title: 'Emotion Recognition',
+    year: '2026',
+    description:
+      'An AI-powered emotion recognition system that uses deep learning and computer vision to detect facial expressions in real time and classify emotions such as happiness, sadness, anger, and surprise, enabling intelligent sentiment analysis and human-computer interaction.',
+    features: ['Deep Learning', 'Computer Vision', 'Emotion Detection'],
+    icon: Smile,
+    link: 'https://emotion-recognition-two.vercel.app/',
+  },
+  {
     title: 'Vision Snap',
     year: '2025',
     description:
@@ -109,7 +118,7 @@ const renderTwoToneTitle = (title: string) => {
   );
 };
 
-const ProjectCard = ({ project }: { project: Project }) => {
+const ProjectCard = ({ project, index }: { project: Project; index: number }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const demoMetaRef = useRef<HTMLDivElement>(null);
   const demoMediaRef = useRef<HTMLDivElement>(null);
@@ -168,14 +177,18 @@ const ProjectCard = ({ project }: { project: Project }) => {
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
+    // Even indices sit in the left column, odd indices in the right column.
+    // Slide each card in from its own side as it scrolls into view.
+    const fromLeft = index % 2 === 0;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
         cardRef.current,
-        { opacity: 0, y: 40 },
+        { opacity: 0, x: fromLeft ? -80 : 80 },
         {
           opacity: 1,
-          y: 0,
-          duration: 0.6,
+          x: 0,
+          duration: 0.7,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: cardRef.current,
@@ -187,7 +200,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     }, cardRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [index]);
 
   useEffect(() => {
     if (!showDemo || prefersReducedMotion()) return;
@@ -482,7 +495,7 @@ const Projects = () => {
   }, []);
 
   return (
-    <section id="projects" className="relative pb-12 pt-6 sm:pb-16 sm:pt-10 md:pb-32 md:pt-24">
+    <section id="projects" className="relative overflow-hidden pb-12 pt-6 sm:pb-16 sm:pt-10 md:pb-32 md:pt-24">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div ref={headingRef} className="mx-auto mb-8 flex max-w-6xl items-center gap-4 sm:mb-10">
           <span className="h-px w-10 bg-primary" />
@@ -493,7 +506,7 @@ const Projects = () => {
 
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
           {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} />
+            <ProjectCard key={index} project={project} index={index} />
           ))}
         </div>
       </div>
