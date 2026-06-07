@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Eye, Cpu, Brain, Rocket } from "lucide-react";
@@ -6,9 +6,65 @@ import { prefersReducedMotion } from "@/lib/motion";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Headline split into colored segments so the typing effect can preserve the
+// two-tone styling while revealing one character at a time.
+const headlineSegments = [
+  { text: "Hey, I'm ", className: "text-foreground/50" },
+  { text: "Akash", className: "text-white" },
+  {
+    text:
+      " — I build intelligent computer vision systems that transform visual data into ",
+    className: "text-foreground/50",
+  },
+  {
+    text: "faster decisions and smarter automation.",
+    className: "text-white",
+  },
+];
+const headlineText = headlineSegments.map((s) => s.text).join("");
+const headlineLength = headlineText.length;
+
 const About = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const hasTypedRef = useRef(false);
+  const [typedCount, setTypedCount] = useState(0);
+
+  // Type the headline out, one character at a time, when it scrolls into view.
+  useEffect(() => {
+    if (prefersReducedMotion()) {
+      setTypedCount(headlineLength);
+      return;
+    }
+
+    let intervalId: number | undefined;
+
+    const startTyping = () => {
+      if (hasTypedRef.current) return;
+      hasTypedRef.current = true;
+      intervalId = window.setInterval(() => {
+        setTypedCount((prev) => {
+          if (prev >= headlineLength) {
+            if (intervalId) window.clearInterval(intervalId);
+            return headlineLength;
+          }
+          return prev + 1;
+        });
+      }, 45);
+    };
+
+    const trigger = ScrollTrigger.create({
+      trigger: headlineRef.current,
+      start: "top 72%",
+      onEnter: startTyping,
+    });
+
+    return () => {
+      if (intervalId) window.clearInterval(intervalId);
+      trigger.kill();
+    };
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -110,15 +166,48 @@ const About = () => {
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.5fr_1fr] lg:gap-16">
             {/* Left: big editorial headline + socials */}
             <div>
-              <h2 className="text-2xl font-bold leading-[1.55] tracking-tight sm:text-3xl md:text-4xl lg:text-[2.6rem] lg:leading-[1.5]">
-                <span className="text-foreground/50">Hey, I&apos;m </span>
-                <span className="text-white">Akash</span>
-                <span className="text-foreground/50">
-                  {" "}&mdash; I build intelligent computer vision systems that
-                  transform visual data into{" "}
+              <h2
+                ref={headlineRef}
+                className="relative text-[1.7rem] font-bold leading-[1.45] tracking-tight sm:text-[2rem] md:text-[2.6rem] lg:text-[2.9rem] lg:leading-[1.35]"
+              >
+                {/* Ghost copy reserves the final layout so typing never shifts the page */}
+                <span aria-hidden="true" className="invisible">
+                  {headlineSegments.map((seg, i) => (
+                    <span key={i} className={seg.className}>
+                      {seg.text}
+                    </span>
+                  ))}
                 </span>
-                <span className="text-white">
-                  faster decisions and smarter automation.
+
+                {/* Full headline for screen readers (visual layers are decorative) */}
+                <span className="sr-only">{headlineText}</span>
+
+                {/* Typed overlay rendered on top of the ghost */}
+                <span aria-hidden="true" className="absolute inset-0">
+                  {(() => {
+                    let remaining = typedCount;
+                    return headlineSegments.map((seg, i) => {
+                      const visibleLength = Math.max(
+                        0,
+                        Math.min(seg.text.length, remaining),
+                      );
+                      remaining -= seg.text.length;
+                      if (visibleLength === 0) return null;
+                      return (
+                        <span key={i} className={seg.className}>
+                          {seg.text.slice(0, visibleLength)}
+                        </span>
+                      );
+                    });
+                  })()}
+                  {typedCount < headlineLength && (
+                    <span
+                      aria-hidden="true"
+                      className="ml-0.5 animate-blink font-normal text-primary"
+                    >
+                      |
+                    </span>
+                  )}
                 </span>
               </h2>
             </div>

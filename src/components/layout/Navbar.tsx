@@ -61,11 +61,30 @@ const Navbar = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const navOffset = (navRef.current?.offsetHeight ?? 80) + 32;
-      const target =
-        (element.querySelector(".section-title") as HTMLElement | null) ??
-        (element.querySelector(".container") as HTMLElement | null) ??
-        element;
+      const navHeight = navRef.current?.offsetHeight ?? 80;
+      let target: HTMLElement;
+      let navOffset: number;
+
+      if (id === "about") {
+        // About lands on the section itself with a tuned offset so its headline
+        // sits just below the navbar. The navbar shrinks by ~16px (py-5 -> py-3)
+        // once the page scrolls past 50px, and About always finishes well past
+        // that point. So always base the offset on the scrolled (short) height
+        // — otherwise clicking from the top vs. from another section lands the
+        // section ~16px differently.
+        const scrolledNavHeight = window.scrollY > 50 ? navHeight : navHeight - 16;
+        target = element;
+        navOffset = scrolledNavHeight - 2;
+      } else {
+        // All other sections keep the original behavior: scroll to the inner
+        // heading/container with a fixed gap below the navbar.
+        target =
+          (element.querySelector(".section-title") as HTMLElement | null) ??
+          (element.querySelector(".container") as HTMLElement | null) ??
+          element;
+        navOffset = navHeight + 32;
+      }
+
       const top =
         target.getBoundingClientRect().top + window.scrollY - navOffset;
       setActiveSection(id);
