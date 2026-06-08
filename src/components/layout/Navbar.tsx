@@ -65,13 +65,13 @@ const Navbar = () => {
       let target: HTMLElement;
       let navOffset: number;
 
-      if (id === "about") {
-        // About lands on the section itself with a tuned offset so its headline
-        // sits just below the navbar. The navbar shrinks by ~16px (py-5 -> py-3)
-        // once the page scrolls past 50px, and About always finishes well past
-        // that point. So always base the offset on the scrolled (short) height
-        // — otherwise clicking from the top vs. from another section lands the
-        // section ~16px differently.
+      if (id === "about" || id === "experience") {
+        // About and Experience land on the section itself with a tuned offset so
+        // their own top padding stays visible below the navbar. The navbar
+        // shrinks by ~16px (py-5 -> py-3) once the page scrolls past 50px, and
+        // these sections always finish well past that point. So always base the
+        // offset on the scrolled (short) height — otherwise clicking from the
+        // top vs. from another section lands the section ~16px differently.
         const scrolledNavHeight = window.scrollY > 50 ? navHeight : navHeight - 16;
         target = element;
         navOffset = scrolledNavHeight - 2;

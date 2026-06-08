@@ -57,6 +57,8 @@ const categories: TechCategory[] = [
     title: 'Database',
     items: [
       { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
+      { name: 'SQLite', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg' },
+      { name: 'MySQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
       { name: 'Supabase', logo: '/icons/supabase.png' },
     ],
   },
@@ -64,6 +66,7 @@ const categories: TechCategory[] = [
     title: 'Deployment',
     items: [
       { name: 'Vercel', logo: 'https://cdn.simpleicons.org/vercel/FFFFFF' },
+      { name: 'Render', logo: 'https://cdn.simpleicons.org/render/46E3B7' },
       { name: 'Hostinger', logo: 'https://cdn.simpleicons.org/hostinger/673DE6' },
       { name: 'Railway', logo: 'https://cdn.simpleicons.org/railway/FFFFFF' },
       { name: 'Cloud EC2', logo: '/icons/cloud_EC2.png' },

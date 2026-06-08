@@ -208,9 +208,8 @@ const Contact = () => {
       className="relative overflow-hidden py-20 sm:py-24 md:py-32"
     >
       {/* Decorative gold cross accents */}
-      <span aria-hidden="true" className="pointer-events-none absolute right-[8%] top-[14%] hidden text-4xl font-light text-primary/80 md:block">+</span>
-      <span aria-hidden="true" className="pointer-events-none absolute right-[15%] bottom-[16%] hidden text-5xl font-light text-primary/70 md:block">+</span>
-      <span aria-hidden="true" className="pointer-events-none absolute left-[5%] bottom-[12%] hidden text-3xl font-light text-primary/50 lg:block">+</span>
+      <span aria-hidden="true" className="pointer-events-none absolute right-[5%] top-[12%] hidden text-4xl font-light text-primary/80 md:block">+</span>
+      <span aria-hidden="true" className="pointer-events-none absolute right-[5%] bottom-[12%] hidden text-4xl font-light text-primary/70 md:block">+</span>
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <div ref={contentRef} className="mx-auto w-full max-w-6xl">

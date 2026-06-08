@@ -117,6 +117,19 @@ const Experience = () => {
       ref={sectionRef}
       className="relative overflow-hidden pb-14 pt-8 sm:pb-16 sm:pt-10 md:pb-24 md:pt-16 lg:pb-32 lg:pt-24"
     >
+      {/* experience network graphic anchored to the left, fading toward the center */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 left-0 z-0 w-2/3 bg-left bg-contain bg-no-repeat opacity-10 sm:w-1/2 lg:w-2/5"
+        style={{
+          backgroundImage: "url('/experience.png')",
+          filter: "invert(1)",
+          WebkitMaskImage:
+            "linear-gradient(to right, rgba(0,0,0,1), transparent 85%)",
+          maskImage:
+            "linear-gradient(to right, rgba(0,0,0,1), transparent 85%)",
+        }}
+      />
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <div data-reveal className="mx-auto flex max-w-6xl items-center gap-4">
           <span className="h-px w-10 bg-primary" />
