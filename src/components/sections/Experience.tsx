@@ -43,6 +43,14 @@ const experiences: ExperienceItem[] = [
       "Produced technical documentation and research support for deep learning and data science projects. Worked on dataset analysis, experimental evaluation, model comparison, and performance benchmarking to support AI research workflows. Contributed to preparing structured reports, research summaries, and technical references for model development and validation.",
   },
   {
+    title: "Python/Django Intern",
+    company: "Clovion Tech Solutions Pvt. Ltd.",
+    location: "Kanyakumari, Tamil Nadu",
+    duration: "January 2024 – March 2024",
+    description:
+      "Completed a Python/Django Internship focused on backend development and web application design. Acquired practical experience in Python programming, Django framework, database management, API development, debugging, and software development workflows through hands-on project implementation and training.",
+  },
+  {
     title: "Python-Intern",
     company: "Srishti Innovations",
     parentCompany: "Techno Park",
@@ -115,7 +123,7 @@ const Experience = () => {
     <section
       id="experience"
       ref={sectionRef}
-      className="relative overflow-hidden pb-14 pt-8 sm:pb-16 sm:pt-10 md:pb-24 md:pt-16 lg:pb-32 lg:pt-24"
+      className="relative overflow-hidden pb-14 pt-2 sm:pb-16 sm:pt-3 md:pb-24 md:pt-6 lg:pb-32 lg:pt-10"
     >
       {/* experience network graphic anchored to the left, fading toward the center */}
       <div
