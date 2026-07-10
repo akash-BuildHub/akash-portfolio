@@ -286,6 +286,111 @@
     overflow-wrap: anywhere;
   }
 
+  /* Resume button — "impact spark burst" collision effect */
+  .collision-fx {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+  .collision-projectile {
+    position: absolute;
+    top: 50%;
+    left: -30%;
+    height: 3px;
+    width: 16px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, transparent, hsl(var(--primary)));
+    box-shadow: 0 0 10px 2px hsl(var(--primary) / 0.85);
+    transform: translateY(-50%);
+    animation: collisionProjectile 0.26s cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+
+  .collision-flash {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 46px;
+    width: 46px;
+    border-radius: 999px;
+    background: radial-gradient(circle, hsl(var(--primary) / 0.7), transparent 68%);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.2);
+    animation: collisionFlash 0.42s ease-out 0.2s forwards;
+  }
+
+  .collision-spark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: var(--s, 4px);
+    width: var(--s, 4px);
+    border-radius: 999px;
+    background: hsl(var(--primary));
+    box-shadow: 0 0 6px hsl(var(--primary) / 0.9);
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    animation: collisionSpark 0.5s ease-out var(--delay, 0.22s) forwards;
+  }
+
+  /* Tech Stacks cards — running "beam" border: a gold light trail runs around
+     the perimeter, one gradient line per edge, chasing counter-clockwise
+     (adapted from Alexander Bodin's animated button). Needs four
+     <span class="beam-line beam-*"> children per card. */
+  .beam-border {
+    --beam: hsl(45 98% 58%); /* running light — gold */
+    --beam-w: 1px;           /* line thickness */
+    --beam-speed: 3s;        /* time to traverse one edge */
+
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+  }
+
+  .beam-line {
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .beam-line.beam-top {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--beam-w);
+    background: linear-gradient(to left, transparent, var(--beam));
+    animation: beamTop var(--beam-speed) linear infinite;
+  }
+
+  .beam-line.beam-right {
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: var(--beam-w);
+    background: linear-gradient(to top, transparent, var(--beam));
+    animation: beamRight var(--beam-speed) linear infinite;
+    animation-delay: calc(var(--beam-speed) / -2);
+  }
+
+  .beam-line.beam-bottom {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--beam-w);
+    background: linear-gradient(to right, transparent, var(--beam));
+    animation: beamBottom var(--beam-speed) linear infinite;
+  }
+
+  .beam-line.beam-left {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--beam-w);
+    background: linear-gradient(to bottom, transparent, var(--beam));
+    animation: beamLeft var(--beam-speed) linear infinite;
+    animation-delay: calc(var(--beam-speed) / -2);
+  }
+
 }
 
 @layer utilities {
@@ -345,6 +450,81 @@
   }
 }
 
+@keyframes collisionProjectile {
+  0% {
+    left: -30%;
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    left: 46%;
+    opacity: 0;
+  }
+}
+
+@keyframes collisionFlash {
+  0% {
+    opacity: 0.9;
+    transform: translate(-50%, -50%) scale(0.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.7);
+  }
+}
+
+@keyframes collisionSpark {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateX(0) scale(1);
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateX(var(--d, 32px)) scale(0.3);
+  }
+}
+
+@keyframes beamTop {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes beamRight {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(-100%);
+  }
+}
+
+@keyframes beamBottom {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes beamLeft {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
 img,
 svg {
   max-width: 100%;
@@ -373,5 +553,15 @@ svg {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* Running beam border: hide the moving lines, show a clean static border */
+@media (prefers-reduced-motion: reduce) {
+  .beam-border {
+    border: 1px solid hsl(0 0% 100% / 0.1);
+  }
+  .beam-border .beam-line {
+    display: none;
   }
 }

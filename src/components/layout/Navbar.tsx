@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef, type CSSProperties } from "react";
 import { Menu, X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { RESUME_PATH } from "@/lib/utils";
@@ -11,11 +11,48 @@ const NAV_ITEMS = [
   { label: "Contact", id: "contact" },
 ];
 
+// Radial particles for the Resume button's "impact spark burst" collision effect.
+const COLLISION_SPARKS = Array.from({ length: 12 }, (_, i) => ({
+  angle: (360 / 12) * i,
+  dist: 26 + (i % 3) * 12,
+  size: i % 2 === 0 ? 5 : 3,
+  delay: 0.2 + (i % 4) * 0.02,
+}));
+
+// Keyed overlay for the "impact spark burst" — remount (via key) to replay.
+const CollisionBurst = () => (
+  <span aria-hidden="true" className="collision-fx">
+    <span className="collision-projectile" />
+    <span className="collision-flash" />
+    {COLLISION_SPARKS.map((spark, i) => (
+      <span
+        key={i}
+        className="collision-spark"
+        style={
+          {
+            "--a": `${spark.angle}deg`,
+            "--d": `${spark.dist}px`,
+            "--s": `${spark.size}px`,
+            "--delay": `${spark.delay}s`,
+          } as CSSProperties
+        }
+      />
+    ))}
+  </span>
+);
+
 const Navbar = () => {
   const navRef = useRef<HTMLElement>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [logoBurst, setLogoBurst] = useState(0);
+  const logoTapTimerRef = useRef<number | null>(null);
+
+  const triggerLogoCollision = () => {
+    if (prefersReducedMotion()) return;
+    setLogoBurst((count) => count + 1);
+  };
 
   useEffect(() => {
     if (sessionStorage.getItem("scrollToTopAfterReload") === "1") {
@@ -106,14 +143,28 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex items-center justify-between px-4 sm:px-6">
         <button
+          onMouseEnter={triggerLogoCollision}
           onClick={() => {
-            window.scrollTo({
-              top: 0,
-              behavior: prefersReducedMotion() ? "auto" : "smooth",
-            });
+            triggerLogoCollision();
+            if (logoTapTimerRef.current !== null) {
+              // Second tap within the window → double tap → hard refresh at once
+              // (no scroll-to-top first).
+              window.clearTimeout(logoTapTimerRef.current);
+              logoTapTimerRef.current = null;
+              window.location.reload();
+              return;
+            }
+            // Hold the single-tap action briefly in case a second tap follows.
+            logoTapTimerRef.current = window.setTimeout(() => {
+              logoTapTimerRef.current = null;
+              window.scrollTo({
+                top: 0,
+                behavior: prefersReducedMotion() ? "auto" : "smooth",
+              });
+            }, 300);
           }}
-          className="flex cursor-pointer items-center gap-2 transition-all duration-300 hover:scale-105 hover:opacity-80"
-          aria-label="Scroll to top"
+          className="relative flex cursor-pointer items-center gap-2 transition-all duration-300 hover:scale-105 hover:opacity-80"
+          aria-label="Scroll to top; double-tap to reload"
         >
           <img
             src="/signature_logo_white.png"
@@ -127,6 +178,7 @@ const Navbar = () => {
           <span className="shine animate-pulse text-2xl text-primary md:text-3xl">
             {"\u272F\u00B0"}
           </span>
+          {logoBurst > 0 && <CollisionBurst key={logoBurst} />}
         </button>
 
         <div className="hidden items-center gap-8 md:flex">

@@ -227,8 +227,11 @@ const TechStacks = () => {
           {categories.map((category) => (
             <div
               key={category.title}
-              className="tech-stack-item flex items-start gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-4 transition-colors duration-300 hover:border-white/20 sm:gap-5 sm:px-6 sm:py-5"
+              className="tech-stack-item beam-border flex items-start gap-3 rounded-2xl bg-white/[0.03] px-4 py-4 sm:gap-5 sm:px-6 sm:py-5"
             >
+              {['beam-top', 'beam-right', 'beam-bottom', 'beam-left'].map((edge) => (
+                <span key={edge} aria-hidden="true" className={`beam-line ${edge}`} />
+              ))}
               <h3 className="w-24 flex-shrink-0 text-sm font-semibold leading-snug text-foreground sm:w-44 sm:text-base">
                 {category.title}
               </h3>
