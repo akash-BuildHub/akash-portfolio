@@ -1,7 +1,27 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FileCode2 } from 'lucide-react';
+import {
+  FileCode2,
+  ScanFace,
+  ScanSearch,
+  Radar,
+  Activity,
+  Images,
+  Gauge,
+  Server,
+  Webhook,
+  Cable,
+  KeyRound,
+  BarChart3,
+  Radio,
+  Film,
+  FileVideo,
+  Cctv,
+  Network,
+  Infinity as InfinityIcon,
+  type LucideIcon,
+} from 'lucide-react';
 import { prefersReducedMotion } from '@/lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -9,6 +29,7 @@ gsap.registerPlugin(ScrollTrigger);
 interface TechItem {
   name: string;
   logo?: string;
+  icon?: LucideIcon;
 }
 
 interface TechCategory {
@@ -16,73 +37,116 @@ interface TechCategory {
   items: TechItem[];
 }
 
+const devicon = (slug: string, variant = 'original') =>
+  `https://cdn.jsdelivr.net/gh/devicons/devicon/icons/${slug}/${slug}-${variant}.svg`;
+const simple = (slug: string) => `https://cdn.simpleicons.org/${slug}`;
+
 const categories: TechCategory[] = [
   {
     title: 'Languages',
     items: [
-      { name: 'HTML', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
-      { name: 'CSS', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
-      { name: 'JavaScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-      { name: 'Python', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg' },
+      { name: 'Python', logo: devicon('python') },
+      { name: 'TypeScript', logo: devicon('typescript') },
+      { name: 'JavaScript (ES2022)', logo: devicon('javascript') },
+      { name: 'SQL', logo: devicon('azuresqldatabase') },
+      { name: 'HTML5', logo: devicon('html5') },
+      { name: 'CSS3', logo: devicon('css3') },
     ],
   },
   {
-    title: 'Artificial Intelligence',
+    title: 'AI & Computer Vision',
     items: [
       { name: 'Deep Learning', logo: '/icons/deep_learning.png' },
-      { name: 'Computer Vision', logo: '/icons/computer_vision.png' },
       { name: 'Machine Learning', logo: '/icons/machine_learning.png' },
+      { name: 'Computer Vision', logo: '/icons/computer_vision.png' },
+      { name: 'Face Detection & Recognition', icon: ScanFace },
+      { name: 'Object Detection', icon: ScanSearch },
+      { name: 'Multi-Object Tracking (MOT)', icon: Radar },
+      { name: 'Action Recognition', icon: Activity },
+      { name: 'Image Classification', icon: Images },
+      { name: 'Model Optimization', icon: Gauge },
     ],
   },
   {
-    title: 'Frameworks & APIs',
+    title: 'ML Frameworks',
     items: [
-      { name: 'React', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-      { name: 'Node.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
-      { name: 'FastAPI', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg' },
-      { name: 'API Integration', logo: 'https://cdn-icons-png.flaticon.com/512/906/906334.png' },
+      { name: 'PyTorch', logo: devicon('pytorch') },
+      { name: 'TensorFlow', logo: devicon('tensorflow') },
+      { name: 'Keras', logo: devicon('keras') },
+      { name: 'InsightFace (SCRFD, ArcFace)', icon: ScanFace },
+      { name: 'ONNX Runtime (GPU / CUDA)', logo: simple('onnx') },
+      { name: 'OpenCV', logo: devicon('opencv') },
+      { name: 'NumPy', logo: devicon('numpy') },
+      { name: 'Pillow', icon: Images },
+      { name: 'YOLO', logo: `${simple('ultralytics')}/white` },
     ],
   },
   {
-    title: 'Data & Research',
+    title: 'Backend',
     items: [
-      { name: 'Dataset Development', logo: '/icons/dataset_development.png' },
-      { name: 'Data Streaming', logo: 'https://cdn.simpleicons.org/apachekafka/FFFFFF' },
-      { name: 'Data Analysis', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg' },
-      { name: 'Model Evaluation', logo: 'https://cdn.simpleicons.org/weightsandbiases/FFBE00' },
-      { name: 'Research Analyst', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jupyter/jupyter-original.svg' },
+      { name: 'FastAPI', logo: devicon('fastapi') },
+      { name: 'Flask', logo: devicon('flask') },
+      { name: 'Uvicorn (ASGI)', icon: Server },
+      { name: 'Pydantic', logo: simple('pydantic') },
+      { name: 'SQLAlchemy (ORM)', logo: devicon('sqlalchemy') },
+      { name: 'RESTful API Design', icon: Webhook },
+      { name: 'WebSocket APIs', icon: Cable },
+      { name: 'JWT Auth', logo: `${simple('jsonwebtokens')}/white` },
+      { name: 'Bcrypt', icon: KeyRound },
     ],
   },
   {
-    title: 'Database',
+    title: 'Frontend',
     items: [
-      { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg' },
-      { name: 'SQLite', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg' },
-      { name: 'MySQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg' },
+      { name: 'React 19', logo: devicon('react') },
+      { name: 'TanStack Router', logo: `${simple('tanstack')}/white` },
+      { name: 'TanStack Query', logo: simple('reactquery') },
+      { name: 'React Hook Form', logo: simple('reacthookform') },
+      { name: 'Zod', logo: simple('zod') },
+      { name: 'Tailwind CSS', logo: devicon('tailwindcss') },
+      { name: 'Radix UI', logo: `${simple('radixui')}/white` },
+      { name: 'Recharts', icon: BarChart3 },
+      { name: 'Vite', logo: devicon('vitejs') },
+    ],
+  },
+  {
+    title: 'Video & Streaming',
+    items: [
+      { name: 'RTSP', icon: Radio },
+      { name: 'WebRTC (aiortc)', logo: `${simple('webrtc')}/white` },
+      { name: 'PyAV / FFmpeg', logo: simple('ffmpeg') },
+      { name: 'MJPEG', icon: Film },
+      { name: 'MSE / FMP4', icon: FileVideo },
+      { name: 'ONVIF', icon: Cctv },
+      { name: 'NVDEC / libx264', logo: simple('nvidia') },
+      { name: 'Live Multi-Camera Pipelines', icon: Network },
+    ],
+  },
+  {
+    title: 'Databases & Cloud',
+    items: [
+      { name: 'PostgreSQL', logo: devicon('postgresql') },
+      { name: 'SQLite', logo: devicon('sqlite') },
       { name: 'Supabase', logo: '/icons/supabase.png' },
+      { name: 'AWS EC2', logo: '/icons/cloud_EC2.png' },
+      { name: 'Railway', logo: devicon('railway') },
+      { name: 'Cloudflare', logo: devicon('cloudflare') },
     ],
   },
   {
-    title: 'Deployment',
+    title: 'DevOps & Tools',
     items: [
-      { name: 'Vercel', logo: 'https://cdn.simpleicons.org/vercel/FFFFFF' },
-      { name: 'Render', logo: 'https://cdn.simpleicons.org/render/46E3B7' },
-      { name: 'Hostinger', logo: 'https://cdn.simpleicons.org/hostinger/673DE6' },
-      { name: 'Railway', logo: 'https://cdn.simpleicons.org/railway/FFFFFF' },
-      { name: 'Cloud EC2', logo: '/icons/cloud_EC2.png' },
-    ],
-  },
-  {
-    title: 'Tools',
-    items: [
-      { name: 'Git', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Git_icon.svg?v=2' },
-      { name: 'Figma', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg' },
+      { name: 'Docker', logo: devicon('docker') },
+      { name: 'Git', logo: devicon('git') },
+      { name: 'GitHub', logo: devicon('github') },
+      { name: 'CI/CD', icon: InfinityIcon },
     ],
   },
 ];
 
 const TechBadge = ({ tech }: { tech: TechItem }) => {
   const [logoFailed, setLogoFailed] = useState(false);
+  const FallbackIcon = tech.icon ?? FileCode2;
 
   return (
     <div className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.06] px-2.5 py-1.5 transition-colors duration-200 hover:border-white/25 hover:bg-white/[0.1]">
@@ -96,7 +160,7 @@ const TechBadge = ({ tech }: { tech: TechItem }) => {
           onError={() => setLogoFailed(true)}
         />
       ) : (
-        <FileCode2 className="h-4 w-4 flex-shrink-0 text-primary" />
+        <FallbackIcon className="h-4 w-4 flex-shrink-0 text-primary sm:h-[18px] sm:w-[18px]" />
       )}
       <span className="whitespace-nowrap text-xs font-medium text-foreground/80">
         {tech.name}
@@ -163,12 +227,12 @@ const TechStacks = () => {
           {categories.map((category) => (
             <div
               key={category.title}
-              className="tech-stack-item flex items-center gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-4 transition-colors duration-300 hover:border-white/20 sm:gap-5 sm:px-6 sm:py-5"
+              className="tech-stack-item flex items-start gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] px-4 py-4 transition-colors duration-300 hover:border-white/20 sm:gap-5 sm:px-6 sm:py-5"
             >
               <h3 className="w-24 flex-shrink-0 text-sm font-semibold leading-snug text-foreground sm:w-44 sm:text-base">
                 {category.title}
               </h3>
-              <span className="h-8 w-px flex-shrink-0 bg-white/10 sm:h-9" />
+              <span className="w-px flex-shrink-0 self-stretch bg-white/10" />
               <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                 {category.items.map((tech) => (
                   <TechBadge key={tech.name} tech={tech} />

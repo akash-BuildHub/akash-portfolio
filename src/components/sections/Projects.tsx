@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Users, Hospital, Calendar, ArrowLeft, Trophy, Vote, UserCheck, Smile } from 'lucide-react';
+import { Hospital, ArrowLeft, Trophy, Vote, Smile, ScanFace, Radar, Camera, ScanText } from 'lucide-react';
 import { prefersReducedMotion } from '@/lib/motion';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,21 +18,12 @@ interface Project {
 
 const projects: Project[] = [
   {
-    title: 'AI Election Prediction',
+    title: 'Real-Time Facial Recognition Attendance Platform',
     year: '2026',
     description:
-      'A data-driven election forecasting system that leverages machine learning models on historical voting data, demographic indicators, and sentiment signals to predict constituency-level outcomes with confidence scoring and interactive visual analytics.',
-    features: ['Machine Learning', 'Forecasting', 'Data Analytics'],
-    icon: Vote,
-    link: 'https://owlytics-election-prediction.vercel.app/',
-  },
-  {
-    title: 'AI Attendance System',
-    year: '2026',
-    description:
-      'An AI-powered attendance system using face recognition and computer vision to automate check-ins in real time. It securely records attendance, prevents proxy entries, and offers a dashboard for live tracking, reporting, and analytics.',
-    features: ['Face Recognition', 'Computer Vision', 'Real-Time Tracking'],
-    icon: UserCheck,
+      'Full-stack workforce platform that automates attendance from live camera face recognition, with payroll computation and HR/admin dashboards. Powered by GPU face recognition (InsightFace + ONNX Runtime CUDA) and live multi-camera WebRTC streaming.',
+    features: ['InsightFace', 'ONNX Runtime (CUDA)', 'FastAPI', 'WebRTC'],
+    icon: ScanFace,
     demoImages: [
       '/project_demo/AI_attendance_system/1.jpeg',
       '/project_demo/AI_attendance_system/2.png',
@@ -43,21 +34,30 @@ const projects: Project[] = [
     ],
   },
   {
-    title: 'AI Cricket Batting Shot Classification',
+    title: 'AI Election Prediction',
     year: '2026',
     description:
-      'AI-Based Cricket Shot Classification is a computer vision system that processes uploaded cricket videos to identify and classify batting shots, analyze performance metrics, and predict outcomes for advanced sports analytics.',
-    features: ['Deep Learning', 'Prediction', 'Classification'],
+      'A data-driven election forecasting system that leverages machine learning models on historical voting data, demographic indicators, and sentiment signals to predict constituency-level outcomes with confidence scoring and interactive visual analytics.',
+    features: ['Machine Learning', 'Forecasting', 'Data Analytics'],
+    icon: Vote,
+    link: 'https://owlytics-election-prediction.vercel.app/',
+  },
+  {
+    title: 'AI Cricket Shot Classification & Batting Analysis System',
+    year: '2026',
+    description:
+      'Cricket shot classifier built on a CNN-LSTM architecture with MobileNetV2 for video-based action recognition. Designed preprocessing and feature-engineering pipelines plus backend APIs for confidence scoring and performance tiering.',
+    features: ['CNN-LSTM', 'MobileNetV2', 'FastAPI', 'Action Recognition'],
     icon: Trophy,
     link: 'https://ai-batting-classifier.vercel.app/',
   },
   {
-    title: 'AI Recognition & Detection',
+    title: 'AI Real-Time Person Detection & Tracking System',
     year: '2026',
     description:
-      'An advanced AI-powered system for real-time recognition and detection using IP cameras and deep learning techniques, enabling accurate identification, classification, tracking, and intelligent video analysis.',
-    features: ['Deep Learning', 'Detection', 'Recognition'],
-    icon: Hospital,
+      'Real-time person detection and multi-object tracking pipeline using YOLO, processing RTSP streams with optimized inference. Implements frame-wise analytics and unique person counting.',
+    features: ['YOLO', 'Multi-Object Tracking', 'RTSP', 'Python'],
+    icon: Radar,
   },
   {
     title: 'Emotion Recognition',
@@ -69,38 +69,30 @@ const projects: Project[] = [
     link: 'https://emotion-recognition-two.vercel.app/',
   },
   {
-    title: 'Vision Snap',
+    title: 'Vision Snap — Computer Vision Dataset Tool',
     year: '2025',
     description:
-      'Vision Snap is a web based tool for creating image datasets for computer vision. It captures images from live webcams and extracts frames from uploaded videos. Users can organize samples into custom classes and export them as machine learning ready datasets.',
-    features: ['Webcam Capture', 'Video Frame Extraction', 'Dataset Creation'],
-    icon: Calendar,
+      'Dataset-generation tool built in React with webcam capture, video frame extraction, and automated dataset packaging workflows for computer vision.',
+    features: ['React', 'Webcam Capture', 'Dataset Automation'],
+    icon: Camera,
     link: 'https://vision-snap-two.vercel.app/',
   },
   {
-    title: 'ALL IN ONE',
+    title: 'ALL IN ONE — OCR Web Application',
     year: '2025',
     description:
-      'ALL IN ONE is a web-based OCR tool that extracts content from images, PDFs, and web uploads. It converts scanned documents into readable and searchable text and extracts embedded images along with textual data. Supports structured output from multi-page PDF documents for fast and accurate digitization.',
-    features: ['OCR', 'Document AI', 'Text & Image Extraction'],
-    icon: Users,
+      'JavaScript OCR web app with a modular architecture and responsive UI for structured, multi-page text and image extraction from documents, PDFs, and uploads.',
+    features: ['JavaScript', 'OCR', 'Modular Architecture'],
+    icon: ScanText,
     link: 'https://allinone-snowy.vercel.app/',
   },
   {
-    title: 'Hospital Management System',
+    title: 'Hospital Management System with Brain Tumor Detection',
     year: '2024',
     description:
-      'Developed a hospital management system with dedicated login portals for patients and doctors. Integrated functionalities for managing treatment plans, brain tumor detection records, and visit histories, enhancing efficiency in medical data handling and patient care.',
-    features: ['Patient & Doctor Portals', 'Medical Records', 'Brain Tumor Detection'],
+      'Django-based hospital management system with authentication workflows and integrated deep-learning brain tumor detection and medical reporting.',
+    features: ['Django', 'Deep Learning', 'Medical Imaging'],
     icon: Hospital,
-  },
-  {
-    title: 'Tech Media Community',
-    year: '2023',
-    description:
-      'Designed and developed a tech media platform that encourages group learning and topic-based conversations. The platform enables members to exchange ideas, discuss emerging technologies, and collaborate on upcoming developments, creating a community-driven learning experience.',
-    features: ['Group Learning', 'Topic-Based Discussions', 'Community Collaboration'],
-    icon: Users,
   },
 ];
 
@@ -184,16 +176,16 @@ const ProjectCard = ({ project, index }: { project: Project; index: number }) =>
     const ctx = gsap.context(() => {
       gsap.fromTo(
         cardRef.current,
-        { opacity: 0, x: fromLeft ? -80 : 80 },
+        { opacity: 0, x: fromLeft ? -260 : 260 },
         {
           opacity: 1,
           x: 0,
-          duration: 0.7,
-          ease: 'power3.out',
+          ease: 'none',
           scrollTrigger: {
             trigger: cardRef.current,
             start: 'top 90%',
-            toggleActions: 'play none none reverse',
+            end: 'top 55%',
+            scrub: 1,
           },
         }
       );
@@ -480,12 +472,12 @@ const Projects = () => {
         {
           opacity: 1,
           y: 0,
-          duration: 0.7,
-          ease: 'power3.out',
+          ease: 'none',
           scrollTrigger: {
             trigger: headingRef.current,
             start: 'top 90%',
-            toggleActions: 'play none none reverse',
+            end: 'top 65%',
+            scrub: 1,
           },
         }
       );
