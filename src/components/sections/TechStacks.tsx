@@ -216,14 +216,14 @@ const TechStacks = () => {
   return (
     <section id="tech-stacks" ref={sectionRef} className="relative py-12 sm:py-16 md:py-24 lg:py-32">
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
-        <div className="ts-heading mx-auto mb-8 flex max-w-6xl items-center gap-4 sm:mb-10">
+        <div className="ts-heading mx-auto mb-8 flex max-w-7xl items-center gap-4 sm:mb-10">
           <span className="h-px w-10 bg-primary" />
           <span className="shimmer-text text-base font-semibold uppercase tracking-[0.4em] sm:text-lg md:text-xl">
             Tech Stacks
           </span>
         </div>
 
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2">
           {categories.map((category) => (
             <div
               key={category.title}
