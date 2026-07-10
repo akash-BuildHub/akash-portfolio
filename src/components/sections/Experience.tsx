@@ -11,7 +11,7 @@ interface ExperienceItem {
   parentCompany?: string;
   location: string;
   duration: string;
-  description: string;
+  description: string[];
 }
 
 const experiences: ExperienceItem[] = [
@@ -19,53 +19,77 @@ const experiences: ExperienceItem[] = [
     title: "AI Developer",
     company: "Grow Space Innovations",
     parentCompany: "iQue Ventures",
-    location: "Madiwala, Bengaluru",
-    duration: "2026 - Present",
-    description:
-      "Developing AI-powered real-time person detection and multi-object tracking systems for live video analytics. Working on end-to-end AI pipelines, including camera stream processing, object detection, tracking logic, action recognition, and performance optimization. Focused on improving detection accuracy, reducing latency, tuning model thresholds, and refining tracking stability for real-world AI deployment.",
+    location: "Bengaluru, Karnataka, India",
+    duration: "Feb 2026 – Present",
+    description: [
+      "Developed real-time video analytics solutions with person detection and multi-object tracking using optimized GPU inference on live RTSP camera streams.",
+      "Built an end-to-end facial recognition attendance system, including AI pipelines, FastAPI backend, PostgreSQL database, and a React + TypeScript dashboard.",
+      "Enhanced facial recognition accuracy through embedding validation, threshold optimization, and advanced tracking techniques.",
+      "Deployed and maintained low-latency live video streaming solutions using WebRTC and MSE/fMP4 for multiple concurrent camera feeds.",
+    ],
   },
   {
     title: "AI Developer",
     company: "Owlytics",
     parentCompany: "iQue Ventures",
-    location: "Madiwala, Bengaluru",
-    duration: "2025 - 2026",
-    description:
-      "Designed and deployed AI-powered deep learning models for detection, recognition, and intelligent automation tasks. Built scalable machine learning pipelines from data preprocessing and model training to API integration and production deployment, ensuring seamless performance within backend systems. Focused on improving model accuracy, workflow efficiency, and real-world AI implementation for business-ready solutions.",
+    location: "Bengaluru, Karnataka, India",
+    duration: "Jul 2025 – Jan 2026",
+    description: [
+      "Designed and developed deep learning models for computer vision tasks, including object detection and recognition.",
+      "Built scalable machine learning pipelines for data preprocessing, model training, evaluation, and deployment.",
+      "Integrated AI models into production-ready backend services and RESTful APIs for real-world applications.",
+      "Collaborated with cross-functional teams to deliver AI-powered solutions aligned with business and product requirements.",
+    ],
   },
   {
     title: "Research Analyst",
-    company: "Rpinnacle Research Solutions",
+    company: "RPinnacle Publication",
     parentCompany: "Resbee Info Technologies Pvt Ltd",
-    location: "Thuckalay, Tamil Nadu",
-    duration: "2024 - 2025",
-    description:
-      "Produced technical documentation and research support for deep learning and data science projects. Worked on dataset analysis, experimental evaluation, model comparison, and performance benchmarking to support AI research workflows. Contributed to preparing structured reports, research summaries, and technical references for model development and validation.",
+    location: "Tamil Nadu, India",
+    duration: "Aug 2024 – Mar 2025",
+    description: [
+      "Conducted data analysis and evaluated machine learning models to compare performance across multiple algorithms.",
+      "Prepared comprehensive technical documentation and research reports for AI, machine learning, and data science projects.",
+      "Interpreted model performance, identified limitations, and recommended improvements based on analytical findings.",
+      "Contributed to research-driven publications by documenting methodologies, experimental results, and technical insights.",
+    ],
   },
   {
     title: "Python/Django Intern",
     company: "Clovion Tech Solutions Pvt. Ltd.",
-    location: "Kanyakumari, Tamil Nadu",
-    duration: "January 2024 – March 2024",
-    description:
-      "Completed a Python/Django Internship focused on backend development and web application design. Acquired practical experience in Python programming, Django framework, database management, API development, debugging, and software development workflows through hands-on project implementation and training.",
+    location: "Azhagiyamandapam, Tamil Nadu",
+    duration: "Jan 2024 – Mar 2024",
+    description: [
+      "Developed backend features using Python and Django while contributing to web application development.",
+      "Implemented database operations, business logic, and REST API functionalities.",
+      "Collaborated with the development team to maintain and enhance existing application modules.",
+      "Gained practical experience in backend architecture, debugging, and software development best practices.",
+    ],
   },
   {
-    title: "Python-Intern",
-    company: "Srishti Innovations",
+    title: "Python Intern",
+    company: "Srishti Innovative",
     parentCompany: "Techno Park",
-    location: "Thiruvananthapuram, Kerala",
-    duration: "July 2023",
-    description:
-      "Learned the fundamentals of Python programming through an internship training program. Developed a strong understanding of basic syntax, variables, data types, conditional statements, loops, functions, and beginner-level problem-solving through hands-on coding practice.",
+    location: "Trivandrum, Kerala, India",
+    duration: "Jul 2023",
+    description: [
+      "Strengthened Python programming skills by developing solutions for real-world programming challenges.",
+      "Applied core programming concepts, data structures, and file handling techniques in practical assignments.",
+      "Improved problem-solving and debugging capabilities through hands-on development exercises.",
+      "Built a strong foundation in Python application development and coding best practices.",
+    ],
   },
   {
     title: "Inplant Training",
-    company: "iTrobes Technologies Pvt. Ltd.",
+    company: "iTrobes Solutions LLC",
     location: "Marthandam, Tamil Nadu",
-    duration: "July 2022",
-    description:
-      "Gained industry exposure through in-plant training at ITrobes Technologies Pvt. Ltd., understanding software development practices, company workflows, team collaboration, and real-world IT project environments.",
+    duration: "Jul 2022",
+    description: [
+      "Gained practical exposure to software development processes and industry-standard IT workflows.",
+      "Learned the complete software development lifecycle, from project planning to implementation and deployment.",
+      "Observed real-world development practices, team collaboration, and project management methodologies.",
+      "Developed a foundational understanding of enterprise software development environments.",
+    ],
   },
 ];
 
@@ -99,7 +123,7 @@ const Experience = () => {
     return () => ctx.revert();
   }, []);
 
-  // Reveal the active experience's description line-by-line whenever it changes.
+  // Reveal the active experience's description whenever it changes.
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
@@ -189,9 +213,14 @@ const Experience = () => {
                 {activeExp.duration}
               </p>
               <div className="mt-6 h-px w-12 bg-primary" />
-              <p className="exp-desc mt-6 text-sm leading-[1.9] text-foreground/75 text-justify">
-                {activeExp.description}
-              </p>
+              <ul className="exp-desc mt-6 space-y-3 text-sm leading-[1.7] text-foreground/75">
+                {activeExp.description.map((point, i) => (
+                  <li key={i} className="flex gap-2.5">
+                    <span className="mt-[0.5rem] h-1 w-1 flex-shrink-0 rounded-full bg-primary/70" />
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
