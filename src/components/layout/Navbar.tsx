@@ -199,12 +199,15 @@ const Navbar = () => {
             </button>
           ))}
           <Button
-            variant="outline"
-            className="border-primary/60 hover:border-primary"
+            variant="ghost"
+            className="resume-flip overflow-hidden text-sm font-normal uppercase tracking-[0.2em] text-foreground/80 duration-300 hover:bg-transparent hover:text-foreground"
             onClick={() => window.open(RESUME_PATH, "_blank")}
+            aria-label="Resume"
           >
-            <Download className="mr-2 h-4 w-4" />
-            Resume
+            <span className="resume-flip__face resume-flip__front">Resume</span>
+            <span className="resume-flip__face resume-flip__back text-primary" aria-hidden="true">
+              <Download className="h-4 w-4" />
+            </span>
           </Button>
         </div>
 
