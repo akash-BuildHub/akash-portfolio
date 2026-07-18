@@ -73,12 +73,12 @@ const categories: TechCategory[] = [
   {
     title: 'Languages',
     items: [
-      { name: 'Python', logo: devicon('python') },
-      { name: 'TypeScript', logo: devicon('typescript') },
-      { name: 'JavaScript (ES2022)', logo: devicon('javascript') },
-      { name: 'SQL', logo: devicon('azuresqldatabase') },
       { name: 'HTML5', logo: devicon('html5') },
       { name: 'CSS3', logo: devicon('css3') },
+      { name: 'JavaScript (ES2022)', logo: devicon('javascript') },
+      { name: 'TypeScript', logo: devicon('typescript') },
+      { name: 'SQL', logo: devicon('azuresqldatabase') },
+      { name: 'Python', logo: devicon('python') },
     ],
   },
   {
