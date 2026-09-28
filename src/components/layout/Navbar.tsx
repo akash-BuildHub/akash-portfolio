@@ -136,7 +136,7 @@ const Navbar = () => {
   return (
     <nav
       ref={navRef}
-      className={`fixed left-0 right-0 top-0 z-50 transition-all duration-300 ${
+      className={`fixed left-0 right-0 top-0 z-50 border-b border-glass-border/30 transition-all duration-300 ${
         isScrolled ? "glass py-3" : "bg-transparent py-5"
       }`}
       aria-label="Primary"
