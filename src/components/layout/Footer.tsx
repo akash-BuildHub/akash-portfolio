@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-center gap-2 text-center md:flex-row">
           <p className="text-sm text-muted-foreground sm:text-base">
             Designed and Developed by{" "}
-            <span className="gradient-text glow-text font-semibold">Akash</span>
+            <span className="gradient-text font-semibold">Akash</span>
           </p>
           <Heart className="h-4 w-4 animate-pulse text-red-500" />
         </div>

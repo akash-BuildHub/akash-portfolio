@@ -1,14 +1,6 @@
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
+import App from "@/app/App";
+import "@/styles/index.css";
 
-const initTheme = () => {
-  // Dark mode only — light/white theme has been removed.
-  const root = document.documentElement;
-  root.classList.remove("light");
-  root.classList.add("dark");
-};
-
-initTheme();
-
+// Dark mode only: index.html adds the `dark` class before this bundle loads.
 createRoot(document.getElementById("root")!).render(<App />);

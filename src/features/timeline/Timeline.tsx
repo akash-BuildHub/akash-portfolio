@@ -1,66 +1,15 @@
 ﻿import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { GraduationCap, Briefcase, TrendingUp, Wrench, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { prefersReducedMotion } from "@/lib/motion";
+import { timelineData, type TimelineItem } from "./timeline.data";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface TimelineProps {
   show: boolean;
 }
-
-interface TimelineItem {
-  icon: React.ElementType;
-  title: string;
-  content: string[];
-}
-
-const timelineData: TimelineItem[] = [
-  {
-    icon: GraduationCap,
-    title: "Education",
-    content: [
-      "HSE - Child Jesus Matriculation Higher Secondary School, Unnamalaikadai [2018 - 2020]",
-      "BE (CSE) - Bethlahem Institute of Engineering, Karungal [2020 - 2024]",
-    ],
-  },
-  {
-    icon: Briefcase,
-    title: "Career",
-    content: [
-      "2023 - Academic Project using Deep Learning",
-      "2024 - Research Analyst",
-      "2025 - Python Developer",
-      "2026 - AI Developer",
-    ],
-  },
-  {
-    icon: TrendingUp,
-    title: "Personal Journey",
-    content: [
-      "2020 - Transitioned from school to engineering, building core technical foundations",
-      "2023 - Achieved significant research milestones and actively explored career opportunities",
-      "2024 - Placed in a Research Analyst role, working on data-driven research tasks",
-      "2025 - Exploring opportunities in Web Development and AI technologies",
-      "2026 - Focused on building AI-powered computer vision and real-time analytics projects",
-    ],
-  },
-  {
-    icon: Wrench,
-    title: "Skills",
-    content: [
-      "- Frontend Development",
-      "- Backend Development",
-      "- Databases & Cloud Services",
-      "- Artificial Intelligence",
-      "- Computer Vision Models",
-      "- Optimization & Performance Tuning",
-      "- Real-Time Video Streaming",
-      "- DevOps & Version Control",
-    ],
-  },
-];
 
 const TimelineItemComponent = ({
   item,

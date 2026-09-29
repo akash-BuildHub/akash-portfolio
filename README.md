@@ -30,7 +30,7 @@ npm run lint      # ESLint
 
 | Variable | Required | Purpose |
 | --- | --- | --- |
-| `VITE_GOOGLE_APPS_SCRIPT_URL` | No | Endpoint that receives Contact form submissions. If unset, the URL hard-coded in `src/components/sections/Contact.tsx` is used. |
+| `VITE_GOOGLE_APPS_SCRIPT_URL` | No | Endpoint that receives Contact form submissions. If unset, the URL hard-coded in `src/services/contact.ts` is used. |
 
 Put it in `.env.local`, which git ignores:
 
@@ -40,82 +40,100 @@ VITE_GOOGLE_APPS_SCRIPT_URL=https://script.google.com/macros/s/<deployment-id>/e
 
 ## Project structure
 
+The code is organised by feature: each page section is a self-contained module holding its component(s) and its content, while shared UI, external integrations and site-wide settings each have one home.
+
 ```text
 .
-├── index.html                 # Shell: forces dark mode, static SEO/OG tags, preconnects
-├── public/                    # Served as-is from the site root
-│   ├── akash_profile.jpeg     # Home portrait (also the OG/Twitter image)
-│   ├── aboutme.jpeg           # About section backdrop
-│   ├── akash_resume.pdf       # Linked from the navbar (RESUME_PATH)
-│   ├── icons/                 # Local tech logos not available on the CDNs
-│   ├── project_demo/          # Screenshots for in-card project galleries
+├── index.html                    # Shell: forces dark mode, static SEO/OG tags, CDN preconnects
+├── public/                       # Served as-is from the site root
+│   ├── akash_profile.jpeg        # Home portrait (also the OG/Twitter image)
+│   ├── aboutme.jpeg              # About section backdrop
+│   ├── experience.png            # Experience section backdrop
+│   ├── akash_resume.pdf          # Linked from the navbar
+│   ├── icons/                    # Local tech logos not available on the CDNs
+│   ├── project_demo/             # Screenshots for in-card project galleries
+│   ├── signature_logo_white.png, title-logo.png
 │   ├── robots.txt, sitemap.xml
-│   └── _redirects             # Netlify-style SPA fallback
+│   └── _redirects                # Netlify-style SPA fallback
 ├── src/
-│   ├── main.tsx               # Entry: applies the dark class, mounts <App />
-│   ├── App.tsx                # Providers, router, lazy routes, shared Timeline state
-│   ├── index.css              # Theme tokens + custom CSS effects
+│   ├── main.tsx                  # Entry: loads the styles and mounts <App />
+│   ├── app/App.tsx               # Router, lazy routes, shared Timeline state
 │   ├── pages/
-│   │   ├── Index.tsx          # The single page: runtime SEO + section composition
-│   │   └── NotFound.tsx       # Catch-all 404
+│   │   ├── HomePage.tsx          # The single page: runtime SEO + section composition
+│   │   └── NotFoundPage.tsx      # Catch-all 404
+│   ├── features/                 # One module per page section
+│   │   ├── hero/                 # Hero.tsx + HeroArrow.tsx (gold arrows, outline mask)
+│   │   ├── about/                # About.tsx + about.data.ts
+│   │   ├── experience/           # Experience.tsx + experience.data.ts
+│   │   ├── tech-stacks/          # TechStacks.tsx + techStacks.data.ts
+│   │   ├── projects/             # Projects.tsx, ProjectCard.tsx (+ gallery), projects.data.ts
+│   │   ├── timeline/             # Timeline.tsx + timeline.data.ts
+│   │   └── contact/              # Contact.tsx, contact.data.ts, validation.ts
 │   ├── components/
-│   │   ├── layout/            # Navbar, Footer
-│   │   ├── sections/          # Hero, About, Experience, TechStacks, Projects, Timeline, Contact
-│   │   └── ui/                # shadcn/ui primitives (button, toast, tooltip, sonner)
-│   ├── hooks/use-toast.ts     # shadcn toast store
-│   └── lib/
-│       ├── motion.ts          # prefersReducedMotion()
-│       ├── seo.ts             # Meta, canonical and JSON-LD helpers
-│       └── utils.ts           # cn() class merger, RESUME_PATH
-├── tailwind.config.ts         # Maps Tailwind colors to the CSS variables
-├── vite.config.ts             # Port 8080, "@" → src alias
-├── components.json            # shadcn/ui generator config
-└── vercel.json                # Vercel SPA rewrite
+│   │   ├── layout/               # Navbar, Footer
+│   │   └── ui/button.tsx         # shadcn/ui button primitive
+│   ├── services/                 # Integrations with the outside world
+│   │   ├── contact.ts            # Posts the contact form to Google Apps Script
+│   │   └── seo.ts                # <head> meta tags, canonical link and JSON-LD per page
+│   ├── config/site.ts            # Site name, SEO text, resume path, contact details
+│   ├── lib/
+│   │   ├── motion.ts             # prefersReducedMotion()
+│   │   └── utils.ts              # cn() class merger
+│   └── styles/index.css          # Theme tokens + custom CSS effects
+├── tailwind.config.ts            # Maps Tailwind colors to the CSS variables
+├── vite.config.ts                # Port 8080, "@" → src alias
+├── components.json               # shadcn/ui generator config
+└── vercel.json                   # Vercel SPA rewrite
 ```
+
+Dependencies flow one way: `pages` compose `features` and `components`; features use `components`, `services`, `config` and `lib`; nothing imports from `pages` or from another feature.
 
 ## Architecture
 
 ### Boot sequence
 
 1. **`index.html`** adds the `dark` class and paints the charcoal background before any JavaScript runs, so the page never flashes white. It also holds the static SEO and Open Graph tags for crawlers that don't execute JavaScript.
-2. **`src/main.tsx`** re-applies the dark class, loads `index.css` and mounts `<App />`.
-3. **`src/App.tsx`** wraps the app in its providers (React Query, the Radix tooltip provider, and the toast and Sonner toasters) and a `BrowserRouter`. It lazy-loads the two routes: `/` and a `*` catch-all. The providers are mounted, but no section uses them yet.
-4. **`src/pages/Index.tsx`** sets the runtime SEO tags through `lib/seo.ts`: title, description, Open Graph and Twitter tags, the canonical URL, and a schema.org `Person` JSON-LD block. It then renders the navbar, the sections in order, and the footer.
+2. **`src/main.tsx`** loads `styles/index.css` and mounts `<App />`.
+3. **`src/app/App.tsx`** sets up the `BrowserRouter` and lazy-loads the two routes: `/` and a `*` catch-all.
+4. **`src/pages/HomePage.tsx`** applies the runtime SEO through `services/seo.ts` (title, description, Open Graph and Twitter tags, the canonical URL, and a schema.org `Person` JSON-LD block, all built from `config/site.ts`). It then renders the navbar, the sections in order, and the footer.
 
 ```mermaid
 flowchart TD
-    main["main.tsx"] --> app["App.tsx<br/>providers · router · showTimeline state"]
-    app -->|"/"| index["pages/Index.tsx<br/>SEO tags · page layout"]
-    app -->|"*"| notfound["pages/NotFound.tsx"]
-    index --> navbar["Navbar"]
-    index --> sections
-    index --> footer["Footer"]
-    subgraph sections["Sections, in page order"]
-        hero["Hero"] --> about["About"] --> experience["Experience"] --> tech["TechStacks"] --> projects["Projects"] --> timeline["Timeline"] --> contact["Contact"]
+    main["main.tsx"] --> app["app/App.tsx<br/>router · showTimeline state"]
+    app -->|"/"| home["pages/HomePage.tsx<br/>SEO tags · page layout"]
+    app -->|"*"| notfound["pages/NotFoundPage.tsx"]
+    home --> navbar["Navbar"]
+    home --> sections
+    home --> footer["Footer"]
+    subgraph sections["features/, in page order"]
+        hero["hero"] --> about["about"] --> experience["experience"] --> tech["tech-stacks"] --> projects["projects"] --> timeline["timeline"] --> contact["contact"]
     end
     hero -. "Explore → setShowTimeline(true)" .-> app
     app -. "show" .-> timeline
+    contact -.-> svc["services/contact.ts → Google Apps Script"]
 ```
 
 ### State
 
-The page keeps almost no shared state. The only value that crosses components is **`showTimeline`**, which lives in `App.tsx`. The Hero's **Explore** button sets it to `true`; `Timeline` renders nothing until then, and afterwards it mounts and the page scrolls to it. Everything else is local component state, such as the active role in Experience, the demo gallery in a project card, and the Contact form fields.
+The page keeps almost no shared state. The only value that crosses components is **`showTimeline`**, which lives in `app/App.tsx`. The Hero's **Explore** button sets it to `true`; `Timeline` renders nothing until then, and afterwards it mounts and the page scrolls to it. Everything else is local component state, such as the active role in Experience, the demo gallery in a project card, and the Contact form fields.
 
-### Content lives in the components
+### Content lives in data files
 
-There is no CMS or API. Each section declares its content as a typed array at the top of its own file, so updating the site means editing one of these arrays:
+There is no CMS or API. Each feature keeps its content in a typed `*.data.ts` file next to its component, and site-wide details live in `config/site.ts`, so updating the site means editing data, not layout:
 
 | To change… | Edit |
 | --- | --- |
-| Home headline and role | `HEADLINE` and `ROLE` in `sections/Hero.tsx` |
-| About intro and focus list | `headlineSegments` and `highlights` in `sections/About.tsx` |
-| Work history | `experiences` in `sections/Experience.tsx` |
-| Skills and logos | `categories` in `sections/TechStacks.tsx` |
-| Projects, links and demo screenshots | `projects` in `sections/Projects.tsx` (images go in `public/project_demo/`) |
-| Education and career journey | `timelineData` in `sections/Timeline.tsx` |
-| Email, phone and location | `sections/Contact.tsx` |
-| Navbar links | `NAV_ITEMS` in `layout/Navbar.tsx` |
-| Resume file | Replace `public/akash_resume.pdf`, or change `RESUME_PATH` in `lib/utils.ts` |
+| Home headline and role | `HEADLINE` and `ROLE` in `features/hero/Hero.tsx` |
+| About intro and focus list | `features/about/about.data.ts` |
+| Work history | `features/experience/experience.data.ts` |
+| Skills and logos | `features/tech-stacks/techStacks.data.ts` |
+| Projects, links and demo screenshots | `features/projects/projects.data.ts` (images go in `public/project_demo/`) |
+| Education and career journey | `features/timeline/timeline.data.ts` |
+| Social links and contact-form purposes | `features/contact/contact.data.ts` |
+| Email, phone, location, profile links | `CONTACT` in `config/site.ts` |
+| Site title, description, keywords | `SITE` in `config/site.ts` |
+| Navbar links | `NAV_ITEMS` in `components/layout/Navbar.tsx` |
+| Resume file | Replace `public/akash_resume.pdf`, or change `SITE.resumePath` in `config/site.ts` |
 
 ### Sections
 
@@ -136,8 +154,8 @@ There is no CMS or API. Each section declares its content as a typed array at th
 ### Animation system
 
 - **GSAP + ScrollTrigger** handle every entrance and scroll animation. Each section creates its tweens inside `gsap.context(…, sectionRef)` and calls `ctx.revert()` on unmount, so no ScrollTriggers leak between mounts.
-- **Reduced motion is respected in two places.** Every animation effect returns early when `prefersReducedMotion()` (`lib/motion.ts`) is true, and a global `prefers-reduced-motion` rule in `index.css` shortens all CSS animations and transitions.
-- **CSS effects** live in `index.css` as reusable classes: `shimmer-text`, `beam-border`, `flip-card`, `resume-flip`, `reflect-card` and the navbar logo's `collision-*` burst.
+- **Reduced motion is respected in two places.** Every animation effect returns early when `prefersReducedMotion()` (`lib/motion.ts`) is true, and a global `prefers-reduced-motion` rule in `styles/index.css` shortens all CSS animations and transitions.
+- **CSS effects** live in `styles/index.css` as reusable classes: `shimmer-text`, `watermark-fade`, `beam-border`, `resume-flip` and the navbar logo's `collision-*` burst.
 - **The stack stays lean on purpose.** GSAP is the only animation dependency; depth and 3D effects use CSS transforms rather than WebGL.
 
 ### Home backdrop
@@ -145,7 +163,7 @@ There is no CMS or API. Each section declares its content as a typed array at th
 The Hero background is the profile photo on the plain dark background, with a double gold "<" chevron to the right of the head, pointing in at the subject's neck.
 
 - All the art is laid out in the **portrait's own coordinate space** (1000 × 1640 units, the photo's aspect ratio). The chevron therefore stays in the same position relative to the subject at every breakpoint. The portrait is 66% of the section wide.
-- The chevron is inline SVG (`HeroArrow` in `Hero.tsx`): two nested translucent bands without borders, in a lighter tint of the theme's `--primary` gold (`GOLD`), fading out along the arms, with no glow or lighting effects. The `ARROW` config holds each band's tip position and thickness, plus the fill strength.
+- The chevron is inline SVG (`features/hero/HeroArrow.tsx`): two nested translucent bands without borders, in a lighter tint of the theme's `--primary` gold (`GOLD`), fading out along the arms, with no glow or lighting effects. The `ARROW` config holds each band's tip position and thickness, plus the fill strength.
 - The layers, back to front, are: the photo, the chevron, a solid copy of the "Akash" watermark in the page color, and the faint watermark itself.
   - The photo is `akash_profile.jpeg` at 30% opacity, faded into the background, with a CSS `brightness(1.35)` filter so the face reads clearly without lightening the dark panel. Its black backdrop forms a dark panel that always starts 38.76% across the section and runs to the right edge. From `xl` (1280px) up, the photo slides 11% of the section width left inside that panel, bringing the face closer to the headline, and the panel fills in on the right with the photo's own backdrop color (`#070707`: `#060606` measured along its right edge, brightened to match the filter), so there's no seam. Below `xl` it keeps its original placement. The arrow's `ART_BOX` mirrors the photo's position at both sizes; keep the two in step if you change either.
   - Below the right shoulder, an extra mask shape (`RIGHT_SHOULDER_BLOCK`) hides the chevron's lower arm, so it doesn't reappear beside the barely visible right arm.
@@ -154,11 +172,11 @@ The Hero background is the profile photo on the plain dark background, with a do
   - The solid watermark copy keeps the letters in front, hiding the chevron wherever it crosses them.
 ### Theming
 
-The site is dark-only. The colors are HSL CSS variables defined in `src/index.css` (charcoal `--background`, antique-gold `--primary`, glass and gradient tokens). `tailwind.config.ts` maps them to Tailwind color names, so a class like `text-primary` always follows the theme. The `:root` light palette is still defined, but the dark class is always applied.
+The site is dark-only. The colors are HSL CSS variables defined in `src/styles/index.css` (charcoal `--background`, antique-gold `--primary`, glass and gradient tokens). `tailwind.config.ts` maps them to Tailwind color names, so a class like `text-primary` always follows the theme. The `:root` light palette is still defined, but the dark class is always applied.
 
 ### Contact form
 
-The form validates on the client: name, mobile number and email are required, the mobile number must have 10 digits and the email must be well-formed. It then `POST`s the fields as JSON, plus a timestamp, to the Google Apps Script web app. The request uses `mode: "no-cors"`, so the response is opaque. The success message appears whenever the request doesn't throw a network error; the site cannot confirm that the script actually stored the submission, so check the script's destination (for example, its Google Sheet) when testing.
+The form validates on the client (`features/contact/validation.ts`): name, mobile number and email are required, the mobile number must have 10 digits and the email must be well-formed. `services/contact.ts` then `POST`s the fields as JSON, plus a timestamp, to the Google Apps Script web app. The request uses `mode: "no-cors"`, so the response is opaque. The success message appears whenever the request doesn't throw a network error; the site cannot confirm that the script actually stored the submission, so check the script's destination (for example, its Google Sheet) when testing.
 
 ### External resources
 
@@ -167,7 +185,7 @@ Tech Stacks logos load from the jsDelivr (Devicon) and Simple Icons CDNs, and `i
 ### SEO
 
 - `index.html` ships static meta tags for non-JS crawlers and link previews.
-- `Index.tsx` refreshes the same tags at runtime and adds JSON-LD, using the live `window.location.origin` for the canonical and image URLs.
+- `HomePage.tsx` refreshes the same tags at runtime (via `services/seo.ts`) and adds JSON-LD, using the live `window.location.origin` for the canonical and image URLs.
 - `public/robots.txt` and `public/sitemap.xml` are served from the root.
 
 ## Deployment

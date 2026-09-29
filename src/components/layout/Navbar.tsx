@@ -1,7 +1,7 @@
 ﻿import { useState, useEffect, useRef, type CSSProperties } from "react";
 import { Menu, X, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { RESUME_PATH } from "@/lib/utils";
+import { SITE } from "@/config/site";
 import { prefersReducedMotion } from "@/lib/motion";
 
 const NAV_ITEMS = [
@@ -175,7 +175,7 @@ const Navbar = () => {
             decoding="async"
             className="h-10 w-auto"
           />
-          <span className="shine animate-pulse text-2xl text-primary md:text-3xl">
+          <span className="animate-pulse text-2xl text-primary md:text-3xl">
             {"\u272F\u00B0"}
           </span>
           {logoBurst > 0 && <CollisionBurst key={logoBurst} />}
@@ -186,7 +186,7 @@ const Navbar = () => {
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`group relative text-sm uppercase tracking-[0.2em] transition-all duration-300 hover:text-foreground hover:glow-text ${
+              className={`group relative text-sm uppercase tracking-[0.2em] transition-all duration-300 hover:text-foreground ${
                 activeSection === item.id ? "text-foreground" : "text-foreground/80"
               }`}
             >
@@ -201,7 +201,7 @@ const Navbar = () => {
           <Button
             variant="ghost"
             className="resume-flip overflow-hidden text-sm font-normal uppercase tracking-[0.2em] text-foreground/80 duration-300 hover:bg-transparent hover:text-foreground"
-            onClick={() => window.open(RESUME_PATH, "_blank")}
+            onClick={() => window.open(SITE.resumePath, "_blank")}
             aria-label="Resume"
           >
             <span className="resume-flip__face resume-flip__front">Resume</span>
@@ -237,7 +237,7 @@ const Navbar = () => {
               </button>
             ))}
             <a
-              href={RESUME_PATH}
+              href={SITE.resumePath}
               download
               className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-md border border-primary/60 px-4 py-2 text-foreground transition-colors hover:border-primary hover:bg-primary/10"
             >
