@@ -5,6 +5,7 @@ interface ProjectCardProps {
   project: Project;
   isActive: boolean;
   onActivate: () => void;
+  onDeactivate: () => void;
   onOpenGallery: () => void;
   className?: string;
 }
@@ -26,6 +27,7 @@ const ProjectCard = ({
   project,
   isActive,
   onActivate,
+  onDeactivate,
   onOpenGallery,
   className = '',
 }: ProjectCardProps) => {
@@ -46,7 +48,11 @@ const ProjectCard = ({
   return (
     <article
       onMouseEnter={onActivate}
-      onFocus={onActivate}
+      onMouseLeave={onDeactivate}
+      // Keyboard focus lights the card too. Focus from a mouse click doesn't,
+      // so the gold never lingers once the pointer has left.
+      onFocus={(e) => e.target.matches(':focus-visible') && onActivate()}
+      onBlur={onDeactivate}
       className={`project-card group relative ${className}`}
     >
       {/* Card body; the notch cut from its bottom-right corner holds the action */}
@@ -59,7 +65,7 @@ const ProjectCard = ({
             cards in the same row line up whatever the title length. */}
         <div className="flex-1 p-6 sm:p-7">
           <h3
-            className={`text-lg font-bold uppercase leading-snug tracking-wide sm:text-xl ${
+            className={`text-lg font-bold uppercase leading-snug tracking-wide sm:text-xl xl:text-lg ${
               isActive ? 'text-primary-foreground' : ''
             }`}
           >
