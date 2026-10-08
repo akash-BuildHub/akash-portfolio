@@ -1,55 +1,100 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { prefersReducedMotion } from '@/lib/motion';
 import ProjectCard from './ProjectCard';
-import { projects } from './projects.data';
+import ProjectGallery from './ProjectGallery';
+import { projects, type Project } from './projects.data';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// From xl up the grid has 6 tracks and each card spans 2 (three per row). A
+// last row holding one or two cards is shifted right so it sits centered.
+const GRID_PLACEMENT =
+  'xl:col-span-2 xl:[&:nth-child(3n+1):nth-last-child(2)]:col-start-2 xl:[&:nth-child(3n+1):last-child]:col-start-3';
+
 const Projects = () => {
-  const headingRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [active, setActive] = useState(0);
+  const [galleryProject, setGalleryProject] = useState<Project | null>(null);
 
   useEffect(() => {
     if (prefersReducedMotion()) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        headingRef.current,
+        '.projects-heading',
         { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
           ease: 'none',
           scrollTrigger: {
-            trigger: headingRef.current,
+            trigger: '.projects-heading',
             start: 'top 90%',
             end: 'top 65%',
             scrub: 1,
           },
         }
       );
-    }, headingRef);
+
+      // Cards rise in a row at a time as they scroll into view.
+      gsap.set('.project-card', { opacity: 0, y: 60 });
+      ScrollTrigger.batch('.project-card', {
+        start: 'top 90%',
+        onEnter: (batch) =>
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: 'power3.out',
+            stagger: 0.12,
+            overwrite: true,
+          }),
+        onLeaveBack: (batch) =>
+          gsap.to(batch, { opacity: 0, y: 60, duration: 0.4, ease: 'power2.in', overwrite: true }),
+      });
+    }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section id="projects" className="relative overflow-hidden pb-12 pt-6 sm:pb-16 sm:pt-10 md:pb-32 md:pt-24">
-      <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div ref={headingRef} className="mx-auto mb-8 flex max-w-6xl items-center gap-4 sm:mb-10">
-          <span className="h-px w-10 bg-primary" />
-          <span className="shimmer-text text-base font-semibold uppercase tracking-[0.4em] sm:text-lg md:text-xl">
-            Projects
-          </span>
+    <section
+      id="projects"
+      ref={sectionRef}
+      className="relative overflow-hidden pb-12 pt-6 sm:pb-16 sm:pt-10 md:pb-32 md:pt-24"
+    >
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
+        {/* Heading: two-tone title and a short intro above a full-width rule */}
+        <div className="projects-heading mx-auto max-w-6xl">
+          <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between md:gap-12">
+            <h2 className="text-3xl font-extrabold uppercase leading-[0.95] tracking-[0.04em] text-white sm:text-4xl md:text-5xl">
+              My <span className="text-primary">Projects</span>
+            </h2>
+            <p className="max-w-sm text-sm leading-[1.8] tracking-wide text-foreground/55">
+              Real-time computer vision systems, AI-powered tools and full-stack
+              business applications, built end to end.
+            </p>
+          </div>
+          <div className="mt-8 h-px w-full bg-white/10 sm:mt-10" />
         </div>
 
-        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2">
+        <div className="mx-auto mt-10 grid max-w-6xl grid-cols-1 gap-6 sm:mt-12 md:grid-cols-2 xl:grid-cols-6">
           {projects.map((project, index) => (
-            <ProjectCard key={index} project={project} index={index} />
+            <ProjectCard
+              key={project.title}
+              project={project}
+              isActive={active === index}
+              onActivate={() => setActive(index)}
+              onOpenGallery={() => setGalleryProject(project)}
+              className={GRID_PLACEMENT}
+            />
           ))}
         </div>
       </div>
+
+      <ProjectGallery project={galleryProject} onClose={() => setGalleryProject(null)} />
     </section>
   );
 };

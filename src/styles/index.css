@@ -336,6 +336,33 @@
     animation: beamLeft var(--beam-speed) linear infinite;
     animation-delay: calc(var(--beam-speed) / -2);
   }
+
+  /* Project cards — the action button sits in a notch cut out of the card's
+     bottom-right corner: a 32px-radius scoop with 16px rounded shoulders,
+     sized for a 52px button inset 6px from the corner. XOR-ing the SVG shape
+     with a solid layer removes it from the card; the button is a sibling of
+     the masked element, so it stays visible. */
+  .project-notch {
+    mask-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 80'%3E%3Cpath d='M80 0A16 16 0 0 1 64 16H48A32 32 0 0 0 16 48V64A16 16 0 0 1 0 80H80Z'/%3E%3C/svg%3E"),
+      linear-gradient(#000 0 0);
+    mask-position: right bottom, 0 0;
+    mask-size: 80px 80px, 100% 100%;
+    mask-repeat: no-repeat;
+    mask-composite: exclude;
+  }
+
+  /* Placeholder art for projects without a cover image: a faint grid under a
+     soft gold glow, behind the project's icon. */
+  .project-art {
+    background-color: hsl(240 4% 14%);
+    background-image:
+      radial-gradient(circle at 50% 55%, hsl(var(--primary) / 0.22), transparent 62%),
+      linear-gradient(hsl(0 0% 100% / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(0 0% 100% / 0.05) 1px, transparent 1px);
+    background-size: 100% 100%, 22px 22px, 22px 22px;
+    background-position: center;
+  }
 }
 
 @keyframes shimmerText {
