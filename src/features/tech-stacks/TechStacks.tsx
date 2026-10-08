@@ -87,10 +87,11 @@ const TechStacks = () => {
         </div>
 
         <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2">
+          {/* An odd card out at the end spans both columns so the grid stays even */}
           {categories.map((category) => (
             <div
               key={category.title}
-              className="tech-stack-item beam-border flex items-start gap-3 rounded-2xl bg-white/[0.03] px-4 py-4 sm:gap-5 sm:px-6 sm:py-5"
+              className="tech-stack-item beam-border flex items-start gap-3 rounded-2xl bg-white/[0.03] px-4 py-4 sm:gap-5 sm:px-6 sm:py-5 md:odd:last:col-span-2"
             >
               {['beam-top', 'beam-right', 'beam-bottom', 'beam-left'].map((edge) => (
                 <span key={edge} aria-hidden="true" className={`beam-line ${edge}`} />

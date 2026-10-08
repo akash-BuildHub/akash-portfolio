@@ -1,4 +1,4 @@
-import { Brain, Cpu, Eye, Rocket, type LucideIcon } from "lucide-react";
+import { Brain, Cpu, Eye, LayoutDashboard, type LucideIcon } from "lucide-react";
 
 // Headline split into colored segments so the typing effect can preserve the
 // two-tone styling while revealing one character at a time.
@@ -20,5 +20,5 @@ export const highlights: { icon: LucideIcon; label: string }[] = [
   { icon: Brain, label: "Deep Learning" },
   { icon: Eye, label: "Computer Vision" },
   { icon: Cpu, label: "Machine Learning" },
-  { icon: Rocket, label: "AI Implementation" },
+  { icon: LayoutDashboard, label: "Business Applications" },
 ];

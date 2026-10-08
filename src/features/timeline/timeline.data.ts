@@ -20,9 +20,9 @@ export const timelineData: TimelineItem[] = [
     title: "Career",
     content: [
       "2023 - Academic Project using Deep Learning",
-      "2024 - Research Analyst",
-      "2025 - Python Developer",
-      "2026 - AI Developer",
+      "2024 - Python/Django Intern",
+      "2024 - Assistant Technical Writer",
+      "2025 - AI Developer",
     ],
   },
   {
@@ -31,9 +31,9 @@ export const timelineData: TimelineItem[] = [
     content: [
       "2020 - Transitioned from school to engineering, building core technical foundations",
       "2023 - Achieved significant research milestones and actively explored career opportunities",
-      "2024 - Placed in a Research Analyst role, working on data-driven research tasks",
-      "2025 - Exploring opportunities in Web Development and AI technologies",
-      "2026 - Focused on building AI-powered computer vision and real-time analytics projects",
+      "2024 - Placed in an Assistant Technical Writer role, documenting AI research",
+      "2025 - Joined Grow Space Innovations as an AI Developer, building AI systems",
+      "2026 - Focused on AI-powered HRMS, computer vision, and full-stack business applications",
     ],
   },
   {
@@ -43,6 +43,7 @@ export const timelineData: TimelineItem[] = [
       "- Frontend Development",
       "- Backend Development",
       "- Databases & Cloud Services",
+      "- Full-Stack Business Applications",
       "- Artificial Intelligence",
       "- Computer Vision Models",
       "- Optimization & Performance Tuning",

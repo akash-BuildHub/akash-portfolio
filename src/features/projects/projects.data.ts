@@ -12,10 +12,10 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    title: 'Real-Time Facial Recognition Attendance Platform',
+    title: 'AI-Powered HRMS & Facial Recognition Attendance Platform',
     year: '2026',
     description:
-      'Full-stack workforce platform that automates attendance from live camera face recognition, with payroll computation and HR/admin dashboards. Powered by GPU face recognition (InsightFace + ONNX Runtime CUDA) and live multi-camera WebRTC streaming.',
+      'AI-powered workforce platform integrating facial recognition, automated attendance, payroll-related workflows, and HR/admin dashboards. Powered by GPU face recognition (InsightFace + ONNX Runtime CUDA) and live multi-camera WebRTC streaming.',
     features: ['InsightFace', 'ONNX Runtime (CUDA)', 'FastAPI', 'WebRTC'],
     icon: ScanFace,
     demoImages: [

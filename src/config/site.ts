@@ -15,7 +15,7 @@ export const CONTACT = {
   email: "akashrm.mail@gmail.com",
   phoneDisplay: "+91 96268 63389",
   whatsappUrl: "https://wa.me/919626863389",
-  location: "India",
+  location: "Tamil Nadu, India",
   linkedinUrl: "https://www.linkedin.com/in/akash-rm",
   githubUrl: "https://github.com/akash-BuildHub",
 } as const;

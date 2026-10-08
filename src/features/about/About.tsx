@@ -193,9 +193,9 @@ const About = () => {
             {/* Right: short paragraph + numbered focus index */}
             <div className="lg:pt-2">
               <p className="about-line text-sm leading-[1.9] tracking-wide text-foreground/60">
-                Specialize in machine learning, deep learning, and computer
-                vision &mdash; building end-to-end AI systems that are fast,
-                accurate, scalable, and ready for real-world deployment.
+                Specialize in deep learning, computer vision, and multi-object
+                tracking &mdash; building end-to-end AI systems and full-stack
+                business applications ready for real-world deployment.
               </p>
 
               <div className="mt-9 space-y-4 border-t border-border/60 pt-7">
