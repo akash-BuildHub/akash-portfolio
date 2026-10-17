@@ -7,6 +7,8 @@ interface ProjectCardProps {
   onActivate: () => void;
   onDeactivate: () => void;
   onOpenGallery: () => void;
+  /** A visual copy (for the looping row): kept out of the tab order. */
+  isClone?: boolean;
   className?: string;
 }
 
@@ -29,6 +31,7 @@ const ProjectCard = ({
   onActivate,
   onDeactivate,
   onOpenGallery,
+  isClone = false,
   className = '',
 }: ProjectCardProps) => {
   const hasGallery = Boolean(project.demoImages?.length);
@@ -65,7 +68,7 @@ const ProjectCard = ({
             cards in the same row line up whatever the title length. */}
         <div className="flex-1 p-6 sm:p-7">
           <h3
-            className={`text-lg font-bold uppercase leading-snug tracking-wide sm:text-xl xl:text-lg ${
+            className={`text-lg font-bold uppercase leading-snug tracking-wide sm:text-xl ${
               isActive ? 'text-primary-foreground' : ''
             }`}
           >
@@ -75,7 +78,7 @@ const ProjectCard = ({
 
         {/* Preview: the cover rests on a stack of two translucent sheets */}
         <div
-          className={`relative h-52 shrink-0 border-t transition-colors duration-500 sm:h-60 lg:h-72 xl:h-64 ${
+          className={`relative h-52 shrink-0 border-t transition-colors duration-500 sm:h-60 ${
             isActive ? 'border-primary-foreground/15' : 'border-white/10'
           }`}
         >
@@ -98,7 +101,7 @@ const ProjectCard = ({
                 alt={`${project.title} preview`}
                 loading="lazy"
                 decoding="async"
-                className="h-full w-full object-cover object-top transition-transform duration-700 ease-smooth group-hover:scale-[1.04]"
+                className="h-full w-full object-cover object-center transition-transform duration-700 ease-smooth group-hover:scale-[1.04]"
               />
             ) : (
               <div
@@ -119,6 +122,7 @@ const ProjectCard = ({
           type="button"
           onClick={onOpenGallery}
           aria-label={`View ${project.title} screenshots`}
+          tabIndex={isClone ? -1 : undefined}
           className={actionClass}
         >
           {arrow}
@@ -129,6 +133,7 @@ const ProjectCard = ({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Open ${project.title} (opens in a new tab)`}
+          tabIndex={isClone ? -1 : undefined}
           className={actionClass}
         >
           {arrow}

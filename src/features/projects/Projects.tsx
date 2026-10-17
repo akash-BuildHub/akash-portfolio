@@ -8,19 +8,30 @@ import { projects, type Project } from './projects.data';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// From xl up the grid has 8 tracks and each card spans 2 (four per row). A
-// last row holding fewer than four cards is shifted right so it sits centered.
-const GRID_PLACEMENT =
-  'xl:col-span-2 xl:[&:nth-child(4n+1):nth-last-child(3)]:col-start-2 xl:[&:nth-child(4n+1):nth-last-child(2)]:col-start-3 xl:[&:nth-child(4n+1):last-child]:col-start-4';
+// How fast the row drifts, in pixels per second.
+const DRIFT_SPEED = 45;
 
 const Projects = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const rowRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [still] = useState(prefersReducedMotion);
   // The card under the pointer (or keyboard focus) turns gold; none otherwise.
   const [active, setActive] = useState<number | null>(null);
   const [galleryProject, setGalleryProject] = useState<Project | null>(null);
 
+  // The moving row holds the list twice so it can loop; the second copy is
+  // hidden from screen readers and the keyboard. With reduced motion the row
+  // stays put and scrolls sideways instead.
+  const rowItems = [
+    ...projects.map((project) => ({ project, clone: false })),
+    ...(still ? [] : projects.map((project) => ({ project, clone: true }))),
+  ];
+
   useEffect(() => {
-    if (prefersReducedMotion()) return;
+    const row = rowRef.current;
+    const track = trackRef.current;
+    if (still || !row || !track) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo(
@@ -39,26 +50,71 @@ const Projects = () => {
         }
       );
 
-      // Cards rise in a row at a time as they scroll into view.
-      gsap.set('.project-card', { opacity: 0, y: 60 });
-      ScrollTrigger.batch('.project-card', {
-        start: 'top 90%',
-        onEnter: (batch) =>
-          gsap.to(batch, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: 'power3.out',
-            stagger: 0.12,
-            overwrite: true,
-          }),
-        onLeaveBack: (batch) =>
-          gsap.to(batch, { opacity: 0, y: 60, duration: 0.4, ease: 'power2.in', overwrite: true }),
+      // The row slides in from the left as it scrolls into view.
+      gsap.from(row, {
+        xPercent: -12,
+        opacity: 0,
+        duration: 1.2,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: row, start: 'top 88%', toggleActions: 'play none none reverse' },
       });
+
+      // Endless left-to-right drift: shifting the track by half its width (one
+      // copy of the list) lands it back where it started, so the loop is seamless.
+      const drift = gsap.fromTo(
+        track,
+        { xPercent: -50 },
+        { xPercent: 0, ease: 'none', repeat: -1, duration: track.scrollWidth / 2 / DRIFT_SPEED }
+      );
+
+      // Speed = base (eased to 0 while the row is paused) × a boost from
+      // scrolling the page, which fades back out.
+      const speed = { base: 1, boost: 0 };
+      const update = () => {
+        speed.boost *= Math.pow(0.92, gsap.ticker.deltaRatio());
+        drift.timeScale(speed.base * (1 + speed.boost));
+      };
+      gsap.ticker.add(update);
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        onUpdate: (self) => {
+          speed.boost = Math.max(speed.boost, Math.min(Math.abs(self.getVelocity()) / 300, 6));
+        },
+      });
+
+      const pause = () => gsap.to(speed, { base: 0, duration: 0.5, ease: 'power2.out', overwrite: true });
+      const resume = () => gsap.to(speed, { base: 1, duration: 0.8, ease: 'power2.in', overwrite: true });
+
+      // Keyboard focus stops the row and slides the focused card into view.
+      const onFocusIn = (e: FocusEvent) => {
+        pause();
+        const item = (e.target as HTMLElement).closest<HTMLElement>('[data-row-item]');
+        if (!item) return;
+        const half = track.scrollWidth / 2;
+        const x = Math.min(0, Math.max(-half, (row.clientWidth - item.offsetWidth) / 2 - item.offsetLeft));
+        drift.progress((x + half) / half);
+      };
+      const onFocusOut = (e: FocusEvent) => {
+        if (!row.contains(e.relatedTarget as Node | null)) resume();
+      };
+
+      row.addEventListener('pointerenter', pause);
+      row.addEventListener('pointerleave', resume);
+      row.addEventListener('focusin', onFocusIn);
+      row.addEventListener('focusout', onFocusOut);
+      return () => {
+        gsap.ticker.remove(update);
+        row.removeEventListener('pointerenter', pause);
+        row.removeEventListener('pointerleave', resume);
+        row.removeEventListener('focusin', onFocusIn);
+        row.removeEventListener('focusout', onFocusOut);
+      };
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [still]);
 
   return (
     <section
@@ -80,18 +136,35 @@ const Projects = () => {
           </div>
           <div className="mt-8 h-px w-full bg-white/10 sm:mt-10" />
         </div>
+      </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:mt-12 md:grid-cols-2 xl:grid-cols-8">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              isActive={active === index}
-              onActivate={() => setActive(index)}
-              onDeactivate={() => setActive((current) => (current === index ? null : current))}
-              onOpenGallery={() => setGalleryProject(project)}
-              className={GRID_PLACEMENT}
-            />
+      {/* One full-width row of cards drifting left to right, faded at both ends */}
+      <div
+        ref={rowRef}
+        className={`relative z-10 mt-10 sm:mt-12 ${
+          still
+            ? 'overflow-x-auto px-4 sm:px-6'
+            : 'overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_5%,#000_95%,transparent)]'
+        }`}
+      >
+        <div ref={trackRef} className="flex w-max">
+          {rowItems.map(({ project, clone }, index) => (
+            <div
+              key={`${project.title}${clone ? '-copy' : ''}`}
+              data-row-item
+              aria-hidden={clone || undefined}
+              className="flex w-[80vw] shrink-0 pr-5 sm:w-[340px] sm:pr-6 xl:w-[360px]"
+            >
+              <ProjectCard
+                project={project}
+                isClone={clone}
+                isActive={active === index}
+                onActivate={() => setActive(index)}
+                onDeactivate={() => setActive((current) => (current === index ? null : current))}
+                onOpenGallery={() => setGalleryProject(project)}
+                className="w-full"
+              />
+            </div>
           ))}
         </div>
       </div>

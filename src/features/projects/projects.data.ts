@@ -22,12 +22,12 @@ export const projects: Project[] = [
     icon: ScanFace,
     image: '/project_demo/AI_attendance_system/cover.webp',
     demoImages: [
-      '/project_demo/AI_attendance_system/1.jpeg',
-      '/project_demo/AI_attendance_system/2.png',
-      '/project_demo/AI_attendance_system/3.png',
-      '/project_demo/AI_attendance_system/4.png',
-      '/project_demo/AI_attendance_system/5.png',
-      '/project_demo/AI_attendance_system/6.png',
+      '/project_demo/AI_attendance_system/1.webp',
+      '/project_demo/AI_attendance_system/2.webp',
+      '/project_demo/AI_attendance_system/3.webp',
+      '/project_demo/AI_attendance_system/4.webp',
+      '/project_demo/AI_attendance_system/5.webp',
+      '/project_demo/AI_attendance_system/6.webp',
     ],
   },
   {
@@ -57,6 +57,7 @@ export const projects: Project[] = [
       'Real-time person detection and multi-object tracking pipeline using YOLO, processing RTSP streams with optimized inference. Implements frame-wise analytics and unique person counting.',
     features: ['YOLO', 'Multi-Object Tracking', 'RTSP', 'Python'],
     icon: Radar,
+    image: '/project_demo/AI Real-Time Person Tracking Dashboard.png',
   },
   {
     title: 'Emotion Recognition',
@@ -65,7 +66,7 @@ export const projects: Project[] = [
       'An AI-powered emotion recognition system that uses deep learning and computer vision to detect facial expressions in real time and classify emotions such as happiness, sadness, anger, and surprise, enabling intelligent sentiment analysis and human-computer interaction.',
     features: ['Deep Learning', 'Computer Vision', 'Emotion Detection'],
     icon: Smile,
-    image: '/project_demo/emotion_recognition/cover.webp',
+    image: '/project_demo/emotion_recognition/cover.png',
     link: 'https://emotion-recognition-two.vercel.app/',
   },
   {
