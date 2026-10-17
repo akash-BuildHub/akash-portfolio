@@ -31,10 +31,8 @@ interface ProjectGallery3DProps {
   onClose: () => void;
 }
 
-// Every project screenshot in list order, tagged with its project.
-const SHOTS = projects.flatMap((project) =>
-  (project.demoImages ?? (project.image ? [project.image] : [])).map((src) => ({ src, project }))
-);
+// Every project image in list order, tagged with its project.
+const SHOTS = projects.flatMap((project) => (project.image ? [{ src: project.image, project }] : []));
 
 // One chip per project that has screenshots, jumping to its first one.
 const CHIPS = projects

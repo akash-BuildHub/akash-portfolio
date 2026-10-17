@@ -6,7 +6,6 @@ interface ProjectCardProps {
   isActive: boolean;
   onActivate: () => void;
   onDeactivate: () => void;
-  onOpenGallery: () => void;
   /** A visual copy (for the looping row): kept out of the tab order. */
   isClone?: boolean;
   className?: string;
@@ -30,12 +29,9 @@ const ProjectCard = ({
   isActive,
   onActivate,
   onDeactivate,
-  onOpenGallery,
   isClone = false,
   className = '',
 }: ProjectCardProps) => {
-  const hasGallery = Boolean(project.demoImages?.length);
-
   const actionClass = `group/action absolute bottom-1.5 right-1.5 flex h-[52px] w-[52px] items-center justify-center rounded-full transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
     isActive
       ? 'bg-primary text-primary-foreground'
@@ -68,7 +64,7 @@ const ProjectCard = ({
             cards in the same row line up whatever the title length. */}
         <div className="flex-1 p-6 sm:p-7">
           <h3
-            className={`text-lg font-bold uppercase leading-snug tracking-wide sm:text-xl ${
+            className={`truncate text-sm font-bold uppercase leading-snug tracking-wide sm:text-base ${
               isActive ? 'text-primary-foreground' : ''
             }`}
           >
@@ -115,19 +111,9 @@ const ProjectCard = ({
         </div>
       </div>
 
-      {/* Action in the notch: screenshots, the live demo, or — with neither —
-          just the project's icon */}
-      {hasGallery ? (
-        <button
-          type="button"
-          onClick={onOpenGallery}
-          aria-label={`View ${project.title} screenshots`}
-          tabIndex={isClone ? -1 : undefined}
-          className={actionClass}
-        >
-          {arrow}
-        </button>
-      ) : project.link ? (
+      {/* Action in the notch: the live demo, or — without one — just the
+          project's icon */}
+      {project.link ? (
         <a
           href={project.link}
           target="_blank"

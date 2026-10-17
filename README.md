@@ -51,7 +51,7 @@ The code is organised by feature: each page section is a self-contained module h
 │   ├── experience.png            # Experience section backdrop
 │   ├── akash_resume.pdf          # Linked from the navbar
 │   ├── icons/                    # Local tech logos not available on the CDNs
-│   ├── project_demo/             # Screenshots for in-card project galleries
+│   ├── project_demo/             # One cover image per project card
 │   ├── signature_logo_white.png, title-logo.png
 │   ├── robots.txt, sitemap.xml
 │   └── _redirects                # Netlify-style SPA fallback
@@ -127,7 +127,7 @@ There is no CMS or API. Each feature keeps its content in a typed `*.data.ts` fi
 | About intro and focus list | `features/about/about.data.ts` |
 | Work history | `features/experience/experience.data.ts` |
 | Skills and logos | `features/tech-stacks/techStacks.data.ts` |
-| Projects, links and demo screenshots | `features/projects/projects.data.ts` (images go in `public/project_demo/`) |
+| Projects, links and cover images | `features/projects/projects.data.ts` (one image per project in `public/project_demo/`) |
 | Education and career journey | `features/timeline/timeline.data.ts` |
 | Social links and contact-form purposes | `features/contact/contact.data.ts` |
 | Email, phone, location, profile links | `CONTACT` in `config/site.ts` |
@@ -143,7 +143,7 @@ There is no CMS or API. Each feature keeps its content in a typed `*.data.ts` fi
 | **About** | `#about` | Two-tone intro headline typed out when it scrolls into view, a short summary and a numbered focus list. A hidden "ghost" copy reserves the final layout, so the typing never shifts the page. |
 | **Experience** | `#experience` | List of roles; hovering, focusing or clicking one shows its details. |
 | **Tech Stacks** | `#tech-stacks` | Skill badges grouped by category, in cards with a running gold "beam" border. |
-| **Projects** | `#projects` | Project cards that slide in from alternating sides as you scroll. Projects with `demoImages` open an in-card screenshot gallery (preloaded, auto-advancing, draggable); the others link to live demos. |
+| **Projects** | `#projects` | One row of project cards drifting left to right (pauses on hover, speeds up as you scroll). Each card shows its cover image; the corner arrow opens the live demo when there is one. |
 | **Timeline** | `#timeline` | Education, career and skills journey. Rendered only after Explore is pressed; the center line draws in on scroll. |
 | **Contact** | `#contact` | Contact details and a validated message form. |
 

@@ -3,8 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { prefersReducedMotion } from '@/lib/motion';
 import ProjectCard from './ProjectCard';
-import ProjectGallery from './ProjectGallery';
-import { projects, type Project } from './projects.data';
+import { projects } from './projects.data';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,7 +17,6 @@ const Projects = () => {
   const [still] = useState(prefersReducedMotion);
   // The card under the pointer (or keyboard focus) turns gold; none otherwise.
   const [active, setActive] = useState<number | null>(null);
-  const [galleryProject, setGalleryProject] = useState<Project | null>(null);
 
   // The moving row holds the list twice so it can loop; the second copy is
   // hidden from screen readers and the keyboard. With reduced motion the row
@@ -67,12 +65,25 @@ const Projects = () => {
         { xPercent: 0, ease: 'none', repeat: -1, duration: track.scrollWidth / 2 / DRIFT_SPEED }
       );
 
-      // Speed = base (eased to 0 while the row is paused) × a boost from
-      // scrolling the page, which fades back out.
-      const speed = { base: 1, boost: 0 };
+      // Shift the cards by `px` (positive = right) by advancing the loop; one
+      // full loop is half the track's width.
+      const half = () => track.scrollWidth / 2;
+      const wrapProgress = gsap.utils.wrap(0, 1);
+      const nudge = (px: number) => drift.progress(wrapProgress(drift.progress() + px / half()));
+
+      // Speed = base (eased to 0 while the pointer is on the row) × a boost
+      // from scrolling the page, which fades back out. `glide` is momentum left
+      // over from the mouse wheel or a drag, in px per frame.
+      const speed = { base: 1, boost: 0, glide: 0 };
+      let dragX: number | null = null;
       const update = () => {
-        speed.boost *= Math.pow(0.92, gsap.ticker.deltaRatio());
+        const frames = gsap.ticker.deltaRatio();
+        speed.boost *= Math.pow(0.92, frames);
         drift.timeScale(speed.base * (1 + speed.boost));
+        if (dragX === null && Math.abs(speed.glide) > 0.05) {
+          nudge(speed.glide * frames);
+          speed.glide *= Math.pow(0.92, frames);
+        }
       };
       gsap.ticker.add(update);
       ScrollTrigger.create({
@@ -87,29 +98,105 @@ const Projects = () => {
       const pause = () => gsap.to(speed, { base: 0, duration: 0.5, ease: 'power2.out', overwrite: true });
       const resume = () => gsap.to(speed, { base: 1, duration: 0.8, ease: 'power2.in', overwrite: true });
 
-      // Keyboard focus stops the row and slides the focused card into view.
-      const onFocusIn = (e: FocusEvent) => {
+      let hovering = false;
+      const onPointerEnter = () => {
+        hovering = true;
         pause();
-        const item = (e.target as HTMLElement).closest<HTMLElement>('[data-row-item]');
-        if (!item) return;
-        const half = track.scrollWidth / 2;
-        const x = Math.min(0, Math.max(-half, (row.clientWidth - item.offsetWidth) / 2 - item.offsetLeft));
-        drift.progress((x + half) / half);
       };
-      const onFocusOut = (e: FocusEvent) => {
-        if (!row.contains(e.relatedTarget as Node | null)) resume();
+      const onPointerLeave = () => {
+        hovering = false;
+        resume();
       };
 
-      row.addEventListener('pointerenter', pause);
-      row.addEventListener('pointerleave', resume);
+      // Keyboard focus stops the row and slides the focused card into view.
+      // Not mouse focus: pressing a card's arrow also focuses it, and moving
+      // the row then would pull the arrow out from under the click.
+      const onFocusIn = (e: FocusEvent) => {
+        const target = e.target as HTMLElement;
+        if (!target.matches(':focus-visible')) return;
+        pause();
+        const item = target.closest<HTMLElement>('[data-row-item]');
+        if (!item) return;
+        const loop = half();
+        const x = Math.min(0, Math.max(-loop, (row.clientWidth - item.offsetWidth) / 2 - item.offsetLeft));
+        drift.progress((x + loop) / loop);
+      };
+      const onFocusOut = (e: FocusEvent) => {
+        if (!hovering && !row.contains(e.relatedTarget as Node | null)) resume();
+      };
+
+      // Mouse wheel or trackpad over the row moves the cards sideways instead
+      // of scrolling the page.
+      const onWheel = (e: WheelEvent) => {
+        const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+        if (!delta) return;
+        e.preventDefault();
+        const px = e.deltaMode === WheelEvent.DOM_DELTA_LINE ? delta * 16 : delta;
+        speed.glide = gsap.utils.clamp(-60, 60, speed.glide - px * 0.09);
+      };
+
+      // Click-and-drag (or a swipe) pushes the row either way; it keeps gliding
+      // a little after release.
+      let velocity = 0;
+      let lastMove = 0;
+      let dragged = 0;
+      const onPointerMove = (e: PointerEvent) => {
+        if (dragX === null) return;
+        const dx = e.clientX - dragX;
+        const now = performance.now();
+        dragX = e.clientX;
+        dragged += Math.abs(dx);
+        nudge(dx);
+        velocity = (dx / Math.max(now - lastMove, 1)) * 16.7; // px per frame at 60fps
+        lastMove = now;
+      };
+      const onPointerUp = () => {
+        dragX = null;
+        // Letting go after holding still shouldn't fling the row.
+        speed.glide = performance.now() - lastMove < 80 ? gsap.utils.clamp(-60, 60, velocity) : 0;
+        window.removeEventListener('pointermove', onPointerMove);
+        window.removeEventListener('pointerup', onPointerUp);
+        window.removeEventListener('pointercancel', onPointerUp);
+      };
+      const onPointerDown = (e: PointerEvent) => {
+        if (e.button !== 0) return;
+        dragX = e.clientX;
+        dragged = 0;
+        velocity = 0;
+        speed.glide = 0;
+        lastMove = performance.now();
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        window.addEventListener('pointercancel', onPointerUp);
+      };
+      // A drag that ends over a card's arrow shouldn't open the project.
+      const onClickCapture = (e: MouseEvent) => {
+        if (dragged > 6) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      };
+      const onDragStart = (e: DragEvent) => e.preventDefault(); // no ghost image of links/images
+
+      row.addEventListener('pointerenter', onPointerEnter);
+      row.addEventListener('pointerleave', onPointerLeave);
       row.addEventListener('focusin', onFocusIn);
       row.addEventListener('focusout', onFocusOut);
+      row.addEventListener('wheel', onWheel, { passive: false });
+      row.addEventListener('pointerdown', onPointerDown);
+      row.addEventListener('click', onClickCapture, true);
+      row.addEventListener('dragstart', onDragStart);
       return () => {
         gsap.ticker.remove(update);
-        row.removeEventListener('pointerenter', pause);
-        row.removeEventListener('pointerleave', resume);
+        row.removeEventListener('pointerenter', onPointerEnter);
+        row.removeEventListener('pointerleave', onPointerLeave);
         row.removeEventListener('focusin', onFocusIn);
         row.removeEventListener('focusout', onFocusOut);
+        row.removeEventListener('wheel', onWheel);
+        row.removeEventListener('pointerdown', onPointerDown);
+        row.removeEventListener('click', onClickCapture, true);
+        row.removeEventListener('dragstart', onDragStart);
+        onPointerUp();
       };
     }, sectionRef);
 
@@ -144,7 +231,7 @@ const Projects = () => {
         className={`relative z-10 mt-10 sm:mt-12 ${
           still
             ? 'overflow-x-auto px-4 sm:px-6'
-            : 'overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_5%,#000_95%,transparent)]'
+            : 'cursor-grab touch-pan-y overflow-hidden [mask-image:linear-gradient(to_right,transparent,#000_5%,#000_95%,transparent)] active:cursor-grabbing'
         }`}
       >
         <div ref={trackRef} className="flex w-max">
@@ -161,15 +248,12 @@ const Projects = () => {
                 isActive={active === index}
                 onActivate={() => setActive(index)}
                 onDeactivate={() => setActive((current) => (current === index ? null : current))}
-                onOpenGallery={() => setGalleryProject(project)}
                 className="w-full"
               />
             </div>
           ))}
         </div>
       </div>
-
-      <ProjectGallery project={galleryProject} onClose={() => setGalleryProject(null)} />
     </section>
   );
 };

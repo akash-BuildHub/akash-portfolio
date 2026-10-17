@@ -6,29 +6,20 @@ export interface Project {
   description: string;
   features: string[];
   icon: React.ElementType;
-  /** Card cover; without one the card shows placeholder art built from `icon`. */
+  /** Card cover in `public/project_demo/`; without one the card shows placeholder art built from `icon`. */
   image?: string;
   link?: string;
-  demoImages?: string[];
 }
 
 export const projects: Project[] = [
   {
-    title: 'AI-Powered HRMS & Facial Recognition Attendance Platform',
+    title: 'AI HRMS & Attendance',
     year: '2026',
     description:
       'AI-powered workforce platform integrating facial recognition, automated attendance, payroll-related workflows, and HR/admin dashboards. Powered by GPU face recognition (InsightFace + ONNX Runtime CUDA) and live multi-camera WebRTC streaming.',
     features: ['InsightFace', 'ONNX Runtime (CUDA)', 'FastAPI', 'WebRTC'],
     icon: ScanFace,
-    image: '/project_demo/AI_attendance_system/cover.webp',
-    demoImages: [
-      '/project_demo/AI_attendance_system/1.webp',
-      '/project_demo/AI_attendance_system/2.webp',
-      '/project_demo/AI_attendance_system/3.webp',
-      '/project_demo/AI_attendance_system/4.webp',
-      '/project_demo/AI_attendance_system/5.webp',
-      '/project_demo/AI_attendance_system/6.webp',
-    ],
+    image: '/project_demo/ai-attendance-platform.webp',
   },
   {
     title: 'AI Election Prediction',
@@ -37,27 +28,27 @@ export const projects: Project[] = [
       'A data-driven election forecasting system that leverages machine learning models on historical voting data, demographic indicators, and sentiment signals to predict constituency-level outcomes with confidence scoring and interactive visual analytics.',
     features: ['Machine Learning', 'Forecasting', 'Data Analytics'],
     icon: Vote,
-    image: '/project_demo/AI_election_prediction/cover.webp',
+    image: '/project_demo/ai-election-prediction.webp',
     link: 'https://owlytics-election-prediction.vercel.app/',
   },
   {
-    title: 'AI Cricket Shot Classification & Batting Analysis System',
+    title: 'Cricket Shot Analysis',
     year: '2026',
     description:
       'Cricket shot classifier built on a CNN-LSTM architecture with MobileNetV2 for video-based action recognition. Designed preprocessing and feature-engineering pipelines plus backend APIs for confidence scoring and performance tiering.',
     features: ['CNN-LSTM', 'MobileNetV2', 'FastAPI', 'Action Recognition'],
     icon: Trophy,
-    image: '/project_demo/AI_cricket_batting/cover.webp',
+    image: '/project_demo/ai-cricket-batting-analysis.webp',
     link: 'https://ai-batting-classifier.vercel.app/',
   },
   {
-    title: 'AI Real-Time Person Detection & Tracking System',
+    title: 'AI Person Tracking',
     year: '2026',
     description:
       'Real-time person detection and multi-object tracking pipeline using YOLO, processing RTSP streams with optimized inference. Implements frame-wise analytics and unique person counting.',
     features: ['YOLO', 'Multi-Object Tracking', 'RTSP', 'Python'],
     icon: Radar,
-    image: '/project_demo/AI Real-Time Person Tracking Dashboard.png',
+    image: '/project_demo/ai-person-tracking.png',
   },
   {
     title: 'Emotion Recognition',
@@ -66,35 +57,36 @@ export const projects: Project[] = [
       'An AI-powered emotion recognition system that uses deep learning and computer vision to detect facial expressions in real time and classify emotions such as happiness, sadness, anger, and surprise, enabling intelligent sentiment analysis and human-computer interaction.',
     features: ['Deep Learning', 'Computer Vision', 'Emotion Detection'],
     icon: Smile,
-    image: '/project_demo/emotion_recognition/cover.png',
+    image: '/project_demo/emotion-recognition.png',
     link: 'https://emotion-recognition-two.vercel.app/',
   },
   {
-    title: 'Vision Snap — Computer Vision Dataset Tool',
+    title: 'Vision Snap Dataset Tool',
     year: '2025',
     description:
       'Dataset-generation tool built in React with webcam capture, video frame extraction, and automated dataset packaging workflows for computer vision.',
     features: ['React', 'Webcam Capture', 'Dataset Automation'],
     icon: Camera,
-    image: '/project_demo/vision_snap/cover.webp',
+    image: '/project_demo/vision-snap.webp',
     link: 'https://vision-snap-two.vercel.app/',
   },
   {
-    title: 'ALL IN ONE — OCR Web Application',
+    title: 'All In One — OCR App',
     year: '2025',
     description:
       'JavaScript OCR web app with a modular architecture and responsive UI for structured, multi-page text and image extraction from documents, PDFs, and uploads.',
     features: ['JavaScript', 'OCR', 'Modular Architecture'],
     icon: ScanText,
-    image: '/project_demo/all_in_one_ocr/cover.webp',
+    image: '/project_demo/all-in-one-ocr.webp',
     link: 'https://allinone-snowy.vercel.app/',
   },
   {
-    title: 'Hospital Management System with Brain Tumor Detection',
+    title: 'Brain Tumor Detection',
     year: '2024',
     description:
       'Django-based hospital management system with authentication workflows and integrated deep-learning brain tumor detection and medical reporting.',
     features: ['Django', 'Deep Learning', 'Medical Imaging'],
     icon: Hospital,
+    image: '/project_demo/hospital-brain-tumor-detection.png',
   },
 ];
